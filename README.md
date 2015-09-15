@@ -30,7 +30,7 @@ existing data to coordinate data collection efforts, evolve data sharing
 strategies and discover methods to efficiently sustain our (island) ecosystems.
 A first step toward integrating the data is to provide a side-by-side
 comparison of existing data associated with active island ecostation
-communities to stimulate knowledge sharing and collaboration. [add references]
+communities to stimulate knowledge sharing and collaboration. See [Meyer et al. 2015](http://dx.doi.org/10.1038/ncomms9221) for a recent discussion about the importance of identifying "[...] Gaps in digital accessible information (DAI)[...]" or biodiversity data completeness. 
 
 ## methods
 
