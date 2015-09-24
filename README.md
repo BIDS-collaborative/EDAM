@@ -2,7 +2,9 @@
 
 Ecostations Data Access Monitor
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/BIDS-collaborative/EDAM?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Join us for discussions on [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/BIDS-collaborative/EDAM?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) .
+
+Learn more about current status of this project on our [wiki](../../wiki).
 
 ## origins
 
