@@ -1,25 +1,31 @@
----
-layout: default
----
-
-<div class="content">
-  <div>
-    <h3>Mockup for Biodiversity Completion Lookup</h3>
-    <div>
-      <div class="map_div">
-        <h4>Region Selection</h4>
-      </div>
-      <div class="bar_div">
-        <h4>Completion Bar</h4>
-      </div>
+<!DOCTYPE>
+<html>
+  <head>
+    {% include head.html %}
+    {% include leaflet.html %}
+    <script src="{{ site.baseurl }}/js/biodiversity_tool.js"></script>
+  </head>
+  <body>
+    <div class="content">
+      <div>
+        <h3>Mockup for Biodiversity Completion Lookup</h3>
+        <div>
+          <div id="map_div">
+            <!-- <h4>Region Selection</h4> -->
+          </div>
+          <div id="bar_div">
+            <h4>Completion Bar</h4>
+          </div>
+        </div>
+        <div>
+          <div id="region_info_div">
+            <h4>Region Summary</h4>
+          </div>
+          <div id="biodiversity_info_div">
+            <h4>Biodiversity Summary</h4>
+          </div>
+        </div>
+      </div> 
     </div>
-    <div>
-      <div class="region_info_div">
-        <h4>Region Summary</h4>
-      </div>
-      <div class="biodiversity_info_div">
-        <h4>Biodiversity Summary</h4>
-      </div>
-    </div>
-  </div> 
-</div>
+  </body>
+</html>

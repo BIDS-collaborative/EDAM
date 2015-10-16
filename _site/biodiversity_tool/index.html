@@ -1,38 +1,47 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
   <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Biodiversity Tool</title>
+<title>Biodiversity Tool</title>
 
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://bids-collaborative.github.io/biodiversity_tool/">
-</head>
+<link rel="stylesheet" href="/css/main.css">
+<link rel="canonical" href="http://bids-collaborative.github.io/biodiversity_tool/">
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
 
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+
+    <!-- TODO: download assets -->
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+
+    <script src="/js/biodiversity_tool.js"></script>
+  </head>
   <body>
     <div class="content">
-  <div>
-    <h3>Mockup for Biodiversity Completion Lookup</h3>
-    <div>
-      <div class="map_div">
-        <h4>Region Selection</h4>
-      </div>
-      <div class="bar_div">
-        <h4>Completion Bar</h4>
-      </div>
+      <div>
+        <h3>Mockup for Biodiversity Completion Lookup</h3>
+        <div>
+          <div id="map_div">
+            <!-- <h4>Region Selection</h4> -->
+          </div>
+          <div id="bar_div">
+            <h4>Completion Bar</h4>
+          </div>
+        </div>
+        <div>
+          <div id="region_info_div">
+            <h4>Region Summary</h4>
+          </div>
+          <div id="biodiversity_info_div">
+            <h4>Biodiversity Summary</h4>
+          </div>
+        </div>
+      </div> 
     </div>
-    <div>
-      <div class="region_info_div">
-        <h4>Region Summary</h4>
-      </div>
-      <div class="biodiversity_info_div">
-        <h4>Biodiversity Summary</h4>
-      </div>
-    </div>
-  </div> 
-</div>
-
   </body>
 </html>
