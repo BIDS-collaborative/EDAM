@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>A COOL THING</title>
+    {% include head.html %}
+    {% include leaflet.html %}
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/leaflet_demo.css">
+    <script src="{{ site.baseurl }}/js/leaflet_demo.js"></script>
+  </head>
+
+  <body>
+    <h1> Four Island Chains </h1>
+
+    <div class="row">
+      <div class="span5">
+        <div id="map_all"> </div>
+      </div>
+
+      <div class="span2"></div>
+
+      <div id="small_maps" class="row">
+        <div class="span5">
+          <h4> Kauai </h4> 
+          <div id="map"></div>
+          </br>
+
+          <h4> Moorea </h4> 
+          <div id="map1"></div>  
+          </br>
+
+          <h4> Friday Harbor, Washington, USA </h4> 
+          <div id="map2"></div>
+          </br>
+
+          <h4> Galapagos Islands </h4> 
+          <div id="map3"></div>
+        </div> 
+      </div>
+    </div>     
+  </body>
+</html>
