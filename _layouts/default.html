@@ -2,10 +2,12 @@
 <html>
   <head>
     {% include head.html %}
+    {% include jquery.html %}
     {% include leaflet.html %}
-    <script src="{{ site.baseurl }}/js/index.js"></script>
+    {% include index_resources.html %}
   </head>
   <body>
+    <h2>EDAM Static Demo</h2>
     <div id="link_div">
       <a href="comparison_table">Data Table</a> | 
       <a href="biodiversity_tool">Tool Wireframe</a> | 
@@ -14,8 +16,12 @@
     <div id="map_div">
       <div id="map"> 
       </div>
+      <p>Interactive map showing selected islands.<br>(Click map markers to identify islands)</p>
     </div>
     <div id="table_div">
+      <div id="table_title">
+        <h3>Comparison of Biodiversity Data for Birds on Islands</h3>
+      </div>
       {{ content }}
     </div>
   </body>

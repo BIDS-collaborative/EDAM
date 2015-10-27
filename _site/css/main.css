@@ -16,6 +16,15 @@
   float: left;
 }
 
+#table_div p {
+  padding-left: 40px;
+}
+
+#table_title {
+  text-align: center;
+}
+
 th, td {
   padding: 10px 40px;
 }
+

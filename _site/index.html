@@ -7,19 +7,23 @@
 
 <title>EDAM</title>
 
-<link rel="stylesheet" href="/css/main.css">
 <link rel="canonical" href="http://bids-collaborative.github.io/">
 
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 
     <!-- TODO: download assets -->
 
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 
-    <script src="/js/index.js"></script>
+    <link rel="stylesheet" href="/css/main.css">
+<script src="/js/index.js"></script>
+
+
   </head>
   <body>
+    <h2>EDAM Static Demo</h2>
     <div id="link_div">
       <a href="comparison_table">Data Table</a> | 
       <a href="biodiversity_tool">Tool Wireframe</a> | 
@@ -28,9 +32,15 @@
     <div id="map_div">
       <div id="map"> 
       </div>
+      <p>Interactive map showing selected islands.<br>(Click map markers to identify islands)</p>
     </div>
     <div id="table_div">
-      <table>
+      <div id="table_title">
+        <h3>Comparison of Biodiversity Data for Birds on Islands</h3>
+      </div>
+      <!-- keep this as md so it is easy to edit table -->
+
+<table>
   <thead>
     <tr>
       <th> </th>
@@ -79,6 +89,11 @@
   </tbody>
 </table>
 
+<p>The information in the table is based on a completeness metric, which
+is a function of area and island distance.<br />
+We estimated the full biodiversity of birds on an island with the idea
+of island biogeography, which isolates an <br />
+ecosystem to some degree. [wording]</p>
 
     </div>
   </body>
