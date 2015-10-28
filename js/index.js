@@ -9,7 +9,7 @@ $(document).ready(function() {
   }).addTo(map);
   
   var greenIcon = L.icon({
-      iconUrl: '../resources/map_pointer.png',
+      iconUrl: 'resources/map_pointer.png',
 
       iconSize:     [30, 48], // size of the icon
       iconAnchor:   [15, 48], // point of the icon which will correspond to marker's location
