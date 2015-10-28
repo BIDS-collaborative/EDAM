@@ -7,8 +7,8 @@
 }
 
 #map {
-  height: 500px;  
-  width: 500px;
+  height: 600px;  
+  width: 600px;
 }
 
 #table_div {
@@ -17,7 +17,7 @@
 }
 
 #table_div p {
-  padding-left: 40px;
+  padding-left: 20px;
 }
 
 #table_title {
@@ -25,6 +25,6 @@
 }
 
 th, td {
-  padding: 10px 40px;
+  padding: 10px 20px;
 }
 

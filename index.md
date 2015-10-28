@@ -5,18 +5,15 @@ layout: default
 <!-- keep this as md so it is easy to edit table -->
 {: .table}
 
-|              | Moorea | Friday Harbor | Kauai | Galapagos Islands |
-| ------------ | ------ | ------------- | ----- | ----------------- |
-| Species      |        |               |       |                   |
-| Open Data    |        |               |       |                   |
-| Locked Data  |        |               |       |                   |
-| Area         |        |               |       |                   |
-| Completeness |        |               |       |                   |
+|                    | Moorea | Friday Harbor | Kauai | Galapagos |
+| ------------------ | ------ | ------------- | ----- | --------- |
+| Completeness       |   44   |      97.6     | 92.6  |    90.5   |
+| Discovered Species |        |               |       |           |
+| Species Missed     |   14   |        5      |   2   |     6     |
+| Species in Common  |        |               |       |           |
 
 
+The information in the table is based on the completeness estimate of the Meyer research.  
+The estimate is a function of island area and island distance.  
+(Some columns are still being decided/worked on)
 
-The information in the table is based on a completeness metric, which
-is a function of area and island distance.  
-We estimated the full biodiversity of birds on an island with the idea
-of island biogeography, which isolates an   
-ecosystem to some degree. [wording]

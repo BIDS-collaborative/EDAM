@@ -17,8 +17,8 @@ $(document).ready(function() {
       popupAnchor:  [0, -48] // point from which the popup should open relative to the iconAnchor
   });
 
-  L.marker([22.0833, -159.5000], {icon: greenIcon}).addTo(map, map).bindPopup("Kauai");
-  L.marker([-17.5333, -149.8333], {icon: greenIcon}).addTo(map).bindPopup("Moorea");
-  L.marker([48.5353, -123.0311], {icon: greenIcon}).addTo(map).bindPopup("Friday Harbor");
-  L.marker([-0.6667, -90.5500], {icon: greenIcon}).addTo(map).bindPopup("Galapagos Islands");
+  L.marker([22.0833, -159.5000], {icon: greenIcon}).addTo(map, map).bindPopup("Kauai<br>Completeness: 92.6%");
+  L.marker([-17.5333, -149.8333], {icon: greenIcon}).addTo(map).bindPopup("Moorea<br>Completeness: 44%");
+  L.marker([48.5353, -123.0311], {icon: greenIcon}).addTo(map).bindPopup("Friday Harbor<br>Completeness: 97.6%");
+  L.marker([-0.6667, -90.5500], {icon: greenIcon}).addTo(map).bindPopup("Galapagos Islands<br>Completeness: 90.5%");
 });
