@@ -11,9 +11,9 @@ layout: default
 | Island Area(sq km)   | 134         | 5.41          | 1456       | 8010        |
 | Island Type          | Oceanic     | Continental   | Oceanic    | Oceanic     |
 | Species Records      | 11          | 205           | 25         | 57          |
-| Effechecka Records** | NA          | 22            | 15         | 37          |
+| Effechecka Records** | NA          | 22            | [15](http://www.effechecka.org/#geometry=POLYGON%28%28-159.8895263671875%2021.76970289940967%2C-159.8895263671875%2022.36023644579937%2C-159.1644287109375%2022.36023644579937%2C-159.1644287109375%2021.76970289940967%2C-159.8895263671875%2021.76970289940967%29%29&hasSpatialIssue=false&height=232&lat=22.06527806776582&limit=20&lng=-159.5269775390625&scientificName=Aves&taxonSelector=Aves&traitSelector=&width=264&wktString=ENVELOPE%28-159.8895263671875%2C-159.1644287109375%2C22.36023644579937%2C21.76970289940967%29&zoom=9)         | 37          |
 | Species Missed       | 14          | 5             | 2          | 6           |
-| Total Speces*        | 25          | 210           | 27         | 63          |
+| Total Species*       | 25          | 210           | 27         | 63          |
 | Completeness         | 44          | 97.6          | 92.6       | 90.5        |
 
 The information in the table is based on the completeness estimate of the [Meyer research](http://www.nature.com/ncomms/2015/150907/ncomms9221/full/ncomms9221.html).  
