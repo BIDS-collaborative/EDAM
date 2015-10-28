@@ -16,6 +16,17 @@
   float: left;
 }
 
+#map_headers {
+  padding-left: 180px;
+}
+
+.mini_map {
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  margin-left: 20px;
+}
+
 #table_div p {
   padding-left: 20px;
 }
