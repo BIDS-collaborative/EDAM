@@ -31,6 +31,10 @@
   padding-left: 20px;
 }
 
+#table_div h3 {
+  margin-top: 0;
+}
+
 #table_title {
   text-align: center;
 }
