@@ -1,6 +1,8 @@
 var app = angular.module('myApp', []);
 var clean_data = {};
 
+
+var fetchData = function() {
 $.ajax({
   // search taxonomy
   url: 'http://api.gbif.org/v1/species/search?q=Puma concolor',
@@ -24,12 +26,20 @@ $.ajax({
   console.log(clean_data);
 });
 
+};
+
 
 app.controller('customersCtrl', function($scope) {
+	
     $scope.names = [
       { "Name" : "Max Joe", "City" : "Lulea", "Country" : "Sweden" },
       { "Name" : "Manish", "City" : "Delhi", "Country" : "India" },
       { "Name" : "Koniglich", "City" : "Barcelona", "Country" : "Spain" },
       { "Name" : "Wolski", "City" : "Arhus", "Country" : "Denmark" }
     ];
+	
+	fetchData();
+	
+	$scope.cleanData = clean_data;
+	
 });
