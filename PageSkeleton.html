@@ -26,15 +26,55 @@
 	</head>
 
 	<body ng-app="myApp">
+
     <div class="tableDiv" ng-controller="TableController">
-        <table border="1">
-        	<tr><td><em><strong>Name</strong></em></td>
-        	<td><em><strong>Species</strong></em></td></tr>
-        	<tr ng-repeat="x in dataResult.results">
-        	<td> {{x.name}} </td>
-        	<td> {{x.species}} </td>
-        	</tr>
+        <table border="1" class = "speices1">
+            <thead>
+                <tr> <th>Name</th> <th>Species</th> </tr>
+            </thead>
+            <tbody>
+        	   <tr ng-repeat="x in dataResult_gbif.results">
+        	   <td> {{x.name}} </td>
+        	   <td> {{x.species}} </td>
+        	   </tr>
+            </tbody>
         </table>
+
+
+        <table border="1" class = "iDigBio">
+            <thead>
+                <tr> <th>common name</th> <th>scientific name</th> 
+                <th>species</th> <th>genus</th> <th>family</th> 
+                <th>order</th> <th>class</th> <th>phylum</th>
+                <th>kingdom</th> <th>location</th> <th>location name</th> <th>taxonomy</th> </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="x in dataResult_iDigBio.results">
+               <td> {{x['common name']}} </td>
+               <td> {{x['scientific name']}} </td>
+               <td> {{x['species']}} </td>
+               <td> {{x['genus']}} </td>
+               <td> {{x['family']}} </td>
+               <td> {{x['order']}} </td>
+               <td> {{x['class']}} </td>
+               <td> {{x['phylum']}} </td>
+               <td> {{x['kingdom']}} </td>
+               <td> {{x['location']}} </td>
+               <td> {{x['location name']}} </td>
+               <td> {{x['taxonomy']}} </td>
+               </tr>
+            </tbody>
+        </table>
+
+        <div> {{dataResult_inaturalistAPI}} </div>
+
+        <div>
+        <p>  dataResult_speciesplus </p>
+        {{dataResult_speciesplus}}</div>
+
+
+
+
 	</div>
 
 	</body>
