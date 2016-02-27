@@ -3,21 +3,22 @@ app.controller('TableController', ['$scope', 'gbifAPI', 'iDigBioAPI','speciesplu
 
 
 	gbifAPI.success(function(data) {
-		$scope.dataResult_gbif = pasringScheme_gbif(data)
+		$scope.dataResult_gbif = pasringScheme_gbif(data);
 	});
 
 	iDigBioAPI.success(function(data) {
-		$scope.dataResult_iDigBio = pasringScheme_iDigBio(data)
+		$scope.dataResult_iDigBio = pasringScheme_iDigBio(data);
 	});
 
 	speciesplusAPI.success(function(data) {
-		$scope.dataResult_speciesplus = data
+		$scope.dataResult_speciesplus = pasringScheme_speciesplus(data);
 	});
 
 
 	inaturalistAPI.success(function(data) {
-		$scope.dataResult_inaturalistAPI = pasringScheme_inaturalistAPI(data)
+		$scope.dataResult_inaturalistAPI = pasringScheme_inaturalistAPI(data);
 	});
+
 
 
 }]);
@@ -91,14 +92,15 @@ pasringScheme_inaturalistAPI = function(data){
 //Module3 iDigBio parsingScheme developed by Jong Ha Lee
 
 var config_iDigBio = {
-	dataType: 'json',
+	url:'https://search.idigbio.org/v2/search/records/',
+	responseType: 'json',
     contentType: 'application/json',
-    type: "POST",
+    method: "POST",
     data: JSON.stringify({limit:5000, rq:{scientificname:"puma concolor"}})
 };
 
 app.factory('iDigBioAPI', ['$http', function($http) { 
-  return $http.get('https://search.idigbio.org/v2/search/records/', config_iDigBio) 
+  return $http(config_iDigBio)
             .success(function(data) { 
               return data; 
             }) 
@@ -143,26 +145,30 @@ pasringScheme_iDigBio = function(data) {
 };
 
 
+
 //Module4 speciesplus parsingScheme developed by numfah
 var config_speciesplus = {
-  	url: 'http://api.speciesplus.net/api/v1/taxon_concepts.json?name=Puma concolor',
+	url:'http://api.speciesplus.net/api/v1/taxon_concepts.json?name=Puma concolor',
+	responseType: 'json',
+	method: "POST",
   	headers: {'X-Authentication-Token': 'WYjddmVCPlzeonLKsf39rwtt'}
 };
 
 
 app.factory('speciesplusAPI', ['$http', function($http) { 
-  return $http.get('http://api.speciesplus.net/api/v1/taxon_concepts.json?name=Puma concolor') 
+  return $http(config_speciesplus)
             .success(function(data) { 
-        	return data;
+        		return data;
       		})
             .error(function(err) { 
-              return err; 
+              	return err; 
             }); 
 }]);
 
+var myurl;
 
 pasringScheme_speciesplus = function(data) {
-  	var clean_data = {}
+	var clean_data_speciesplus = {};
     var extract_results = [];
     // extract common names, higher taxa, and taxon ID
     var data_extract = {
@@ -172,13 +178,21 @@ pasringScheme_speciesplus = function(data) {
    
     extract_results.push(data_extract);
     var taxon_id = data.taxon_concepts[0].id;
-    var myurl = 'http://api.speciesplus.net/api/v1/taxon_concepts/'+taxon_id+'/distributions.json';
+    myurl = 'http://api.speciesplus.net/api/v1/taxon_concepts/'+taxon_id+'/distributions.json';
 
     // add cleaned results to object
-    clean_data['results'] = extract_results;
-    //console.log(clean_data); 
-    return clean_data;
+    clean_data_speciesplus['results'] = extract_results;
+    return clean_data_speciesplus;
+    //console.log(clean_data_speciesplus); 
+
 };
+
+
+
+
+
+
+
 
 
 

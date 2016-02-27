@@ -28,8 +28,9 @@
 	<body ng-app="myApp">
 
     <div class="tableDiv" ng-controller="TableController">
-        <table border="1" class = "speices1">
+        <table class = "gbif">
             <thead>
+                <tr> <th colspan="2" class = "title"> GBIF </th> </tr>
                 <tr> <th>Name</th> <th>Species</th> </tr>
             </thead>
             <tbody>
@@ -41,8 +42,9 @@
         </table>
 
 
-        <table border="1" class = "iDigBio">
+        <table class = "iDigBio">
             <thead>
+                <tr> <th colspan="12" class = "title"> IDigBio </th> </tr>
                 <tr> <th>common name</th> <th>scientific name</th> 
                 <th>species</th> <th>genus</th> <th>family</th> 
                 <th>order</th> <th>class</th> <th>phylum</th>
@@ -66,11 +68,25 @@
             </tbody>
         </table>
 
-        <div> {{dataResult_inaturalistAPI}} </div>
+        <table class = "inaturalist">
+            <thead>
+                <tr> <th colspan="2" class = "title"> Inaturalist </th> </tr>
+                <tr> <th>latitude</th> <th>longitude</th></tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="x in dataResult_inaturalistAPI">
+               <td> {{x['latitude']}} </td>
+               <td> {{x['longitude']}} </td>
+               </tr>
+            </tbody>
+        </table>
+
 
         <div>
         <p>  dataResult_speciesplus </p>
         {{dataResult_speciesplus}}</div>
+
+
 
 
 
