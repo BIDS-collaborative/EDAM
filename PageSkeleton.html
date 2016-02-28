@@ -16,25 +16,33 @@
 
         <!-- Controllers !-->
         <script type="text/javascript" src = "./JS/Controller/TableController.js"></script>
+        
+        <div id = "image">
+            <img id = "logo" src = "./IMG/BIDS_LOGO.png">
+        </div>
+
+        <div id = "title">
+            <h1> Ecostations Data Access Monitor (EDAM) </h1>
+        </div>
 
 
-
-
-
+            
 	</head>
 
 	<body ng-app="myApp">
 
     <div class="inputDiv"> 
-        <form name="SearchQuery">
-            <input type="text" name="KeyWord"/>
-        </form>
+        <div id = "form">
+            <form name="SearchQuery">
+                <input type="text" name="KeyWord"/>
+            </form>
+        </div>
         <div id="button">Search Database</div>
         <br/>
         <div class="list"></div>
     </div>
 
-
+    <hr/>
 
 
     <div class="tableDiv" ng-controller="TableController">
@@ -50,6 +58,8 @@
         	   </tr>
             </tbody>
         </table>
+
+        <hr/>
 
 
         <table class = "iDigBio">
@@ -78,6 +88,8 @@
             </tbody>
         </table>
 
+        <hr/>
+
         <table class = "inaturalist">
             <thead>
                 <tr> <th colspan="2" class = "title"> Inaturalist </th> </tr>
@@ -91,17 +103,18 @@
             </tbody>
         </table>
 
+        <hr/>
 
         <div>
         <p>  dataResult_speciesplus </p>
         {{dataResult_speciesplus}}</div>
 
-
-
-
-
-
 	</div>
+
+
+    <div id = "bottom">
+
+    </div>
 
 	</body>
     

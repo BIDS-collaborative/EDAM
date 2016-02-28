@@ -138,6 +138,7 @@ pasringScheme_inaturalistAPI = function(data){
 };
 
 
+
 //Module3 iDigBio parsingScheme developed by Jong Ha Lee
 
 var config_iDigBio = {
@@ -199,7 +200,7 @@ pasringScheme_iDigBio = function(data) {
 var config_speciesplus = {
 	url:'http://api.speciesplus.net/api/v1/taxon_concepts.json?name=Puma concolor',
 	responseType: 'json',
-	method: "POST",
+	method: "GET",
   	headers: {'X-Authentication-Token': 'WYjddmVCPlzeonLKsf39rwtt'}
 };
 
