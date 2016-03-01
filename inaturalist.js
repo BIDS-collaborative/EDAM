@@ -1,89 +1,52 @@
+// probably can be optimized more
+function searchINaturalist(species){
+  var api_data = [];
+  var dfd_list = [];
+  var dfd = $.Deferred();
 
-
-function searchINat(speciesname){
-
-var cleaned=[];
-
-var jqXHR=$.ajax({
-	url: "http://inaturalist.org/observations.json?q="+speciesname+"&per_page=200&page=1"
-
-
-}
-
-	).done(function(data){
+  // initial request to get total entries
+  $.ajax({
+    url: "http://inaturalist.org/observations.json?q=" + species + "&per_page=200&page=1"
+  }).done(function(data, textStatus, jqXHR){
+    // read header to get total entries
     var headers = jqXHR.getResponseHeader('X-Total-Entries');
-    console.log(headers);
-    //console.log(data);
-	//console.log(data);
-		for(b=0;b<data.length;b++){
-			if(data[b]!=null){
-				var better={'latitude': data[b].latitude , 'longitude': data[b].longitude};
-				//console.log(better);
-				cleaned.push(better);
-				
-			}
-		}
+    for(i = 0; i < data.length; i++){
+      if(data[i] != null){
+        var cleaned_data = {'latitude': data[i].latitude , 'longitude': data[i].longitude};
+        api_data.push(cleaned_data);
+      }
+    }
 
-		for(a=2;a<Math.floor(headers/200)+2;a++){
+    // read all pages
+    for(p = 2; p < Math.floor(headers/200)+2; p++){
+      // add a deferred for each ajax request
+      dfd_list.push($.Deferred());
+      $.ajax({
+        url: "http://inaturalist.org/observations.json?q=" + species + "&per_page=200&page=" + p
+      }).done(function(data,request){  
+        for(i = 0; i < data.length; i++){
+          if(data[i] != null){
+            var cleaned_data = {'latitude': data[i].latitude , 'longitude': data[i].longitude};
+            api_data.push(cleaned_data);
+          }
+        }
+        // resolve each deferred in list
+        dfd_list.pop().resolve();
+      });
+    }   
+    // resolve initial deferred once deferred list is filled
+    dfd.resolve();
+  });
 
-
-		
-$.ajax({
-	url: "http://inaturalist.org/observations.json?q="+speciesname+"&per_page=200&page="+a
-
-
+  // wait for page header to return
+  dfd.done(function() {
+    // wait for all data to load
+    $.when.apply(this, dfd_list).done(function() {
+      var result = {'species': species, 'taxonomy': null}
+      if(api_data.length == 0){
+        return null
+      }
+      return result;
+    });
+  });
 }
-
-	).done(function(data,request){
-    
-    
-	//console.log(data);
-		for(b=0;b<data.length;b++){
-			if(data[b]!=null){
-				var better={'latitude': data[b].latitude , 'longitude': data[b].longitude};
-				//console.log(better);
-				cleaned.push(better);
-				
-			}
-		}
-
-		console.log(cleaned);
-		
-
-	/*	
-		for(a=0;a<cleaned.length;a++){
-	var lat=cleaned[a].latitude;
-	var lon = cleaned[a].longitude;
-	
-	$.ajax({
-		url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&sensor=false&key=AIzaSyBnPTDQG8hVlUwSdf6Fvwg4AQf7_IJunVE"
-
-
-	}	
-
-		).done(function(data){
-  		
-		
-});
-
-
-}
-
-*/
-});
-
-
-
-
-		}
-		
-});
-
-var existenceline={'species':speciesname,'exists':true}
-alert(cleaned.length);
-if (cleaned.length==0){
-	existenceline['exists']=false;
-}
-return existenceline;
-}
-
