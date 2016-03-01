@@ -10,7 +10,7 @@ var jqXHR=$.ajax({
 	).done(function(data){
     var headers = jqXHR.getAllResponseHeaders();
     console.log(headers);
-    console.log(data);
+    //console.log(data);
 	//console.log(data);
 		for(b=0;b<data.length;b++){
 			if(data[b]!=null){
@@ -43,7 +43,29 @@ $.ajax({
 				
 			}
 		}
+
+		console.log(cleaned);
+		console.log(cleaned.length);
+		for(a=0;a<cleaned.length;a++){
+	var lat=cleaned[a].latitude;
+	var lon = cleaned[a].longitude;
+	console.log(lat);
+	console.log(120);
+	$.ajax({
+		url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&sensor=false&key=AIzaSyBnPTDQG8hVlUwSdf6Fvwg4AQf7_IJunVE"
+
+
+	}	
+
+		).done(function(data){
+  		console.log(data);
+		
 		//console.log(cleaned);
 });
+
+
+}
+});
+
 
 
