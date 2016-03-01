@@ -8,7 +8,7 @@ var jqXHR=$.ajax({
 }
 
 	).done(function(data){
-    var headers = jqXHR.getAllResponseHeaders();
+    var headers = jqXHR.getResponseHeader('X-Total-Entries');
     console.log(headers);
     //console.log(data);
 	//console.log(data);
@@ -20,13 +20,13 @@ var jqXHR=$.ajax({
 				
 			}
 		}
-		//console.log(cleaned);
-});
+
+		for(a=2;a<Math.floor(headers/200)+2;a++){
 
 
-
+		
 $.ajax({
-	url: "http://inaturalist.org/observations.json?q='Puma concolor'&per_page=200&page=2"
+	url: "http://inaturalist.org/observations.json?q='Puma concolor'&per_page=200&page="+a
 
 
 }
@@ -45,12 +45,11 @@ $.ajax({
 		}
 
 		console.log(cleaned);
-		console.log(cleaned.length);
+		
 		for(a=0;a<cleaned.length;a++){
 	var lat=cleaned[a].latitude;
 	var lon = cleaned[a].longitude;
-	console.log(lat);
-	console.log(120);
+	
 	$.ajax({
 		url: "https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+lon+"&sensor=false&key=AIzaSyBnPTDQG8hVlUwSdf6Fvwg4AQf7_IJunVE"
 
@@ -58,13 +57,19 @@ $.ajax({
 	}	
 
 		).done(function(data){
-  		console.log(data);
+  		
 		
-		//console.log(cleaned);
 });
 
 
 }
+});
+
+
+
+
+		}
+		
 });
 
 
