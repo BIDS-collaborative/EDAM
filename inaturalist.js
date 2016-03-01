@@ -1,8 +1,11 @@
+
+
+function searchINat(speciesname){
+
 var cleaned=[];
 
-
 var jqXHR=$.ajax({
-	url: "http://inaturalist.org/observations.json?q='Puma concolor'&per_page=200&page=1"
+	url: "http://inaturalist.org/observations.json?q="+speciesname+"&per_page=200&page=1"
 
 
 }
@@ -26,7 +29,7 @@ var jqXHR=$.ajax({
 
 		
 $.ajax({
-	url: "http://inaturalist.org/observations.json?q='Puma concolor'&per_page=200&page="+a
+	url: "http://inaturalist.org/observations.json?q="+speciesname+"&per_page=200&page="+a
 
 
 }
@@ -46,6 +49,8 @@ $.ajax({
 
 		console.log(cleaned);
 		
+
+	/*	
 		for(a=0;a<cleaned.length;a++){
 	var lat=cleaned[a].latitude;
 	var lon = cleaned[a].longitude;
@@ -63,6 +68,8 @@ $.ajax({
 
 
 }
+
+*/
 });
 
 
@@ -72,5 +79,11 @@ $.ajax({
 		
 });
 
-
+var existenceline={'species':speciesname,'exists':true}
+alert(cleaned.length);
+if (cleaned.length==0){
+	existenceline['exists']=false;
+}
+return existenceline;
+}
 
