@@ -19,7 +19,10 @@
 
 <!-- API pulls !-->
 
+         <script type="text/javascript" src = "./JS/Controller/gbifAPI.js"></script>
+         <script type="text/javascript" src = "./JS/Controller/inaturalistAPI.js"></script>
          <script type="text/javascript" src = "./JS/Controller/idigbioAPI.js"></script>
+         <script type="text/javascript" src = "./JS/Controller/speciesplusAPI.js"></script>
 
 
 
@@ -50,24 +53,24 @@
                 <tr> <th>common name</th> <th>scientific name</th> 
                 <th>species</th> <th>genus</th> <th>family</th> 
                 <th>order</th> <th>class</th> <th>phylum</th>
-                <th>kingdom</th> <th>location</th> <th>location name</th> <th>taxonomy</th> </tr>
+                <th>kingdom</th> <th>higher taxonomy</th> <th>country</th> <th>sources</th> </tr>
             </thead>
-            <tbody>
-               <tr ng-repeat="x in dataResult_iDigBio.results">
-               <td> {{x['common name']}} </td>
-               <td> {{x['scientific name']}} </td>
-               <td> {{x['species']}} </td>
-               <td> {{x['genus']}} </td>
-               <td> {{x['family']}} </td>
-               <td> {{x['order']}} </td>
-               <td> {{x['class']}} </td>
-               <td> {{x['phylum']}} </td>
-               <td> {{x['kingdom']}} </td>
-               <td> {{x['location']}} </td>
-               <td> {{x['location name']}} </td>
-               <td> {{x['taxonomy']}} </td>
-               </tr>
-            </tbody>
+                  <tbody>
+                    <tr ng-repeat="x in dataResult_iDigBio.results">
+                    <td> {{x['common name']}} </td>
+                    <td> {{x['scientific name']}} </td>
+                    <td> {{x['species']}} </td>
+                    <td> {{x['genus']}} </td>
+                    <td> {{x['family']}} </td>
+                    <td> {{x['order']}} </td>
+                    <td> {{x['class']}} </td>
+                    <td> {{x['phylum']}} </td>
+                    <td> {{x['kingdom']}} </td>
+                    <td> {{x['higher taxonomy']}} </td>
+                    <td> {{x['country']}} </td>
+                    <!--<td> {{x['sources']}} </td> !-->
+                    </tr>
+                  </tbody>
         </table>
 
 

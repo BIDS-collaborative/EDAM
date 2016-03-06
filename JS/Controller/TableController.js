@@ -1,6 +1,7 @@
 
 // Input Handler
-var keyWord
+var keyWord;
+var searchResult;
 
 $(document).ready(function(){
     $("#button").click(function(){
@@ -12,7 +13,8 @@ $(document).ready(function(){
         	} else if (keyWord.toLowerCase() === "inaturalist") {
 				window.location = "./inaturalistTable.html";
         	} else {
-        		window.location = "./PageSkeleton.html";
+                searchResult = searchINaturalist(keyWord); //fix me !!!!
+                window.location = "./responsePage.html";
         	}
     });
     $("form").keypress(function(e) {
@@ -24,9 +26,12 @@ $(document).ready(function(){
 				window.location = "./idigbioTable.html";
         	} else if (keyWord.toLowerCase() === "inaturalist") {
 				window.location = "./inaturalistTable.html";
-        	} else {
-        		window.location = "./PageSkeleton.html";
-        	}
+        	} else if (keyWord != null){
+                searchResult = searchINaturalist(keyWord);
+                window.location = "./responsePage.html";
+            } else {
+                window.location = "./PageSkeleton.html";
+            }
     	}
     });
     $("#button").mouseenter(function(){
@@ -67,6 +72,8 @@ app.controller('TableController', ['$scope', 'gbifAPI', 'iDigBioAPI','speciesplu
 	inaturalistAPI.success(function(data) {
 		$scope.dataResult_inaturalistAPI = pasringScheme_inaturalistAPI(data);
 	});
+
+    $scope.searchResponse = searchResult;
 
 
 

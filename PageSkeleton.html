@@ -83,13 +83,24 @@
                 </p>     
                 <table class = "gbif">
                       <thead>
-                        <tr> <th colspan="2" class = "title"> GBIF </th> </tr>
-                        <tr> <th>Name</th> <th>Species</th> </tr>
+                        <tr> <th colspan="10" class = "title"> GBIF </th> </tr>
+                        <tr> <th>kingdom</th> <th>phylum</th> 
+                        <th>order</th> <th>family</th> <th>genus</th> 
+                        <th>species</th> <th>country</th> <th>latitude</th>
+                        <th>longtitude</th> <th>references</th></tr>
                       </thead>
                     <tbody>
                     <tr ng-repeat="x in dataResult_gbif.results">
-                      <td> {{x.name}} </td>
+                      <td> {{x.kingdom}} </td>
+                      <td> {{x.phylum}} </td>
+                      <td> {{x.order}} </td>
+                      <td> {{x.family}} </td>
+                      <td> {{x.genus}} </td>
                       <td> {{x.species}} </td>
+                      <td> {{x.country}} </td>
+                      <td> {{x.latitude}} </td>
+                      <td> {{x.longitude}} </td>
+                      <td> {{x.references}} </td>
                     </tr>
                     </tbody>
                   </table>
@@ -107,11 +118,11 @@
                   <p> Through ADBC, data and images for millions of biological specimens are being made available in electronic format for the research community, government agencies, students, educators, and the general public.</p>
                   <table class = "iDigBio">
                     <thead>
-                        <tr> <th colspan="12" class = "title"> IDigBio </th> </tr>
+                        <tr> <th colspan="11" class = "title"> IDigBio </th> </tr>
                         <tr> <th>common name</th> <th>scientific name</th> 
                         <th>species</th> <th>genus</th> <th>family</th> 
                         <th>order</th> <th>class</th> <th>phylum</th>
-                        <th>kingdom</th> <th>location</th> <th>location name</th> <th>taxonomy</th> </tr>
+                        <th>kingdom</th> <th>higher taxonomy</th> <th>country</th> <!--<th>sources</th>!--> </tr>
                     </thead>
                     <tbody>
                        <tr ng-repeat="x in dataResult_iDigBio.results">
@@ -124,9 +135,9 @@
                        <td> {{x['class']}} </td>
                        <td> {{x['phylum']}} </td>
                        <td> {{x['kingdom']}} </td>
-                       <td> {{x['location']}} </td>
-                       <td> {{x['location name']}} </td>
-                       <td> {{x['taxonomy']}} </td>
+                       <td> {{x['higher taxonomy']}} </td>
+                       <td> {{x['country']}} </td>
+                       <!--<td> {{x['sources']}} </td> !-->
                        </tr>
                     </tbody>
                 </table>
