@@ -46,12 +46,12 @@
             
 	</head>
 
-	<body ng-app="myApp">
+	<body ng-app="myApp" ng-controller="TableController">
 
     <div class="inputDiv"> 
         <div id = "form">
             <form name="SearchQuery">
-                <input type="text" name="KeyWord"/>
+                <input type="text" name=KeyWord ng-model="KeyWord">
             </form>
         </div>
         <div id="button">Search Database</div>
@@ -63,7 +63,7 @@
 
 
   <p><strong>Note:</strong> Click on the linked heading text to expand or collapse  panels.</p>
-<div class="tableDiv" ng-controller="TableController">
+<div class="tableDiv">
       <div id = "accordion">
       </div>
 

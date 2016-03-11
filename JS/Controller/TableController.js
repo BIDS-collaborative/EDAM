@@ -1,63 +1,31 @@
-
-// Input Handler
-var keyWord;
-var searchResult;
-
-$(document).ready(function(){
-    $("#button").click(function(){
-        keyWord = $('input[name=KeyWord]').val();    
-        	if (keyWord.toLowerCase() === "gbif") {
-       			window.location = "./gbifTable.html";
-        	} else if (keyWord.toLowerCase() === "idigbio") {
-				window.location = "./idigbioTable.html";
-        	} else if (keyWord.toLowerCase() === "inaturalist") {
-				window.location = "./inaturalistTable.html";
-        	} else {
-                searchResult = searchINaturalist(keyWord); //fix me !!!!
-                window.location = "./responsePage.html";
-        	}
-    });
-    $("form").keypress(function(e) {
-    	if(e.which == 13) {
-        	keyWord = $('input[name=KeyWord]').val();    
-        	if (keyWord.toLowerCase() === "gbif") {
-       			window.location = "./gbifTable.html";
-        	} else if (keyWord.toLowerCase() === "idigbio") {
-				window.location = "./idigbioTable.html";
-        	} else if (keyWord.toLowerCase() === "inaturalist") {
-				window.location = "./inaturalistTable.html";
-        	} else if (keyWord != null){
-                searchResult = searchINaturalist(keyWord);
-                window.location = "./responsePage.html";
-            } else {
-                window.location = "./PageSkeleton.html";
-            }
-    	}
-    });
-    $("#button").mouseenter(function(){
-        $("#button").fadeTo('fast',1);
-    });
-    $("#button").mouseleave(function(){
-        $("#button").fadeTo('fast',0.2);
-    });
-    
-});
-
-
-
-
-
-
 // Module
 var app = angular.module("myApp", []);
 
+var databases = ["gbif", "iDigBio", "speciesplus", "inaturalist"];
+
+var searchDatabase = function(keyWord) {
+    results = {};
+    for (database in databases):
+        if (database === "gbif") {
+            result[database] = search_gbif(keyWord);
+        }
+        if (database === "iDigBio") {
+            result[database] = search_iDigBio(keyWord);
+        }
+        if (database === "speciesplus") {
+            result[database] = search_speciesplus(keyWord);
+        }
+        if (database === "inaturalist") {  
+            result[database] = search_inaturalist(keyWord);
+        }
+    return results;
+}
 
 app.controller('TableController', ['$scope', 'gbifAPI', 'iDigBioAPI','speciesplusAPI', 'inaturalistAPI', 
-	function($scope, gbifAPI, iDigBioAPI, speciesplusAPI, inaturalistAPI) { 
-
+	function($scope, gbifAPI, iDigBioAPI, speciesplusAPI, inaturalistAPI) {
 
 	gbifAPI.success(function(data) {
-		$scope.dataResult_gbif = pasringScheme_gbif(data);
+		//$scope.dataResult_gbif = pasringScheme_gbif(data);
 	});
 
 	iDigBioAPI.success(function(data) {
@@ -74,8 +42,6 @@ app.controller('TableController', ['$scope', 'gbifAPI', 'iDigBioAPI','speciesplu
 	});
 
     $scope.searchResponse = searchResult;
-
-
 
 }]);
 

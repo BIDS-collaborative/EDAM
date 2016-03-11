@@ -22,6 +22,7 @@
 
         <script type="text/javascript" src="./JS/PageSkeletonScript.js"></script>
         <script type="text/javascript" src="./JS/fill_table.js"></script>
+        <script type="text/javascript" src="./JS/ActionHandler.js"></script>
 
         <!-- Controllers !-->
         <script type="text/javascript" src = "./JS/Controller/TableController.js"></script>
@@ -46,12 +47,12 @@
             
 	</head>
 
-	<body ng-app="myApp">
+	<body ng-app="myApp" ng-controller="TableController">
 
     <div class="inputDiv"> 
         <div id = "form">
             <form name="SearchQuery">
-                <input type="text" name="KeyWord"/>
+                <input type="text" name=KeyWord ng-model="KeyWord">
             </form>
         </div>
         <div id="button">Search Database</div>
@@ -63,8 +64,8 @@
 
 
 
-    <div class="tableDiv" ng-controller="TableController">
-        <div> {{searchResponse}} </div>
+    <div class="response">
+        <h1>{{KeyWord}}</h1>
     </div>
 
 
