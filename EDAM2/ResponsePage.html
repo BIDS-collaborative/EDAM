@@ -5,6 +5,7 @@
 		<meta charset="utf-8">
 		<title>EDAM Web Skeleton</title>
 		<!-- CSS !-->
+        <link type="text/css" rel="stylesheet" href="./CSS/Decoration.css"/>
 
         <!-- Angular JS !-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
@@ -28,6 +29,8 @@
          <script type="text/javascript" src = "./JS/idigbioAPI.js"></script>
          <script type="text/javascript" src = "./JS/speciesplusAPI.js"></script>
 
+         <h1> EDAM (Ecostations Data Access Monitor) </h1>
+
 
 
             
@@ -36,20 +39,31 @@
 
 	<body ng-app="myApp">
 
+        <div class="navigationBar">
+            <ul>
+                <li><a class="active" href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#news">People</a></li>
+                <li><a href="#contact">Databases</a></li>
+                <li><a href="#about">Contact Us</a></li>
+            </ul>
+
+
+        </div>
+
+
 		<div class="inputDiv"> 
         	<div id = "form">
             	<form name="SearchQuery">
-                	<input type="text" name=KeyWord ng-model="KeyWord">
+                	<input type="text" name=KeyWord>
             	</form>
         	</div>
-        	<div id="button">Search Database</div>
+        	<div id="button">Search Species</div>
         	<br/>
     	</div>
 
 
     	<div class = "outPut">
-
-
 
     	</div>
 
