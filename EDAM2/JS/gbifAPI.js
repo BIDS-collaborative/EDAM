@@ -2,5 +2,5 @@
 // Call this to asynchronously fetch the data 
 
 search_gbif = function(keyWord) {
-    return [keyWord, 'Undefined'];
+    return {"Name":keyWord, "Taxonomy":'Undefined', "Database":"gbif"};
 }

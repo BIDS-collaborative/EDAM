@@ -26,6 +26,22 @@ searchDatabase = function(keyWord) {
 
 
 
+app.controller('controller', function($scope) {
+    $scope.searchResult = {};
+
+    $scope.search = function(keyWord){
+        $scope.searchResult = searchDatabase(keyWord);
+    }
+
+
+
+});
+
+
+
+
+
+
 
 
 
