@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>EDAM</title>
+  <!-- CSS !-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+
+  <!-- JQuery !-->
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <!-- Angular JS !-->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+  <!-- Bootstrap !-->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <!-- APIs !-->
+   <script type="text/javascript" src = "./js/api/gbifAPI.js"></script>
+   <script type="text/javascript" src = "./js/api/idigbioAPI.js"></script>
+
+  <!-- Controllers - dependent on APIs loading first !-->
+  <script type="text/javascript" src = "./js/client/controller.js"></script>
+</head>
+
+<body ng-app="edamApp" ng-controller="searchController">
+  <!-- header - title/description -->
+  <div class="container">
+    <h1>Ecostations Data Access Monitor</h1>
+    <p>Search species by entering the name in the searching box. The result 
+      will be a joint table with data from multiple databases</p>
+  </div>
+  <!-- search form -->
+  <div class="container" id="search-div"> 
+    <div id="search-form">
+      <form role="form">
+        <input class="form-control" type="text" ng-model="query">
+      </form>
+      <button type="submit" class="btn btn-default" id="search-button" ng-click="search(query)">Search Species</button>
+    </div>
+  </div>
+  <!-- results table -->
+  <div class="container" id="results-table">
+    <h2>Search Result</h2>
+    <p>Joint results from multiple database</p>            
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Taxonomy</th>
+          <th>Database</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="result in searchResult">
+          <td>{{ result['name'] }}</td>
+          <td>{{ result['taxonomy'] }}</td>
+          <td>{{ result['database'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
