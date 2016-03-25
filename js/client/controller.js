@@ -1,6 +1,6 @@
 var app = angular.module('edamApp', []);
 
-var databases = {'idigbio': search_idigbio};
+var databases = {'idigbio': search_idigbio, 'gbif': search_gbif};
 
 searchDatabase = function(query, search_dfd, results) {
   var all_dfd = [];
@@ -19,6 +19,9 @@ searchDatabase = function(query, search_dfd, results) {
 
   // return results after all searches complete
   $.when.apply(this, all_dfd).done(function() {
+    if ($.isEmptyObject(results)) {
+      results['null'] = {'name': 'no results', 'taxonomy': 'no results', 'database': 'no results'};
+    }
     search_dfd.resolve();
   });
 };
