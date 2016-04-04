@@ -44,7 +44,7 @@ function search_idigbio(query, api_dfd, results) {
 
     // check if there are any results
     if (data.items.length !=  0) {
-      results['idigbio'] = {'name': query, 'taxonomy': mode(taxon), database: 'idigbio'};
+      results['idigbio'] = {'name': query, 'taxonomy': mode(taxon),'count': 0, database: 'idigbio'};
     }
     
     // notify done to controller

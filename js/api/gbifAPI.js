@@ -9,9 +9,10 @@ function search_gbif(query, api_dfd, results) {
       // extract taxonomy from first entry
       var resultObject = data.results[0];
       var taxon = [resultObject.kingdom, resultObject.phylum, resultObject.order, resultObject.family, resultObject.genus];
+      var count = data.count;
       
       // update results object
-      results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'database': 'gbif'};
+      results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'count': count, 'database': 'gbif'};
     }
 
     // notify search complete

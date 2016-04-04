@@ -47,6 +47,7 @@
         <tr>
           <th>Name</th>
           <th>Taxonomy</th>
+          <th>Count</th>
           <th>Database</th>
         </tr>
       </thead>
@@ -54,6 +55,7 @@
         <tr ng-repeat="result in searchResult">
           <td>{{ result['name'] }}</td>
           <td>{{ result['taxonomy'] }}</td>
+          <td>{{ result['count'] }}</td>
           <td>{{ result['database'] }}</td>
         </tr>
       </tbody>

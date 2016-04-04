@@ -20,7 +20,7 @@ searchDatabase = function(query, search_dfd, results) {
   // return results after all searches complete
   $.when.apply(this, all_dfd).done(function() {
     if ($.isEmptyObject(results)) {
-      results['null'] = {'name': 'no results', 'taxonomy': 'no results', 'database': 'no results'};
+      results['null'] = {'name': 'no results', 'taxonomy': 'no results', 'count': 'no results', 'database': 'no results'};
     }
     search_dfd.resolve();
   });
