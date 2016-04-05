@@ -13,7 +13,7 @@ var jqXHR=$.ajax({
     
 		if(data.results.length!= 0) {
 			var headers = jqXHR.getResponseHeader('X-Total-Entries');
-			results['iNaturalist'] = {'name': query, 'taxonomy': null, 'count': headers, 'database': 'iNaturalist'};
+			results['iNaturalist'] = {'name': query, 'taxonomy': "not available", 'count': headers, 'database': 'iNaturalist'};
 		}
 		api_dfd.resolve();
 
