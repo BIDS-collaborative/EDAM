@@ -1,5 +1,5 @@
 
- //this function is used for keyword search
+ //this function is used for keyword search.
 function search_inat(query, api_dfd, results) {
 var cleaned=[];
 
