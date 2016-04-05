@@ -35,6 +35,7 @@ function search_idigbio(query, api_dfd, results) {
   }).done(function(data) {
     // process resulting data
     var taxon = [];
+    var count = data.itemCount;
     $.each(data.items, function(index, value) {
       var resultObject = value.indexTerms;
       if (resultObject.highertaxon) {
@@ -44,7 +45,7 @@ function search_idigbio(query, api_dfd, results) {
 
     // check if there are any results
     if (data.items.length !=  0) {
-      results['idigbio'] = {'name': query, 'taxonomy': mode(taxon),'count': 0, database: 'idigbio'};
+      results['idigbio'] = {'name': query, 'taxonomy': mode(taxon), 'count': count, database: 'idigbio'};
     }
     
     // notify done to controller
