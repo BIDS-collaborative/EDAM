@@ -1,6 +1,6 @@
 var app = angular.module('edamApp', []);
 
-var databases = {'idigbio': search_idigbio, 'gbif': search_gbif, 'iucn':search_iucn};
+var databases = {'idigbio': search_idigbio, 'gbif': search_gbif, 'iucn':search_iucn, 'inaturalist': search_inat};
 
 searchDatabase = function(query, search_dfd, results) {
   var all_dfd = [];
