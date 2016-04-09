@@ -23,7 +23,7 @@ searchDatabase = function(query, locationQuery, search_dfd, results) {
     if (locationQuery != null && locationQuery.length > 0) {
       func['location'](query, locationQuery, api_dfd, results);
     } else {
-      func['basic'](query, locationQuery, api_dfd, results);
+      func['basic'](query, api_dfd, results);
     }
   });
 
@@ -61,5 +61,3 @@ app.controller('searchController', function($scope) {
     });
   }
 });
-
-
