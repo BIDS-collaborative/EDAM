@@ -19,3 +19,9 @@ function search_gbif(query, api_dfd, results) {
     api_dfd.resolve();
   });
 }
+
+
+function search_gbif_location(query, location, api_dfd, results) {
+  api_dfd.resolve();
+}
+

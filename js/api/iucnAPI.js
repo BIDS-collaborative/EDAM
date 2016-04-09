@@ -22,3 +22,10 @@ var jqXHR=$.ajax({
 	});
 
 }
+
+
+function search_iucn_location(query, location, api_dfd, results) {
+	api_dfd.resolve();
+
+}
+
