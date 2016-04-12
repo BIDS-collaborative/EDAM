@@ -63,7 +63,7 @@ app.controller('searchController', function($scope) {
 });
 
 $(function() {
-    var availableTags = [
+    var countryTags = [
       "ActionScript",
       "AppleScript",
       "Asp",

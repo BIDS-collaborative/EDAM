@@ -12,7 +12,7 @@ var jqXHR=$.ajax({
 	).done(function(data){
     
 		if(data.results.length != 0) {
-			var headers = jqXHR.getResponseHeader('X-Total-Entries');
+			var count = data.results[0].count;
 			results['inaturalist'] = {'name': query, 'taxonomy': "not available", 'count': headers, 'database': 'iNaturalist'};
 		}
 		api_dfd.resolve();
