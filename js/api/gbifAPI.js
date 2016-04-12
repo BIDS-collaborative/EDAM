@@ -13,6 +13,8 @@ function search_gbif(query, api_dfd, results) {
       
       // update results object
       results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'count': count, 'database': 'gbif'};
+    } else {
+      results['gbif'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', 'database': 'gbif'};
     }
 
     // notify search complete
@@ -302,9 +304,15 @@ function search_gbif_location(query, location, api_dfd, results) {
         $.ajax({
             url: 'http://api.gbif.org/v1/occurrence/count?taxonKey=' + taxonKey + '&country=' + countryCode,
         }).done(function(data) {
-            var count = data;
-            results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'count' : count, 'database': 'gbif'};
+            if (data.results.length != 0) {
+              var count = data;
+              results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'count' : count, 'database': 'gbif'};
+            } else {
+              results['gbif'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', 'database': 'gbif'};
+            }
         })
+      } else {
+        results['gbif'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', 'database': 'gbif'};
       }
 
       // notify search complete

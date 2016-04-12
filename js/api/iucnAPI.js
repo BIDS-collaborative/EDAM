@@ -16,6 +16,8 @@ var jqXHR=$.ajax({
 		 		var taxon = [info.kingdom, info.phylum, info.order, info.family, info.genus];
 				results['iucn'] = {'name': query, 'taxonomy': taxon, 'count': 1, 'database': 'IUCN'};
 		
+		} else {
+			results['iucn'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', 'database': 'IUCN'};
 		}
 	
 	api_dfd.resolve();
@@ -34,14 +36,19 @@ function search_iucn_location(query, location, api_dfd, results) {
 ).done(function(data){
 		if (data.result != 0) {
 			var countries = data.result;
-			var has = false;
+			var exist = false;
 			$.each(countries, function(i, v) {
 				if (v.country === location) {
 					var taxon = [v.kingdom, v.phylum, v.order, v.family, v.genus];
 					results['iucn'] = {'name':query, 'taxonomy': taxon, 'count' : 1, 'database': 'IUCN'};
+					exist = true
 				}
-			
 			});
+			if (!exist) {
+				results['iucn'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', 'database': 'IUCN'};
+			}
+		} else {
+			results['iucn'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', 'database': 'IUCN'};
 		}
 		api_dfd.resolve();
 });

@@ -46,6 +46,8 @@ function search_idigbio(query, api_dfd, results) {
     // check if there are any results
     if (data.items.length !=  0) {
       results['idigbio'] = {'name': query, 'taxonomy': mode(taxon), 'count': count, database: 'idigbio'};
+    } else{
+      results['idigbio'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', database: 'idigbio'};
     }
     
     // notify done to controller
@@ -79,6 +81,8 @@ function search_idigbio_location(query, location, api_dfd, results) {
     // check if there are any results
     if (data.items.length !=  0) {
       results['idigbio'] = {'name': query, 'taxonomy': mode(taxon), 'count': count, database: 'idigbio'};
+    } else {
+      results['idigbio'] = {'name': query, 'taxonomy': 'no results', 'count': 'no results', database: 'idigbio'};
     }
     
     // notify done to controller

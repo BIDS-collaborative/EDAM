@@ -10,10 +10,12 @@ var jqXHR=$.ajax({
 }
 
 	).done(function(data){
-    
+    	var count = 0
 		if(data.results.length != 0) {
-			var count = data.results[0].count;
-			results['inaturalist'] = {'name': query, 'taxonomy': "not available", 'count': headers, 'database': 'iNaturalist'};
+			count = data.results[0].count;
+			results['inaturalist'] = {'name': query, 'taxonomy': "not available", 'count': count, 'database': 'iNaturalist'};
+		} else {
+			results['inaturalist'] = {'name': query, 'taxonomy': "no results", 'count': 'no results', 'database': 'iNaturalist'};
 		}
 		api_dfd.resolve();
 
