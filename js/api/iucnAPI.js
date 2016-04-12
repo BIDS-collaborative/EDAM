@@ -24,8 +24,27 @@ var jqXHR=$.ajax({
 }
 
 
+
 function search_iucn_location(query, location, api_dfd, results) {
-	api_dfd.resolve();
+	var jqXHR=$.ajax({
+	url: "http://apiv3.iucnredlist.org/api/v3/species/countries/name/"+query+"?token=49a8a2b7e481a521cb4c4c5360044de9a81c5fac89bd5db1db80f733e93126db"
+
+
+}
+).done(function(data){
+		if (data.result != 0) {
+			var countries = data.result;
+			var has = false;
+			$.each(countries, function(i, v) {
+				if (v.country === location) {
+					var taxon = [v.kingdom, v.phylum, v.order, v.family, v.genus];
+					results['iucn'] = {'name':query, 'taxonomy': taxon, 'count' : 1, 'database': 'IUCN'};
+				}
+			
+			});
+		}
+		api_dfd.resolve();
+});
 
 }
 
