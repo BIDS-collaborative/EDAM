@@ -25,7 +25,7 @@
   <script type="text/javascript" src="js/api/idigbioAPI.js"></script>
   <script type="text/javascript" src="js/api/iucnAPI.js"></script>
   <script type="text/javascript" src="js/api/inaturalistAPI.js"></script>
-
+  <script type="text/javascript" src="js/api/nasAPI.js"></script>
   <!-- Controllers - dependent on APIs loading first !-->
   <script type="text/javascript" src="js/client/controller.js"></script>
 </head>
@@ -53,20 +53,23 @@
   <!-- results table -->
   <div class="container" id="results-table">
     <h2>Search Result</h2>
-    <p>Joint results from multiple database</p>            
+    <p>Joint results from multiple database</p>
+    <hr>
+    <h4> Name: {{query}} </h4>
+    <h4> Taxonomy: {{searchResultTaxonomy}} </h4>       
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Taxonomy</th>
+          <!--<th>Name</th> !-->
+          <!--<th>Taxonomy</th> !-->
           <th>Count</th>
           <th>Database</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="result in searchResult">
-          <td>{{ result['name'] }}</td>
-          <td>{{ result['taxonomy'] }}</td>
+          <!--<td>{{ result['name'] }}</td>!-->
+          <!--<td>{{ result['taxonomy'] }}</td>!-->
           <td>{{ result['count'] }}</td>
           <td>{{ result['database'] }}</td>
         </tr>

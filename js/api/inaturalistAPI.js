@@ -19,7 +19,7 @@ var jqXHR=$.ajax({
     	});
 		count_dfd.done(function() {
 			if(data.results.length != 0) {
-				results['inaturalist'] = {'name': query, 'taxonomy': "not available", 'count': count, 'database': 'iNaturalist'};
+				results['inaturalist'] = {'name': query, 'taxonomy': "no results", 'count': count, 'database': 'iNaturalist'};
 			} else {
 				results['inaturalist'] = {'name': query, 'taxonomy': "no results", 'count': 'no results', 'database': 'iNaturalist'};
 			}

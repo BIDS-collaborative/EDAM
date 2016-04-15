@@ -4,7 +4,8 @@ var databases = {
                 'idigbio': {'basic': search_idigbio, 'location': search_idigbio_location},
                 'gbif': {'basic': search_gbif, 'location': search_gbif_location},
                 'iucn': {'basic': search_iucn, 'location': search_iucn_location},
-                'inaturalist': {'basic': search_inat, 'location': search_inat_location}
+                'inaturalist': {'basic': search_inat, 'location': search_inat_location},
+                'nas': {'basic':search_nas, 'location': search_nas_location}
                 };
 
 searchDatabase = function(query, locationQuery, search_dfd, results) {
@@ -39,6 +40,7 @@ searchDatabase = function(query, locationQuery, search_dfd, results) {
 app.controller('searchController', function($scope) {
   // data model for results table
   $scope.searchResult = {};
+  $scope.searchResultTaxonomy = "";
 
   $scope.search = function(query, locationQuery){
     // all search complete notifier
@@ -56,6 +58,15 @@ app.controller('searchController', function($scope) {
       // force update
       $scope.$apply(function() {
         $scope.searchResult = results;
+        // combine taxonomy together
+        $.each($scope.searchResult, function(db, result) {
+          if (result['taxonomy'] != "no results") {
+            $scope.searchResultTaxonomy += result['taxonomy'] + ",\t";
+          }
+        });
+        if (scope.searchResultTaxonomy.length === 0) {
+          scope.searchResultTaxonomy += 'no results';
+        }
         console.log(results)
       });
     });
