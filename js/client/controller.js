@@ -8,7 +8,7 @@ var databases = {
                 'nas': {'basic':search_nas, 'location': search_nas_location}
                 };
 
-searchDatabase = function(query, locationQuery, search_dfd, results) {
+searchDatabase = function(query, locationQuery, search_dfd, results, imgResult) {
 
   var all_dfd = [];
 
@@ -28,6 +28,11 @@ searchDatabase = function(query, locationQuery, search_dfd, results) {
     }
   });
 
+  // search for image
+  var api_dfd = $.Deferred();
+  all_dfd.push(api_dfd);
+  search_img(query, api_dfd, imgResult);
+
   // return results after all searches complete
   $.when.apply(this, all_dfd).done(function() {
     if ($.isEmptyObject(results)) {
@@ -40,7 +45,6 @@ searchDatabase = function(query, locationQuery, search_dfd, results) {
 app.controller('searchController', function($scope) {
   // data model for results table
   $scope.searchResult = {};
-  $scope.searchResultTaxonomy = "";
 
   $scope.search = function(query, locationQuery){
     // all search complete notifier
@@ -49,23 +53,31 @@ app.controller('searchController', function($scope) {
     // container object to modify
     var results = {};
 
+    // image result
+    var imgResult = {};
+
+    $scope.searchResultTaxonomy = "";
+
 
     // start database searches
-    searchDatabase(query, locationQuery, search_dfd, results);
+    searchDatabase(query, locationQuery, search_dfd, results, imgResult);
 
     // return when all searches are complete
     search_dfd.done(function() {
       // force update
       $scope.$apply(function() {
         $scope.searchResult = results;
+        $scope.imageUrl = imgResult['img'];
+
+        console.log($scope.imageUrl);
         // combine taxonomy together
         $.each($scope.searchResult, function(db, result) {
           if (result['taxonomy'] != "no results") {
             $scope.searchResultTaxonomy += result['taxonomy'] + ",\t";
           }
         });
-        if (scope.searchResultTaxonomy.length === 0) {
-          scope.searchResultTaxonomy += 'no results';
+        if ($scope.searchResultTaxonomy.length === 0) {
+          $scope.searchResultTaxonomy += 'no results';
         }
         console.log(results)
       });

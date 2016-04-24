@@ -35,11 +35,16 @@ function search_idigbio(query, api_dfd, results) {
   }).done(function(data) {
     // process resulting data
     var taxon = [];
+    // added commonname
+    var commonname = [];
     var count = data.itemCount;
     $.each(data.items, function(index, value) {
       var resultObject = value.indexTerms;
       if (resultObject.highertaxon) {
         taxon.push(resultObject.highertaxon);
+      }
+      if (resultObject.commonname) {
+        commonname.push(resultObject.commonname);
       }
     });
 
@@ -89,5 +94,45 @@ function search_idigbio_location(query, location, api_dfd, results) {
     api_dfd.resolve();
   });
 }
+
+
+
+function search_idigbio_commonname_taxon(query, api_dfd, results) { 
+
+  // call idigbio service
+  $.ajax({
+    url: 'https://search.idigbio.org/v2/search/records/',
+    dataType: 'json',
+    contentType: 'application/json',
+    type: 'POST',
+    // update search limit
+    data: JSON.stringify({ limit: 5, rq:{scientificname: query} })
+  }).done(function(data) {
+    // process resulting data
+    var taxon = [];
+    var commonname = [];
+    
+    $.each(data.items, function(index, value) {
+      var resultObject = value.indexTerms;
+      if (resultObject.highertaxon) {
+        taxon.push(resultObject.highertaxon);
+      }
+      if (resultObject.commonname) {
+        commonname.push(resultObject.commonname);
+      }
+    });
+
+    // check if there are any results
+    if (data.items.length !=  0) {
+      results['idigbio'] = {'common name': mode(commonname), 'taxonomy': mode(taxon)};
+    } else {
+      results['idigbio'] = {'common name': 'no results', 'taxonomy': 'no results'};
+    }
+    
+    // notify done to controller
+    api_dfd.resolve();
+  });
+}
+
 
 

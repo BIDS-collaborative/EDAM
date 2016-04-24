@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
   <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 
 
   <!-- JQuery !-->
@@ -26,13 +27,14 @@
   <script type="text/javascript" src="js/api/iucnAPI.js"></script>
   <script type="text/javascript" src="js/api/inaturalistAPI.js"></script>
   <script type="text/javascript" src="js/api/nasAPI.js"></script>
+  <script type="text/javascript" src="js/api/img.js"></script>
   <!-- Controllers - dependent on APIs loading first !-->
   <script type="text/javascript" src="js/client/controller.js"></script>
 </head>
 
-<body ng-app="edamApp" ng-controller="searchController">
+<body ng-app="edamApp" ng-controller="searchController"> 
   <!-- header - title/description -->
-  <div class="container">
+  <div class="container" id = "headline">
     <h1>Ecostations Data Access Monitor</h1>
     <p>Search species by entering the name in the searching box. The result 
       will be a joint table with data from multiple databases</p>
@@ -56,25 +58,31 @@
     <p>Joint results from multiple database</p>
     <hr>
     <h4> Name: {{query}} </h4>
-    <h4> Taxonomy: {{searchResultTaxonomy}} </h4>       
-    <table class="table table-striped">
+    <h4> Taxonomy: {{searchResultTaxonomy}} </h4>
+    <hr>
+    <div>
+      <img src="{{imageUrl}}" width="400" height="300" />
+    </div>       
+    <table class="table">
       <thead>
         <tr>
           <!--<th>Name</th> !-->
           <!--<th>Taxonomy</th> !-->
-          <th>Count</th>
           <th>Database</th>
+          <th>Count</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="result in searchResult">
           <!--<td>{{ result['name'] }}</td>!-->
           <!--<td>{{ result['taxonomy'] }}</td>!-->
-          <td>{{ result['count'] }}</td>
           <td>{{ result['database'] }}</td>
+          <td>{{ result['count'] }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </body>
 </html>
+
+
