@@ -37,12 +37,6 @@ searchDatabase = function(query, locationQuery, search_dfd, results, imgResult, 
   var api_dfd = $.Deferred();
   all_dfd.push(api_dfd);
   getCommonNameTaxonomy_IUCN(query, api_dfd, commonNameResult);
-  var api_dfd = $.Deferred();
-  all_dfd.push(api_dfd);
-  getCommonNameTaxonomy_gbif(query, api_dfd, commonNameResult);
-  var api_dfd = $.Deferred();
-  all_dfd.push(api_dfd);
-  search_idigbio_commonname_taxon(query, api_dfd, commonNameResult);
 
 
 
@@ -93,13 +87,10 @@ app.controller('searchController', function($scope) {
         //console.log($scope.imageUrl);
         // combine taxonomy together
         $.each($scope.searchResult, function(db, result) {
-          if (result['taxonomy'] != "no results") {
+          if (db === "iucn") {
             $scope.searchResultTaxonomy += result['taxonomy'] + ",\t";
           }
         });
-        if ($scope.searchResultTaxonomy.length === 0) {
-          $scope.searchResultTaxonomy += 'no results';
-        }
         //console.log(results)
 
         console.log(commonNameResult);
