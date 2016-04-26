@@ -1,8 +1,8 @@
 function search_nas(query, api_dfd, results) {
   var cleaned = [];
   var space = query.indexOf(' ');
-  var genus = ';
-  var species = ';
+  var genus = '';
+  var species = '';
   if (space > 0) {
     genus = query.substring(0, space);
     species = query.substring(space + 1);
@@ -26,8 +26,8 @@ function search_nas(query, api_dfd, results) {
 
 function search_nas_location(query, location, api_dfd, results) {
   var space = query.indexOf(' ');
-  var genus = ';
-  var species = ';
+  var genus = '';
+  var species = '';
   if (space > 0) {
     genus = query.substring(0,space);
     species = query.substring(space + 1);
