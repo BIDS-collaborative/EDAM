@@ -8,7 +8,7 @@ var databases = {
                 'nas': {'basic':search_nas, 'location': search_nas_location}
                 };
 
-searchDatabase = function(query, locationQuery, search_dfd, results, imgResult) {
+searchDatabase = function(query, locationQuery, search_dfd, results, imgResult, commonNameResult) {
 
   var all_dfd = [];
 
@@ -33,6 +33,16 @@ searchDatabase = function(query, locationQuery, search_dfd, results, imgResult) 
   all_dfd.push(api_dfd);
   search_img(query, api_dfd, imgResult);
 
+  // search for common name
+  var api_dfd = $.Deferred();
+  all_dfd.push(api_dfd);
+  getCommonNameTaxonomy_IUCN(query, api_dfd, commonNameResult);
+  var api_dfd = $.Deferred();
+  all_dfd.push(api_dfd);
+  getCommonNameTaxonomy_gbif(query, api_dfd, commonNameResult);
+
+
+
   // return results after all searches complete
   $.when.apply(this, all_dfd).done(function() {
     if ($.isEmptyObject(results)) {
@@ -48,6 +58,7 @@ app.controller('searchController', function($scope) {
 
   $scope.search = function(query, locationQuery){
     // all search complete notifier
+
     var search_dfd = $.Deferred();
 
     // container object to modify
@@ -55,12 +66,19 @@ app.controller('searchController', function($scope) {
 
     // image result
     var imgResult = {};
+    // common name result
+    var commonNameResult = {};
+
+    $scope.name = query;
 
     $scope.searchResultTaxonomy = "";
 
+    $scope.searchResultCommonName = "";
+
+
 
     // start database searches
-    searchDatabase(query, locationQuery, search_dfd, results, imgResult);
+    searchDatabase(query, locationQuery, search_dfd, results, imgResult, commonNameResult);
 
     // return when all searches are complete
     search_dfd.done(function() {
@@ -69,7 +87,7 @@ app.controller('searchController', function($scope) {
         $scope.searchResult = results;
         $scope.imageUrl = imgResult['img'];
 
-        console.log($scope.imageUrl);
+        //console.log($scope.imageUrl);
         // combine taxonomy together
         $.each($scope.searchResult, function(db, result) {
           if (result['taxonomy'] != "no results") {
@@ -79,7 +97,17 @@ app.controller('searchController', function($scope) {
         if ($scope.searchResultTaxonomy.length === 0) {
           $scope.searchResultTaxonomy += 'no results';
         }
-        console.log(results)
+        //console.log(results)
+
+        console.log(commonNameResult);
+
+        // combine commonname together
+        $.each(commonNameResult, function(db, result) {
+          $scope.searchResultCommonName += result['common name'];
+        });
+        if ($scope.searchResultCommonName.length === 0) {
+          $scope.searchResultCommonName += 'no results';
+        }
       });
     });
   }

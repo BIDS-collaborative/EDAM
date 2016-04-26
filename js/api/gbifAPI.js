@@ -322,7 +322,7 @@ function search_gbif_location(query, location, api_dfd, results) {
 
 
 
-function gbif_getCommonNameTaxonomy(query, api_dfd, results) {
+function getCommonNameTaxonomy_gbif(query, api_dfd, results) {
   // call gbif service
   $.ajax({
       // currently gets 5 results
@@ -348,7 +348,7 @@ function gbif_getCommonNameTaxonomy(query, api_dfd, results) {
             }
           }
           var commonNames = Array.from(commonNamesSet);
-          results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'common names' : commonNames, 'database': 'gbif'};
+          results['gbif'] = {'name': query, 'taxonomy': taxon.join(), 'common name' : commonNames, 'database': 'gbif'};
       });
 
       // notify search complete
