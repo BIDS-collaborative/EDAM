@@ -9,7 +9,6 @@
   <link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 
-
   <!-- JQuery !-->
   <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
   <!-- Angular JS !-->
@@ -20,7 +19,6 @@
   <!-- JQueryUI:typeahead -->
   <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-
   <!-- APIs !-->
   <script type="text/javascript" src="js/api/helper.js"></script>
   <script type="text/javascript" src="js/api/gbifAPI.js"></script>
@@ -28,7 +26,6 @@
   <script type="text/javascript" src="js/api/iucnAPI.js"></script>
   <script type="text/javascript" src="js/api/inaturalistAPI.js"></script>
   <script type="text/javascript" src="js/api/nasAPI.js"></script>
-  <script type="text/javascript" src="js/api/img.js"></script>
   <!-- Controllers - dependent on APIs loading first !-->
   <script type="text/javascript" src="js/client/controller.js"></script>
 </head>
@@ -53,13 +50,23 @@
       <button type="submit" class="btn btn-default" id="search-button" ng-click="search(query, locationQuery)">Search</button>
     </div>
   </div>
+  <!-- species information -->
+  <div class="container">
+    <hr>
+    <div class="row">
+      <div class="col-md-8">
+        <h4> Query: {{query}} </h4>
+        <h4> Common Name: {{common_name}} </h4>
+        <h4> Taxonomy: {{taxonomy}} </h4>
+      </div>
+      <div class="col-md-4">
+        <img src="{{img}}" height="100" width="120" />
+      </div>
+    </div>
+    <hr>  
+  </div>
   <!-- results table -->
   <div class="container" id="results-table">
-    <hr>
-    <h4> Query: {{query}} </h4>
-    <h4> Common Name: {{common_name}} </h4>
-    <h4> Taxonomy: {{taxonomy}} </h4>
-    <hr>
     <h2>Search Results</h2>
     <table class="table">
       <thead>
