@@ -22,6 +22,7 @@
 
 
   <!-- APIs !-->
+  <script type="text/javascript" src="js/api/helper.js"></script>
   <script type="text/javascript" src="js/api/gbifAPI.js"></script>
   <script type="text/javascript" src="js/api/idigbioAPI.js"></script>
   <script type="text/javascript" src="js/api/iucnAPI.js"></script>
@@ -42,7 +43,7 @@
   <!-- search form -->
   <div class="container" id="search-div"> 
     <div id="search-form" >
-      <form role="form" autocomplete="on">
+      <form role="form">
         <div class = "input-group">
           <input class="form-control" type="text" ng-model="query" placeholder="species">
           <span class="input-group-addon">-</span>
@@ -54,29 +55,21 @@
   </div>
   <!-- results table -->
   <div class="container" id="results-table">
-    <h2>Search Result</h2>
-    <p>Joint results from multiple database</p>
     <hr>
-    <h4> Name: {{name}} </h4>
-    <h4> Common Name: {{searchResultCommonName}} </h4>
-    <h4> Taxonomy: {{searchResultTaxonomy}} </h4>
+    <h4> Query: {{query}} </h4>
+    <h4> Common Name: {{common_name}} </h4>
+    <h4> Taxonomy: {{taxonomy}} </h4>
     <hr>
-    <!--<div>
-      <img src="{{imageUrl}}" width="400" height="300" />
-    </div> !-->       
+    <h2>Search Results</h2>
     <table class="table">
       <thead>
         <tr>
-          <!--<th>Name</th> !-->
-          <!--<th>Taxonomy</th> !-->
           <th>Database</th>
           <th>Count</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="result in searchResult">
-          <!--<td>{{ result['name'] }}</td>!-->
-          <!--<td>{{ result['taxonomy'] }}</td>!-->
+        <tr ng-repeat="result in search_result">
           <td>{{ result['database'] }}</td>
           <td>{{ result['count'] }}</td>
         </tr>

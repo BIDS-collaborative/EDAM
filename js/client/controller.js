@@ -4,12 +4,11 @@ var databases = {
                 'idigbio': {'basic': search_idigbio, 'location': search_idigbio_location},
                 'gbif': {'basic': search_gbif, 'location': search_gbif_location},
                 'iucn': {'basic': search_iucn, 'location': search_iucn_location},
-                'inaturalist': {'basic': search_inat, 'location': search_inat_location},
+                'inaturalist': {'basic': search_inat, 'location': search_inat},
                 'nas': {'basic':search_nas, 'location': search_nas_location}
                 };
 
-searchDatabase = function(query, locationQuery, search_dfd, results, imgResult, commonNameResult) {
-
+searchDatabase = function(query, location, search_dfd, results, species_info) {
   var all_dfd = [];
 
   // search each database
@@ -21,29 +20,22 @@ searchDatabase = function(query, locationQuery, search_dfd, results, imgResult, 
     all_dfd.push(api_dfd);
 
     // run search to upate results
-    if (locationQuery != null && locationQuery.length > 0) {
-      func['location'](query, locationQuery, api_dfd, results);
+    if (location != null && location.length > 0) {
+      func['location'](query, location, api_dfd, results);
     } else {
       func['basic'](query, api_dfd, results);
     }
   });
 
-  // search for image
+  // search for common name and taxonomy
   var api_dfd = $.Deferred();
   all_dfd.push(api_dfd);
-  search_img(query, api_dfd, imgResult);
-
-  // search for common name
-  var api_dfd = $.Deferred();
-  all_dfd.push(api_dfd);
-  getCommonNameTaxonomy_IUCN(query, api_dfd, commonNameResult);
-
-
+  get_species_info(query, api_dfd, species_info);
 
   // return results after all searches complete
   $.when.apply(this, all_dfd).done(function() {
     if ($.isEmptyObject(results)) {
-      results['null'] = {'name': 'no results', 'taxonomy': 'no results', 'count': 'no results', 'database': 'no results'};
+      results['null'] = {'count': 'no results', 'database': 'no results'};
     }
     search_dfd.resolve();
   });
@@ -51,92 +43,34 @@ searchDatabase = function(query, locationQuery, search_dfd, results, imgResult, 
 
 app.controller('searchController', function($scope) {
   // data model for results table
-  $scope.searchResult = {};
+  $scope.search_result = {};
 
-  $scope.search = function(query, locationQuery){
+  $scope.search = function(query, location){
     // all search complete notifier
 
     var search_dfd = $.Deferred();
 
     // container object to modify
     var results = {};
+    var species_info = {};
 
-    // image result
-    var imgResult = {};
-    // common name result
-    var commonNameResult = {};
-
-    $scope.name = query;
-
-    $scope.searchResultTaxonomy = "";
-
-    $scope.searchResultCommonName = "";
-
-
+    $scope.query = query;
+    $scope.taxonomy = 'Loading...';
+    $scope.common_name = 'Loading...';
+    $scope.search_result = {'loading': {'database': 'Loading...', 'count': 'Loading...'}};
 
     // start database searches
-    searchDatabase(query, locationQuery, search_dfd, results, imgResult, commonNameResult);
+    searchDatabase(query, location, search_dfd, results, species_info);
 
     // return when all searches are complete
     search_dfd.done(function() {
       // force update
       $scope.$apply(function() {
-        $scope.searchResult = results;
-        $scope.imageUrl = imgResult['img'];
-
-        //console.log($scope.imageUrl);
-        // combine taxonomy together
-        $.each($scope.searchResult, function(db, result) {
-          if (db === "iucn") {
-            $scope.searchResultTaxonomy += result['taxonomy'] + ",\t";
-          }
-        });
-        //console.log(results)
-
-        console.log(commonNameResult);
-
-        // combine commonname together
-        $.each(commonNameResult, function(db, result) {
-          if (result['common name'] != "no results") {
-            $scope.searchResultCommonName += result['common name'] + ",\t";;
-          }
-        });
-        if ($scope.searchResultCommonName.length === 0) {
-          $scope.searchResultCommonName += 'no results';
-        }
+        $scope.search_result = results;
+        $scope.taxonomy = species_info['taxonomy'];
+        $scope.common_name = species_info['common_name'];
       });
     });
   }
 });
 
-$(function() {
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme",
-      "puma",
-      "puma concolor"
-    ];
-    $( ".form-control" ).autocomplete({
-      source: availableTags
-    });
-  });
