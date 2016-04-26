@@ -40,6 +40,9 @@ searchDatabase = function(query, locationQuery, search_dfd, results, imgResult, 
   var api_dfd = $.Deferred();
   all_dfd.push(api_dfd);
   getCommonNameTaxonomy_gbif(query, api_dfd, commonNameResult);
+  var api_dfd = $.Deferred();
+  all_dfd.push(api_dfd);
+  search_idigbio_commonname_taxon(query, api_dfd, commonNameResult);
 
 
 
@@ -103,7 +106,9 @@ app.controller('searchController', function($scope) {
 
         // combine commonname together
         $.each(commonNameResult, function(db, result) {
-          $scope.searchResultCommonName += result['common name'];
+          if (result['common name'] != "no results") {
+            $scope.searchResultCommonName += result['common name'] + ",\t";;
+          }
         });
         if ($scope.searchResultCommonName.length === 0) {
           $scope.searchResultCommonName += 'no results';
