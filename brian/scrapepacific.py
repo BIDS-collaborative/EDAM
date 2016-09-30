@@ -24,10 +24,23 @@ def scrape(species):
 		table = tables[1]
 	result = table.find_all("tr")
 	#Skip the first and potentially second row of table since they give no information.  	
-	if result[2].find_all("td")[0].text.strip().encode("utf-8") == "1.01":
-		rows = result[1: len(result) - 1]
-	else:
-		rows = result[2: len(result) - 1]
+	rows = result[: len(result) - 1]
+	entries = rows[0].find_all("td")
+	while len(entries) == 0:
+		rows = rows[1:]
+		entries = rows[0].find_all("td")
+	if len(entries) >= 3:
+		while entries[0].text.strip().encode("utf-8") != "1.01" and entries[2].text.strip().encode("utf-8") != "1.01":
+			rows = rows[1:]
+			entries = rows[0].find_all("td")
+			while len(entries) < 3:
+				rows = rows[1:]
+				entries = rows[0].find_all("td")
+	else: 
+		while entries[0].text.strip().encode("utf-8") != "1.01":
+			rows = rows[1:]
+			entries = rows[0].find_all("td")
+
 	columns = [str(species)]
 	for row in rows:
 		entries = row.find_all("td")
@@ -48,7 +61,7 @@ def scrape(species):
 			columns.append(entries[1].text.strip().encode('utf-8'))
 			columns.append("")
 			columns.append(entries[2].text.strip().encode('utf-8'))
-		elif len(entries) == 5 and entries[0].text.strip().encode("utf-8") != "1.01":
+		elif len(entries) == 5 and entries[0].text.strip().encode("utf-8") == "":
 			columns.append(entries[2].text.strip().encode('utf-8'))
 			columns.append(entries[3].text.strip().encode('utf-8'))
 			columns.append("")
@@ -81,6 +94,7 @@ def makeCSV():
 	species = getSpecies()
 	matrix = []
 	for specie in species:
+		print specie
 		row = scrape(specie)
 		if row is not None:
 			matrix.append(row)
@@ -94,7 +108,7 @@ species = getSpecies()
 
 matrix = makeCSV()
 
-url = "http://www.hear.org/pier/wra/pacific/" + "funtumia_elastica" + "_htmlwra.htm"
-soup = BeautifulSoup(urllib2.urlopen(url).read(), "lxml")
-table = soup.find("table", attrs={"cellpadding":"2", "cellspacing":"0"})
-rows = table.find_all("tr")[1:]
+# url = "http://www.hear.org/pier/wra/pacific/" + "mansoa_hymenaea" + "_htmlwra.htm"
+# soup = BeautifulSoup(urllib2.urlopen(url).read(), "lxml")
+# table = soup.find("table", attrs={"cellpadding":"2", "cellspacing":"0"})
+# rows = table.find_all("tr")[1:]
