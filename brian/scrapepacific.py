@@ -17,11 +17,13 @@ def scrape(species):
 	except urllib2.URLError:
 		return None
 	tables = soup.findAll("table")
+	#Seems like the table we want is always the first or second table in the page. 
 	if len(tables) == 1:
 		table = tables[0]
 	else:
 		table = tables[1]
 	result = table.find_all("tr")
+	#Skip the first and potentially second row of table since they give no information.  	
 	if result[2].find_all("td")[0].text.strip().encode("utf-8") == "1.01":
 		rows = result[1: len(result) - 1]
 	else:
@@ -46,6 +48,11 @@ def scrape(species):
 			columns.append(entries[1].text.strip().encode('utf-8'))
 			columns.append("")
 			columns.append(entries[2].text.strip().encode('utf-8'))
+		elif len(entries) == 5 and entries[0].text.strip().encode("utf-8") != "1.01":
+			columns.append(entries[2].text.strip().encode('utf-8'))
+			columns.append(entries[3].text.strip().encode('utf-8'))
+			columns.append("")
+			columns.append(entries[4].text.strip().encode('utf-8')) 
 		elif len(entries) >= 4: 
 			columns.append(entries[0].text.strip().encode('utf-8'))
 			columns.append(entries[1].text.strip().encode('utf-8'))
@@ -78,16 +85,16 @@ def makeCSV():
 		if row is not None:
 			matrix.append(row)
 	matrix = np.array(matrix)
-	with open('Brianoutput.csv','wb') as f:
+	with open('test.csv','wb') as f:
 		writer = csv.writer(f)
 		writer.writerows(matrix)
 	return matrix
 
-# species = getSpecies()
+species = getSpecies()
 
 matrix = makeCSV()
 
 url = "http://www.hear.org/pier/wra/pacific/" + "funtumia_elastica" + "_htmlwra.htm"
 soup = BeautifulSoup(urllib2.urlopen(url).read(), "lxml")
-table = soup.find("table", attrs={"border":"2", "cellpadding":"2", "cellspacing":"0"})
+table = soup.find("table", attrs={"cellpadding":"2", "cellspacing":"0"})
 rows = table.find_all("tr")[1:]
