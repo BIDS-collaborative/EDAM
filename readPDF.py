@@ -10,7 +10,7 @@ from scoreMap import SCORE_MAP
 
 URL = "http://www.hear.org/pier/"
 JSON_FILE = "plantpdfs.json"
-CSV_PATH = "pier_data.csv"
+CSV_PATH = "pier_data_wide.csv"
 DATA_DIR = "data"
 
 
@@ -61,13 +61,21 @@ def calculateScore(featureDict):
 	return sum([v[1] for v in featureDict.values() if v != "NA"])
 
 
-def writeToCSV(csvPath, plant, featureDict):
+def writeToCsvTidyForm(csvPath, plant, featureDict):
 	print("	Writing",plant,"data to csv file")
 	with open(csvPath, 'a') as file:
 		for k in sorted(featureDict.keys()):
 			lst = [str(i) for i in [plant, k] + list(featureDict[k])]
 			file.write(",".join(lst))
 			file.write("\n")
+
+
+def writeToCsvWideForm(csvPath, plant, featureDict):
+	print("	Writing",plant,"data to csv file")
+	with open(csvPath, 'a') as file:
+		file.write(plant + ",")
+		file.write(",".join([str(featureDict[k][1]) for k in featureDict.keys()]))
+		file.write("\n")
 
 
 def readPDF(txtPath):
@@ -103,20 +111,20 @@ def importFiles(jsonFile):
 
 def main():
 	
-	importFiles(JSON_FILE)
+	# importFiles(JSON_FILE)
 
 	for f in os.listdir(DATA_DIR):
 		try:
 			print("START:", f)
 			pdfName = DATA_DIR + "/" + f
 			txtName = getTextName(pdfName)
-			generateText(pdfName, txtName)
+			# generateText(pdfName, txtName)
 			featureDict = readPDF(txtName)
 
 			# for k in sorted(featureDict.keys()):
 			# 	print(">>", k, ":", featureDict[k])
 			# print(calculateScore(featureDict))
-			writeToCSV(CSV_PATH, getPlantName(f), featureDict)
+			writeToCsvWideForm(CSV_PATH, getPlantName(f), featureDict)
 			print("	SUCCESSED", f)
 
 		except:
