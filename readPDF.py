@@ -4,8 +4,11 @@ readPDF util, calls `pdftotext` command line util from Apache Xpdf to convert to
 then parse line by line and record everything into featureMap (no record column puts NA)
 '''
 
-import re, os
+import re, os, json, urllib.request
 from scoreMap import SCORE_MAP
+
+URL = "http://www.hear.org/pier/"
+JSON_FILE = "plantpdfs.json"
 
 
 # make sure in download phase the file name has no space
@@ -38,7 +41,7 @@ def analyzeTableLine(dic, tokens):
 		# print(tokens[-1], SCORE_MAP[featureID])
 		score = SCORE_MAP[featureID].get(tokens[-1])
 		if score != None:
-			dic[featureID] = score
+			dic[featureID] = (tokens[-1], score)
 		else:
 			dic[featureID] = "NA"
 
@@ -72,15 +75,41 @@ def readPDF(pdfPath, featureDict):
 		print("Please make sure Xpdf installed and pdfPath correct")
 
 
-def main():
-	nameDict, featureDict, scoreDict = dict(), dict(), dict()
-	readPDF("test.pdf", featureDict)
+def import_files(json_file):
+	data = json.load(open(json_file))
 
-	for k in sorted(featureDict.keys()):
-		print(">>", k, ":", featureDict[k])
-	print(sum([v for v in featureDict.values() if v != "NA"]))
+	if not os.path.exists("data"):
+		os.makedirs("data")
+	for line in data:
+		file_name = line.split('/')[-1].replace("%20", '_')
+		try:
+			urllib.request.urlretrieve(URL + line, "data/" + file_name)
+			print("downloaded:", file_name)
+		except:
+			print("****failed download:", file_name)
+
+
+
+def main():
+	for f in os.listdir("data"):
+		try:
+			print("*****************************************")
+			print("*********START:", f)
+			pdf_name = "data/" + f
+			txt_name = getTextName(pdf_name)
+			# generateText(pdf_name, txt_name)
+
+			featureDict = dict()
+			readPDF(txt_name, featureDict)
+
+			for k in sorted(featureDict.keys()):
+				print(">>", k, ":", featureDict[k])
+			print(sum([v[1] for v in featureDict.values() if v != "NA"]))
+		except:
+			print("FAILED!!!!!!!!", f)
 
 if __name__ == '__main__':
+	# import_files(JSON_FILE)
 	main()
 	
 
