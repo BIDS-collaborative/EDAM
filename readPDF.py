@@ -4,23 +4,29 @@ readPDF util, calls `pdftotext` command line util from Apache Xpdf to convert to
 then parse line by line and record everything into featureMap (no record column puts NA)
 '''
 
-import re, os, json, urllib.request
+import re, os, json, csv, urllib.request
 from scoreMap import SCORE_MAP
+
 
 URL = "http://www.hear.org/pier/"
 JSON_FILE = "plantpdfs.json"
+CSV_PATH = "pier_data.csv"
+DATA_DIR = "data"
 
 
-# make sure in download phase the file name has no space
 def getTextName(pdfPath):
 	return pdfPath[:-3] + "txt"
+
+def getPlantName(pdfPath):
+	return pdfPath[:-4]
+
 
 def generateText(pdfPath, textPath):
 	try:
 		os.system("pdftotext -table {} {}".format(pdfPath, textPath))
-		return True
 	except:
-		return False
+		print("Please make sure Xpdf installed and pdfPath correct")
+
 
 def isTableLine(tokens):
 	try:
@@ -28,6 +34,7 @@ def isTableLine(tokens):
 		return len(tokens) > 1
 	except:
 		return False
+
 
 def analyzeTableLine(dic, tokens):
 	try:
@@ -43,73 +50,80 @@ def analyzeTableLine(dic, tokens):
 		if score != None:
 			dic[featureID] = (tokens[-1], score)
 		else:
-			dic[featureID] = "NA"
+			dic[featureID] = ("NA", "NA")
+
 
 def reachEnd(tokens):
 	return tokens[0] == "Designation:"
 
+
 def calculateScore(featureDict):
-	return 
+	return sum([v[1] for v in featureDict.values() if v != "NA"])
 
 
-def readPDF(pdfPath, featureDict):
-
-	textPath = getTextName(pdfPath)
-
-	if True or generateText(pdfPath):
-
-		file = open(textPath, encoding="ISO-8859-1")
-
-		for line in file:
-
-			tokens = [s for s in re.split("\s+", line) if s]
-
-			if tokens:
-				if isTableLine(tokens):
-					# print(tokens)
-					analyzeTableLine(featureDict, tokens)
-				elif reachEnd(tokens):
-					return
-
-	else:
-		print("Please make sure Xpdf installed and pdfPath correct")
+def writeToCSV(csvPath, plant, featureDict):
+	print("	Writing",plant,"data to csv file")
+	with open(csvPath, 'a') as file:
+		for k in sorted(featureDict.keys()):
+			lst = [str(i) for i in [plant, k] + list(featureDict[k])]
+			file.write(",".join(lst))
+			file.write("\n")
 
 
-def import_files(json_file):
-	data = json.load(open(json_file))
+def readPDF(txtPath):
 
-	if not os.path.exists("data"):
-		os.makedirs("data")
+	featureDict = dict()
+	file = open(txtPath, encoding="ISO-8859-1")
+
+	print("	Analyzing table lines")
+	for line in file:
+		tokens = [s for s in re.split("\s+", line) if s]
+		if tokens:
+			if isTableLine(tokens):
+				analyzeTableLine(featureDict, tokens)
+			elif reachEnd(tokens):
+				return featureDict
+
+
+
+def importFiles(jsonFile):
+	data = json.load(open(jsonFile))
+
+	if not os.path.exists(DATA_DIR):
+		os.makedirs(DATA_DIR)
 	for line in data:
-		file_name = line.split('/')[-1].replace("%20", '_')
+		fileName = line.split('/')[-1].replace("%20", '_')
 		try:
-			urllib.request.urlretrieve(URL + line, "data/" + file_name)
-			print("downloaded:", file_name)
+			urllib.request.urlretrieve(URL + line, DATA_DIR + "/" + fileName)
+			print("Downloaded:", fileName)
 		except:
-			print("****failed download:", file_name)
+			print("**Failed download:", fileName)
 
 
 
 def main():
-	for f in os.listdir("data"):
+	
+	importFiles(JSON_FILE)
+
+	for f in os.listdir(DATA_DIR):
 		try:
-			print("*****************************************")
-			print("*********START:", f)
-			pdf_name = "data/" + f
-			txt_name = getTextName(pdf_name)
-			# generateText(pdf_name, txt_name)
+			print("START:", f)
+			pdfName = DATA_DIR + "/" + f
+			txtName = getTextName(pdfName)
+			generateText(pdfName, txtName)
+			featureDict = readPDF(txtName)
 
-			featureDict = dict()
-			readPDF(txt_name, featureDict)
+			# for k in sorted(featureDict.keys()):
+			# 	print(">>", k, ":", featureDict[k])
+			# print(calculateScore(featureDict))
+			writeToCSV(CSV_PATH, getPlantName(f), featureDict)
+			print("	SUCCESSED", f)
 
-			for k in sorted(featureDict.keys()):
-				print(">>", k, ":", featureDict[k])
-			print(sum([v[1] for v in featureDict.values() if v != "NA"]))
 		except:
-			print("FAILED!!!!!!!!", f)
+			print("	FAILED", f)
+
 
 if __name__ == '__main__':
-	# import_files(JSON_FILE)
 	main()
 	
 
