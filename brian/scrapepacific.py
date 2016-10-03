@@ -124,6 +124,82 @@ def makeCSV():
         writer.writerows(matrix)
     return matrix
 
+def cleanData():
+    m = pd.read_csv("test.csv", header = None)
+    drop = []
+    for i in range(241):
+        if i % 4 == 2 or i % 4 == 3 or i > 196:
+                drop.append(i)
+    matrix = m.drop(m[drop], axis = 1)
+    matrix = matrix.as_matrix()
+    newMatrix = []
+    for j in range(matrix.shape[0]):
+        row = [matrix[j][0]]
+        i = 1
+        while i < matrix.shape[1]:
+            label = matrix[j][i]
+            label = int(round(float(label) * 100))
+            value = matrix[j][i + 1]
+            if label != 607:
+                try:
+                    value = float(value)
+                    if value != value:
+                        score = "NA"
+                    else:
+                        score = int(value)
+                except ValueError:
+                    value = value.lower()
+                    if value == "no":
+                        value = "n"
+                    if value == "yes":
+                        value = "y"
+                    try: 
+                        score = SCORE_MAP[label][value]
+                    #greedily finds first score 
+                    except KeyError:
+                        score = "" 
+                        foundNumber = False
+                        for c in value:
+                            if c.isdigit():
+                                foundNumber = True
+                                score += c
+                            else: 
+                                if foundNumber:
+                                    break
+                        if foundNumber:
+                            score = int(score)
+                        else:
+                            score = "NA"
+            else:
+                try:
+                    value = float(value)
+                    if value != value:
+                        score = "NA"
+                    else:
+                        score = int(value)
+                except ValueError:
+                    value = "" 
+                    foundNumber = False
+                    for c in value:
+                        if c.isdigit():
+                            foundNumber = True
+                            value += c
+                        else: 
+                            if foundNumber:
+                                break
+                        value = int(value)
+                    if value > 3:
+                        value = ">3"
+                    value = str(value)
+                    score = SCORE_MAP[label][value]
+
+            row.append(score)
+            i += 2
+        newMatrix.append(np.array(row))
+    newMatrix = np.array(newMatrix)
+    return newMatrix
+
+
 # species = getSpecies()
 
 # matrix = makeCSV()
@@ -134,77 +210,4 @@ def makeCSV():
 # table = soup.find("table", attrs={"cellpadding":"2", "cellspacing":"0"})
 # rows = table.find_all("tr")[1:]
 
-
-m = pd.read_csv("test.csv", header = None)
-drop = []
-for i in range(241):
-    if i % 4 == 2 or i % 4 == 3 or i > 196:
-            drop.append(i)
-matrix = m.drop(m[drop], axis = 1)
-matrix = matrix.as_matrix()
-newMatrix = []
-for j in range(matrix.shape[0]):
-    row = [matrix[j][0]]
-    i = 1
-    while i < matrix.shape[1]:
-        label = matrix[j][i]
-        label = int(round(float(label) * 100))
-        value = matrix[j][i + 1]
-        if label != 607:
-            try:
-                value = float(value)
-                if value != value:
-                    score = "NA"
-                else:
-                    score = int(value)
-            except ValueError:
-                value = value.lower()
-                if value == "no":
-                    value = "n"
-                if value == "yes":
-                    value = "y"
-                try: 
-                    score = SCORE_MAP[label][value]
-                #greedily finds first score 
-                except KeyError:
-                    score = "" 
-                    foundNumber = False
-                    for c in value:
-                        if c.isdigit():
-                            foundNumber = True
-                            score += c
-                        else: 
-                            if foundNumber:
-                                break
-                    if foundNumber:
-                        score = int(score)
-                    else:
-                        score = "NA"
-        else:
-            try:
-                value = float(value)
-                if value != value:
-                    score = "NA"
-                else:
-                    score = int(value)
-            except ValueError:
-                value = "" 
-                foundNumber = False
-                for c in value:
-                    if c.isdigit():
-                        foundNumber = True
-                        value += c
-                    else: 
-                        if foundNumber:
-                            break
-                    value = int(value)
-                if value > 3:
-                    value = ">3"
-                value = str(value)
-                score = SCORE_MAP[label][value]
-
-        row.append(score)
-        i += 2
-    newMatrix.append(np.array(row))
-newMatrix = np.array(newMatrix)
 
