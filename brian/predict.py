@@ -15,24 +15,36 @@ def load_data(fileName, dropFirstColumn = True):
 		df = df.drop(df[[0]], axis = 1)
 	return df.as_matrix()
 
-def predict(X, y):
+def predictLR(X, y):
 	col_mean = stats.nanmean(X,axis=0)
 	inds = np.where(np.isnan(X))
 	X[inds]=np.take(col_mean,inds[1])
 
-	k_means = cluster.KMeans(n_clusters = 6)
-	k_means.fit(X, y)
 	lr = LR(multi_class = "multinomial", solver = "newton-cg")
-	lr.fit(X,y)
-	return lr.score(X, y)
+	lr.fit(X[:500],y[:500])
+	return lr.score(X[500:], y[500:])
+
+def predictRF(X, y):
+	col_mean = stats.nanmean(X,axis=0)
+	inds = np.where(np.isnan(X))
+	X[inds]=np.take(col_mean,inds[1])
+
+	RF = RFC(n_estimators = 100)
+	forest = RF.fit(X[:500], y[:500])
+	return forest.score(X[500:], y[500:])
 
 
 X = load_data("pier_html_data.csv")
 y = np.ravel(load_data("pier_html_labels.csv", False))
+p = np.random.permutation(X.shape[0])
+X = X[p]
+y = y[p]
 col_mean = stats.nanmean(X,axis=0)
 inds = np.where(np.isnan(X))
 X[inds]=np.take(col_mean,inds[1])
-score = predict(X, y)
+scoreLR = predictLR(X, y)
+scoreRF = predictRF(X, y)
+
 # pred_labels_train = predict(model, X_train)
 # pred_labels_test = predict(model, X_test)
 # print("Closed form solution")
