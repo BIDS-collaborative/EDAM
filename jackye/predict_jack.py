@@ -133,7 +133,7 @@ for i in [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]:
 for i in [300, 400, 500, 600, 700, 800]:
 	sampleAndAverage(predictLR, "LR-SBN{}".format(i), sample_size, selectFeatureByNumber(X, i), y)
 
-print("--------------FULL DATA SET RF-----------------")
+print("--------------NE DATA SET RF-----------------")
 
 sampleAndAverage(predictRF, "predictRF", sample_size, X, y)
 sampleAndAverage(predictRF, "averageRF", sample_size, combineFeatureByMean(X, category), y)

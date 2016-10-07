@@ -48,7 +48,7 @@ RUNNING ITERATION 100 FOR AVERAGE SCORE
 [LR-SBN600] average score: 0.909880059970015
 [LR-SBN700] average score: 0.9087406296851575
 [LR-SBN800] average score: 0.9151574212893553
---------------FULL DATA SET RF-----------------
+--------------NE DATA SET RF-----------------
 [predictRF] average score: 0.8859820089955024
 [averageRF] average score: 0.9035532233883059
 [sumfeatRF] average score: 0.9015142428785607
