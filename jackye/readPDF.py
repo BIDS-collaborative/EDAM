@@ -10,8 +10,10 @@ from scoreMap import SCORE_MAP
 
 URL = "http://www.hear.org/pier/"
 JSON_FILE = "plantpdfs.json"
-CSV_PATH = "pier_data_wide.csv"
+CSV_PATH = "pier_data_cleaned.csv"
 DATA_DIR = "data"
+
+RISK_LEVEL = {'L':0, 'H':2, 'E':1, 'W':1}
 
 
 def getTextName(pdfPath):
@@ -53,6 +55,10 @@ def analyzeTableLine(dic, tokens):
 		else:
 			dic[featureID] = ("NA", "NA")
 
+def getRiskLevel(dic, tokens):
+	print(tokens)
+	dic[0] = ("LEVEL",RISK_LEVEL[tokens[1][0]])
+
 
 def reachEnd(tokens):
 	return tokens[0] == "Designation:"
@@ -91,6 +97,8 @@ def readPDF(txtPath):
 			if isTableLine(tokens):
 				analyzeTableLine(featureDict, tokens)
 			elif reachEnd(tokens):
+				getRiskLevel(featureDict, tokens)
+				print(tokens[1], tokens)
 				return featureDict
 
 
