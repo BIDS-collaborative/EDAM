@@ -10,7 +10,7 @@ from sklearn.linear_model import LogisticRegression as LR
 from sklearn.ensemble import RandomForestClassifier as RFC
 from sklearn.ensemble import GradientBoostingClassifier as GBC
 import warnings
-
+from mpl_toolkits.mplot3d import Axes3D
 from sklearn.feature_selection import RFE
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
@@ -165,10 +165,24 @@ def binarize(X):
     return np.array(newMatrix)
 
 
-def pca_decomposition(X):
+def pca_decomposition(X, y):
 	pca = decomposition.PCA(n_components = 3)
 	pca.fit(X)
 	transformX = pca.transform(X)
+
+
+	fig = plt.figure(1, figsize=(4, 3))
+	plt.clf()
+	ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
+	plt.cla()
+
+	ax.scatter(transformX[:, 0], transformX[:, 1], transformX[:, 2], c=y, cmap=plt.cm.spectral)
+
+	ax.w_xaxis.set_ticklabels([])
+	ax.w_yaxis.set_ticklabels([])
+	ax.w_zaxis.set_ticklabels([])
+
+	plt.show()
 	return transformX
 
 def feature_selection(X, y):
