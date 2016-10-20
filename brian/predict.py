@@ -173,7 +173,7 @@ def pca_decomposition(X):
 
 def feature_selection(X, y):
 	model = LR()
-	rfe = RFE(model, 34)
+	rfe = RFE(model, 45)
 	fit = rfe.fit(X, y)
 	print("Num Features: %d") % fit.n_features_
 	print("Selected Features: %s") % fit.support_
@@ -197,7 +197,11 @@ y = np.ravel(load_data("pier_html_labels_noevaluates.csv", False))
 col_mean = np.nanmean(X,axis=0)
 inds = np.where(np.isnan(X))
 X[inds]=np.take(col_mean,inds[1])
-sampleAndAverage(predictRF, "predictRF", sample_size, pca_decomposition(feature_selection(X, y)), y)
+sampleAndAverage(predictLR, "predictLR", sample_size, feature_selection(X, y), y)
+# sampleAndAverage(predictRF, "predictRF", sample_size, feature_selection(X, y), y)
+# sampleAndAverage(predictLR, "predictLR", sample_size, pca_decomposition(feature_selection(X, y)), y)
+# sampleAndAverage(predictRF, "predictRF", sample_size, pca_decomposition(feature_selection(X, y)), y)
+
 
 
 
