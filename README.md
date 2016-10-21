@@ -2,27 +2,34 @@
 
 Ecostations Data Access Monitor
 
-Join us for discussions on [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/BIDS-collaborative/EDAM?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) .
+## Project Information
 
-Learn more about current status of this project on our [wiki](../../wiki).
+With the goal of understanding and modeling ecosystems, we are examining characteristics of invasive species,
+which have a large impact in ecosystems and on other species.
 
-## origins
+We want to develop a data driven method of identifying invasive species by identifying general characteristics
+that are correlated with invasive species. 
+Our model will be generally applicable to multiple species groups.
+In addition, we propose a clustering method based on these characteristics to simplify the manual classification
+process of invasive species. 
 
-This proposal originated at a meeting with Neil Davies (Moorea IDEA, BIDS), Jorrit Poelen (GloBI, author of this text) and Charlotte Cabasse (BIDS) at BIDS on Aug 5, 2015.
+More detailed information regarding the goals and methods of this project for the semester can be found in 
+our [project proposal](https://docs.google.com/document/d/19uCsRykoxVJaP_K2-3qLPJ30yE7CYLvZM6Ad-z6Jw9A/edit?usp=sharing)
+and on the BIDS project page.
 
-## title
+## Origins
 
-(Island) Ecostations Data Access Monitor (EDAM) - Phase 1 - species lists, food webs and associated citations.
+This project originated at a meeting with Neil Davies (Moorea IDEA, BIDS), Jorrit Poelen (GloBI) and Charlotte Cabasse (BIDS) at BIDS on Aug 5, 2015.
 
-## purpose
+### Purpose
 
-Develop methods to openly compare ecological data richness /completeness of (Island) Ecostations to promote open data and tool re-use between researchers, citizen scientists, educators, foundations and regulatory bodies.
+The goal of EDAM is to model species lists, food webs, and associated citations. 
+To do this, we want to develop methods to openly compare ecological data richness/completeness 
+of (Island) Ecostations to promote open data and tool re-use between 
+researchers, citizen scientists, educators, foundations and regulatory bodies.
 
-## setting
 
-Student project for BIDS Hacking Measurement Class Fall 2015: http://www.ischool.berkeley.edu/courses/i290-hm.
-
-## introduction
+### Introduction
 
 As large biodiversity collections and environmental data are accessible online,
 global research communities have an unprecedented access to (siloed) datasets.
@@ -32,9 +39,12 @@ existing data to coordinate data collection efforts, evolve data sharing
 strategies and discover methods to efficiently sustain our (island) ecosystems.
 A first step toward integrating the data is to provide a side-by-side
 comparison of existing data associated with active island ecostation
-communities to stimulate knowledge sharing and collaboration. See [Meyer et al. 2015](http://dx.doi.org/10.1038/ncomms9221) for a recent discussion about the importance of identifying "[...] Gaps in digital accessible information (DAI)[...]" or biodiversity data completeness. 
+communities to stimulate knowledge sharing and collaboration. 
+See [Meyer et al. 2015](http://dx.doi.org/10.1038/ncomms9221) 
+for a recent discussion about the importance of identifying "[...] 
+Gaps in digital accessible information (DAI)[...]" or biodiversity data completeness. 
 
-## methods
+### Methods
 
 Ecostation biodiversity data summaries are derived from openly available
 biodiversity data repositories (e.g. GBIF, iDigBio, GloBI). Initially only
@@ -50,7 +60,7 @@ stimulate collaboration between scientists, technologists, educators, local
 governments and research foundations to help better understand and sustain
 ecosystems around us.
 
-## goals
+### Goals
 
 In order to archieve EDAM Phase I, we need to:
 
@@ -70,16 +80,3 @@ In order to archieve EDAM Phase I, we need to:
  7. (share) create a web-accessible visualization to make results (and
     associated data sources) easy to access.
 
-## realization
-
-Given the availability of relevant ecolological data and the limited scope of
-needed data processing capabilities, a first prototype of EDAM Phase I is
-estimated to take 2-3 months for a group of digitally literate graduate
-students with an allocation of ~10 hrs a week. The outcome of this project will
-help define future funding to further develop advanced phases of the EDAM
-project.
-
-## contact
-
-Jorrit Poelen, http://globalbioticinteractions.org, https://github.com/jhpoelen
-or jhpoelen at xs4all dot nl
