@@ -8,9 +8,13 @@ f4 = open("pier_ne_labels.csv", "w")
 for _ in range(1377):
 	line = f1.readline()
 	label = f2.readline()
-	if label != "1\n":
+	if label == "0\n":
 		f3.write(line)
 		f4.write(label)
+
+	elif label == "2\n":
+		f3.write(line)
+		f4.write("1\n")
 
 f1.close()
 f2.close()
