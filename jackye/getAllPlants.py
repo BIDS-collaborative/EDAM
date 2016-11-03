@@ -12,7 +12,7 @@ def getnames(href, file):
 	for tr in sp.find_all("tr"):
 		for div in tr.find_all("div"):
 			print(div.text)
-			file.write(div.text)
+			file.write(div.text.lower())
 			file.write("\n")
 
 f = open("all_plants.csv", "w")
