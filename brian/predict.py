@@ -102,7 +102,7 @@ def compareFeatures(X, y):
 	# GBCscores = [sampleAndAverage(predictGBC, "predictGBC", 50, X, y)]
 	x = np.arange(X.shape[1] + 1)
 	for i in range(X.shape[1]):
-		print i 
+		print (i)
 		newX = dropColumns(X, i)
 		LRscore = sampleAndAverage(predictLR, "predictLR", 100, newX, y)
 		# RFscore = sampleAndAverage(predictRF, 50, newX, y)
@@ -192,7 +192,7 @@ def feature_selection(X, y):
 	print("Num Features: %d") % fit.n_features_
 	print("Selected Features: %s") % fit.support_
 	print("Feature Ranking: %s") % fit.ranking_
-	print fit.score(X, y)
+	print (fit.score(X, y))
 	return fit.transform(X)
 sample_size = 100
 
