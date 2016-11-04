@@ -15,6 +15,12 @@ from sklearn.feature_selection import RFE
 from sklearn.feature_selection import SelectKBest
 from sklearn.feature_selection import f_classif
 from sklearn import decomposition
+from sklearn.ensemble import ExtraTreesClassifier
+from sklearn.manifold import LocallyLinearEmbedding
+from sklearn.manifold import Isomap
+
+
+
 
 
 def load_data(fileName, dropFirstColumn = True):
@@ -88,6 +94,11 @@ def chooseRandom(x, y):
 	x_train, x_test, y_train, y_test = sklearn.cross_validation.train_test_split(x, y, test_size = 0.5)
 	return x_train, x_test, y_train, y_test
 
+def keepColumns(X, columns):
+	XT = X.T
+	XT = XT[columns]
+	return XT.T
+
 #Preprocessing. Choose which columns to drop 
 def dropColumns(X, columns):
 	XT = X.T
@@ -102,7 +113,7 @@ def compareFeatures(X, y):
 	# GBCscores = [sampleAndAverage(predictGBC, "predictGBC", 50, X, y)]
 	x = np.arange(X.shape[1] + 1)
 	for i in range(X.shape[1]):
-		print (i)
+		print i 
 		newX = dropColumns(X, i)
 		LRscore = sampleAndAverage(predictLR, "predictLR", 100, newX, y)
 		# RFscore = sampleAndAverage(predictRF, 50, newX, y)
@@ -166,34 +177,65 @@ def binarize(X):
 
 
 def pca_decomposition(X, y):
-	pca = decomposition.PCA(n_components = 3)
+	pca = decomposition.PCA(n_components = 1)
 	pca.fit(X)
 	transformX = pca.transform(X)
+	# print np.argmax(np.abs(pca.components_), axis = 1)
+	plt.plot(pca.explained_variance_ratio_)
+	# plt.show()
+	# fig = plt.figure(1, figsize=(4, 3))
+	# plt.clf()
+	# ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
+	# plt.cla()
 
 
-	fig = plt.figure(1, figsize=(4, 3))
-	plt.clf()
-	ax = Axes3D(fig, rect=[0, 0, .95, 1], elev=48, azim=134)
-	plt.cla()
 
-	ax.scatter(transformX[:, 0], transformX[:, 1], transformX[:, 2], c=y, cmap=plt.cm.spectral)
+	# ax.scatter(transformX[:, 0], transformX[:, 1], transformX[:, 2], c=y, cmap=plt.cm.spectral)
 
-	ax.w_xaxis.set_ticklabels([])
-	ax.w_yaxis.set_ticklabels([])
-	ax.w_zaxis.set_ticklabels([])
+	# ax.w_xaxis.set_ticklabels([])
+	# ax.w_yaxis.set_ticklabels([])
+	# ax.w_zaxis.set_ticklabels([])
 
-	plt.show()
+
+
+	# plt.show()
+
+
+	return transformX
+
+
+def localLinearEmbedding(X, y):
+	lle = LocallyLinearEmbedding(n_components = 1, eigen_solver = "dense")
+	lle.fit(X)
+	transformX = lle.transform(X)
+	return transformX
+
+def isoMap(X, y):
+	im = Isomap(n_components = 1, eigen_solver = "dense", n_neighbors = 20)
+	im.fit(X)
+	transformX = im.transform(X)
 	return transformX
 
 def feature_selection(X, y):
 	model = LR()
-	rfe = RFE(model, 45)
+	rfe = RFE(model, 10)
 	fit = rfe.fit(X, y)
 	print("Num Features: %d") % fit.n_features_
 	print("Selected Features: %s") % fit.support_
 	print("Feature Ranking: %s") % fit.ranking_
-	print (fit.score(X, y))
+	print fit.score(X, y)
 	return fit.transform(X)
+
+def RF_feature_importance(X, y):
+	forest = ExtraTreesClassifier(n_estimators=250, random_state=0)
+	forest.fit(X, y)
+	importances = forest.feature_importances_
+	indices = np.argsort(importances)[::-1]
+	print("Feature ranking:")
+	for f in range(X.shape[1]):
+		print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
+
+
 sample_size = 100
 
 # From ecological literature- maybe feature 15
@@ -206,15 +248,73 @@ noDropLR = [8, 24, 35, 40, 41, 44]
 warnings.filterwarnings('ignore')
 
 # np.random.seed(3)
-X = load_data("pier_html_data_noevaluates.csv")
-y = np.ravel(load_data("pier_html_labels_noevaluates.csv", False))
+X = load_data("pier_ne_data.csv")
+y = np.ravel(load_data("pier_ne_labels.csv", False))
+y_new = np.ravel(load_data("pier_ne_labels_new.csv", False))
 col_mean = np.nanmean(X,axis=0)
 inds = np.where(np.isnan(X))
 X[inds]=np.take(col_mean,inds[1])
-sampleAndAverage(predictLR, "predictLR", sample_size, feature_selection(X, y), y)
-# sampleAndAverage(predictRF, "predictRF", sample_size, feature_selection(X, y), y)
-# sampleAndAverage(predictLR, "predictLR", sample_size, pca_decomposition(feature_selection(X, y)), y)
-# sampleAndAverage(predictRF, "predictRF", sample_size, pca_decomposition(feature_selection(X, y)), y)
+# X = dropColumns(X, [8, 1])
+
+# RF_feature_importance(X, y_new)
+
+Xtransform1 = keepColumns(X, [17, 20, 22, 24, 36]) #5 most important
+Xtransform2 = keepColumns(X, [17, 20, 22, 24, 36, 44, 40, 34, 32, 5]) #10 most important
+Xtransform3 = keepColumns(X, [17, 20, 22, 24, 36, 44, 40, 34, 32, 5, 18, 19, 21, 41, 46, 35, 47, 13, 19, 21]) #15 most important
+
+
+generalist = keepColumns(X, [22, 5])
+noninvasivethreats = keepColumns(X, [17, 20])
+other = keepColumns(X, [24, 36, 44, 40, 44, 32])
+
+x1 = pca_decomposition(generalist, y)
+x2 = pca_decomposition(noninvasivethreats, y)
+x3 = pca_decomposition(other, y)
+Xtransform4 = np.column_stack((x1, x2, x3))
+
+x4 = isoMap(generalist, y)
+x5 = isoMap(noninvasivethreats, y)
+x6 = isoMap(other, y)
+Xtransform5 = np.column_stack((x4, x5, x6))
+
+Xtransform6 = keepColumns(X, [46, 32, 34, 21, 35, 5, 47, 40, 22, 24, 41, 44, 16, 39, 20, 7, 18, 45, 14, 43]) #new labels feature rank. Got them from RF_feature_importance
+
+#Try will new labels
+
+sampleAndAverage(predictRF, "predictRF new y", sample_size, dropColumns(X, [1, 8]), y_new)
+
+sampleAndAverage(predictLR, "predictLR new y", sample_size, dropColumns(X, [1, 8]), y_new)
+sampleAndAverage(predictRF, "predictRF keeping 15 most new important features, new y", sample_size, Xtransform3, y_new)
+sampleAndAverage(predictRF, "predictLR keeping 10 most important features from before, new y", sample_size, Xtransform2, y_new)
+sampleAndAverage(predictRF, "predictRF keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
+
+sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
+
+x7 = pca_decomposition(generalist, y_new)
+x8 = pca_decomposition(noninvasivethreats, y_new)
+x9 = pca_decomposition(other, y_new)
+Xtransform4 = np.column_stack((x7, x8, x9))
+sampleAndAverage(predictLR, "predictLR trying with pca decomposition with 10 most important features from before, new y", sample_size, Xtransform4, y_new)
+
+
+#Old labels 
+
+# RF_feature_importance(X, y)
+# sampleAndAverage(predictLR, "predictLR", sample_size, X, y)
+# sampleAndAverage(predictLR, "predictLR", sample_size, Xtransform1, y) #0.7808 for old labels
+# sampleAndAverage(predictLR, "predictLR", sample_size, Xtransform2, y) #0.826 for old labels
+# sampleAndAverage(predictLR, "predictLR", sample_size, Xtransform3, y) #0.787 for old labels
+# # sampleAndAverage(predictLR, "predictLR", sample_size, Xtransform4, y_new)  #0.786 for old labels
+# sampleAndAverage(predictLR, "predictLR", sample_size, Xtransform6, y)  #0.786 for old labels
+
+
+# sampleAndAverage(predictLR, "predictLR", sample_size,Xtransform5, y)
+
+
+# sampleAndAverage(predictLR, "predictLR", sample_size, feature_selection(X, y), y)
+# sampleAndAverage(predictLR, "predictLR", sample_size, pca_decomposition(X, y), y)
+#features 35, 7, 41, 34 
+# sampleAndAverage(predictLR, "predictLR", sample_size, pca_decomposition(feature_selection(X, y), y), y)
 
 
 
