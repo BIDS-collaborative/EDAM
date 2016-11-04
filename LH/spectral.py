@@ -1,9 +1,10 @@
 import pandas as pd, numpy as np, warnings, sklearn
-from sklearn.cluster import KMeans, SpectralClustering
+from sklearn.cluster import SpectralClustering
 import matplotlib.pyplot as plt
-# from mpl_toolkits.mplot3d import Axes3D
 from sklearn.decomposition import PCA
 from sklearn.utils import shuffle
+from sklearn.metrics import pairwise_kernels
+
 
 def load_data(fileName, dropFirstColumn = True):
 	df = pd.read_csv(fileName)
@@ -21,8 +22,8 @@ def combineFeatureByMean(X, category):
 		# print(newX.shape)
 	return newX
 
-def predictSpectralClustering(X, y, n=2):
-	#ranX, ranY = shuffle(X, y, random_state=0)
+def predictSpectralClustering(X, y, n=2, val='rbf'):
+	ranX, ranY = shuffle(X, y, random_state=0)
 	X = X[:600,]
 	y = y[:600,]
 	sc = SpectralClustering(n_clusters=n)
@@ -93,32 +94,47 @@ X[inds]=np.take(col_mean,inds[1])
 X_comb = combineFeatureByMean(X, category)
 
 y = np.divide(np.ravel(load_data("pier_ne_labels.csv", False)), 2)
-
 print("--------------NE DATA SET SPECTRAL-----------------")
 
-results, score, gini = predictSpectralClustering(X,y)
+results, score, val = predictSpectralClustering(X,y,2)
 print score
 
-# Create a PCA model.
-pca_2 = PCA(2)
-# Fit the PCA model on the numeric columns from earlier.
-plot_columns = pca_2.fit_transform(X)
-# Make a scatter plot of each game, shaded according to cluster assignment.
-plt.scatter(x=plot_columns[:,0], y=plot_columns[:,1], c=results)
-# Show the plot.
-plt.show()
 
-cluster_size = [2, 4, 6, 8, 10]
-gini = []
-for c in cluster_size:
-	vals = predictSpectralClustering(X,y,c)
-	gini.append(vals[2])
+kernels = ['rbf', 'sigmoid', 'polynomial', 'poly', 'linear', 'cosine']
+scores = []
+for k in kernels:
+	print k + " Kernel"
+	results, score, val = predictSpectralClustering(X,y,2,k)
+	print score
+	scores.append(score)
 
-print("PLOT CLUSTERS V. GINI")
-plt.plot(cluster_size, gini)
-plt.xlabel("num clusters")
-plt.ylabel("gini")
-plt.axis([2, 10, 0, 1])
+y_pos = np.arange(len(kernels))
+plt.bar(y_pos, scores, align='center')
+plt.xticks(y_pos, kernels)
+plt.ylabel('Kernel type')
+plt.title('Spectral Kernels')
 plt.show()
 
 
+# # Create a PCA model.
+# pca_2 = PCA(2)
+# # Fit the PCA model on the numeric columns from earlier.
+# plot_columns = pca_2.fit_transform(X)
+# # Make a scatter plot of each game, shaded according to cluster assignment.
+# plt.scatter(x=plot_columns[:,0], y=plot_columns[:,1], c=results)
+# # Show the plot.
+# plt.show()
+
+# cluster_size = [2, 4, 6, 8, 10]
+# gini = []
+# for c in cluster_size:
+# 	print str(c) + " Clusters"
+# 	results, score, val = predictSpectralClustering(X,y,c)
+# 	gini.append(val)
+
+# plt.plot(cluster_size, gini)
+# plt.xlabel("num clusters")
+# plt.ylabel("gini")
+# plt.axis([2, 10, 0, 1])
+# plt.title("Num clusters vs. gini")
+# plt.show()

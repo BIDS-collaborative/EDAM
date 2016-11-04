@@ -26,29 +26,21 @@ def predictKMeans(X, y, n):
 	inds = np.where(np.isnan(X))
 	X[inds]=np.take(col_mean,inds[1])
 	km = KMeans(n_clusters=n)
-	X_train, X_test, y_train, y_test = chooseRandom(X, y)
-	km.fit(X_train)
-	results = km.predict(X_test)
-	collapsed = collapse_clusters(results, n)
-	score = calculate_score(collapsed, y_test)
+	results = km.fit_predict(X)
+	score = calculate_score(results, y)
 	gini = compute_gini(results)
 	return (score, gini)
 
-def collapse_clusters(matrix, n):
-	mid = n/2
-	for i in range(0, matrix.shape[0]):
-		if (matrix[i,] < mid):
-			matrix[i,] = 0
-		else:
-			matrix[i,] = 1
-	return matrix
-
-def calculate_score(predicted, actual):
+def calculate_score(predicted, actual, switch=False):
 	score = 0
 	if (predicted.shape == actual.shape):
 		for i,j in zip(predicted, actual):
-			if (i == j):
-				score += 1
+			if (i != j):
+				if switch:
+					score += 1
+			else:
+				if not switch:
+					score += 1
 		return float(score)/predicted.shape[0]
 	else:
 		return None
@@ -99,31 +91,26 @@ y = np.divide(np.ravel(load_data("pier_ne_labels.csv", False)), 2)
 
 print("--------------NE DATA SET KMEANS-----------------")
 
-
-
 cluster_size = [2, 4, 6, 8, 10]
 score = []
 gini = []
 for c in cluster_size:
 	vals = sampleAndAverage(predictKMeans, "KMeans Clustering, NE data set", sample_size, X_comb, y, c)
-	score.append(vals[0])
 	gini.append(vals[1])
+	score.append(vals[0])
 
-print score
-print gini
+# print("PLOT CLUSTERS V. SCORE")
+# plt.plot(cluster_size, score)
+# plt.xlabel("num clusters")
+# plt.ylabel("score")
+# plt.axis([2, 10, 0, 1])
+# plt.show()
 
-print("PLOT CLUSTERS V. SCORE")
-plt.plot(cluster_size, score)
-plt.xlabel("num clusters")
-plt.ylabel("score")
-plt.axis([2, 10, 0, 1])
-plt.show()
-
-print("PLOT CLUSTERS V. GINI")
 plt.plot(cluster_size, gini)
 plt.xlabel("num clusters")
 plt.ylabel("gini")
 plt.axis([2, 10, 0, 1])
+plt.title("CLUSTERS V. GINI")
 plt.show()
 
 
