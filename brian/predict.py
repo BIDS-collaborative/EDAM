@@ -251,6 +251,16 @@ warnings.filterwarnings('ignore')
 X = load_data("pier_ne_data.csv")
 y = np.ravel(load_data("pier_ne_labels.csv", False))
 y_new = np.ravel(load_data("pier_ne_labels_new.csv", False))
+
+tooManyNans = []
+for i in range(X.shape[1]):
+	count = np.sum(np.isnan(X.T[i]))
+	if float(count) / float(X.shape[0]) > 0.1:
+		tooManyNans.append(i)
+
+X = dropColumns(X, tooManyNans + [8, 1])
+
+
 col_mean = np.nanmean(X,axis=0)
 inds = np.where(np.isnan(X))
 X[inds]=np.take(col_mean,inds[1])
@@ -290,11 +300,11 @@ sampleAndAverage(predictRF, "predictRF keeping 10 most new important features, n
 
 sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
 
-x7 = pca_decomposition(generalist, y_new)
-x8 = pca_decomposition(noninvasivethreats, y_new)
-x9 = pca_decomposition(other, y_new)
-Xtransform4 = np.column_stack((x7, x8, x9))
-sampleAndAverage(predictLR, "predictLR trying with pca decomposition with 10 most important features from before, new y", sample_size, Xtransform4, y_new)
+# x7 = pca_decomposition(generalist, y_new)
+# x8 = pca_decomposition(noninvasivethreats, y_new)
+# x9 = pca_decomposition(other, y_new)
+# Xtransform4 = np.column_stack((x7, x8, x9))
+# sampleAndAverage(predictLR, "predictLR trying with pca decomposition with 10 most important features from before, new y", sample_size, Xtransform4, y_new)
 
 
 #Old labels 
