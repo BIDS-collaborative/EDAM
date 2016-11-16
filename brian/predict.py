@@ -255,12 +255,13 @@ y_new = np.ravel(load_data("pier_ne_labels_new.csv", False))
 tooManyNans = []
 for i in range(X.shape[1]):
 	count = np.sum(np.isnan(X.T[i]))
-	if float(count) / float(X.shape[0]) > 0.1:
+	if float(count) / float(X.shape[0]) > 0.15:
 		tooManyNans.append(i)
+#1, 2, 3, 5, 8, 12, 13, 14, 15, 16, 18, 20, 21, 22, 26, 29, 31, 32, 35, 37, 38, 40, 41, 43, 44, 45, 46, 47, 48
 
-X = dropColumns(X, tooManyNans + [8, 1])
+# X2 = dropColumns(X, tooManyNans + [8, 1])
 
-
+	
 col_mean = np.nanmean(X,axis=0)
 inds = np.where(np.isnan(X))
 X[inds]=np.take(col_mean,inds[1])
@@ -287,26 +288,6 @@ x5 = isoMap(noninvasivethreats, y)
 x6 = isoMap(other, y)
 Xtransform5 = np.column_stack((x4, x5, x6))
 
-Xtransform6 = keepColumns(X, [46, 32, 34, 21, 35, 5, 47, 40, 22, 24, 41, 44, 16, 39, 20, 7, 18, 45, 14, 43]) #new labels feature rank. Got them from RF_feature_importance
-
-#Try will new labels
-
-sampleAndAverage(predictRF, "predictRF new y", sample_size, dropColumns(X, [1, 8]), y_new)
-
-sampleAndAverage(predictLR, "predictLR new y", sample_size, dropColumns(X, [1, 8]), y_new)
-sampleAndAverage(predictRF, "predictRF keeping 15 most new important features, new y", sample_size, Xtransform3, y_new)
-sampleAndAverage(predictRF, "predictLR keeping 10 most important features from before, new y", sample_size, Xtransform2, y_new)
-sampleAndAverage(predictRF, "predictRF keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
-
-sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
-
-# x7 = pca_decomposition(generalist, y_new)
-# x8 = pca_decomposition(noninvasivethreats, y_new)
-# x9 = pca_decomposition(other, y_new)
-# Xtransform4 = np.column_stack((x7, x8, x9))
-# sampleAndAverage(predictLR, "predictLR trying with pca decomposition with 10 most important features from before, new y", sample_size, Xtransform4, y_new)
-
-
 #Old labels 
 
 # RF_feature_importance(X, y)
@@ -325,6 +306,40 @@ sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, n
 # sampleAndAverage(predictLR, "predictLR", sample_size, pca_decomposition(X, y), y)
 #features 35, 7, 41, 34 
 # sampleAndAverage(predictLR, "predictLR", sample_size, pca_decomposition(feature_selection(X, y), y), y)
+
+
+
+#### NEW LABELS
+
+
+tooManyNans = []
+for i in range(X.shape[1]):
+	count = np.sum(np.isnan(X.T[i]))
+	if float(count) / float(X.shape[0]) > 0.10:
+		tooManyNans.append(i)
+#1, 2, 3, 5, 8, 12, 13, 14, 15, 16, 18, 20, 21, 22, 26, 29, 31, 32, 35, 37, 38, 40, 41, 43, 44, 45, 46, 47, 48
+
+
+# X2 = dropColumns(X, [1, 2, 3, 5, 8, 12, 13, 14, 15, 16, 18, 20, 21, 22, 26, 29, 31, 32, 35, 37, 38, 40, 41, 43, 44, 45, 46, 47, 48])
+
+
+
+Xtransform6 = keepColumns(X, [46, 32, 34, 21, 35, 5, 47, 40, 22, 24, 41, 44, 16, 39, 20, 7, 18, 45, 14, 43]) #new labels feature rank. Got them from RF_feature_importance
+
+sampleAndAverage(predictLR, "predictLR new y", sample_size, Xtransform6, y_new)
+
+sampleAndAverage(predictRF, "predictRF new y", sample_size, Xtransform6, y_new)
+sampleAndAverage(predictLR, "predictLR keeping 15 most important features from before, new y", sample_size, Xtransform3, y_new)
+sampleAndAverage(predictLR, "predictLR keeping 10 most important features from before, new y", sample_size, Xtransform2, y_new)
+sampleAndAverage(predictRF, "predictRF keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
+sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
+
+# x7 = pca_decomposition(generalist, y_new)
+# x8 = pca_decomposition(noninvasivethreats, y_new)
+# x9 = pca_decomposition(other, y_new)
+# Xtransform4 = np.column_stack((x7, x8, x9))
+# sampleAndAverage(predictLR, "predictLR trying with pca decomposition with 10 most important features from before, new y", sample_size, Xtransform4, y_new)
+
 
 
 
