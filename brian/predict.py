@@ -18,7 +18,7 @@ from sklearn import decomposition
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.manifold import LocallyLinearEmbedding
 from sklearn.manifold import Isomap
-
+import sklearn.preprocessing as preprocessing
 
 
 
@@ -43,7 +43,7 @@ def predictRF(X, y):
 	col_mean = np.nanmean(X,axis=0)
 	inds = np.where(np.isnan(X))
 	X[inds]=np.take(col_mean,inds[1])
-	RF = RFC(n_estimators = 100)
+	RF = RFC(n_estimators = 100, criterion = "entropy")
 
 	X_train, X_test, y_train, y_test = chooseRandom(X, y)
 	RF.fit(X_train, y_train)
@@ -91,7 +91,7 @@ def sampleAndAverage(method, method_string, iterations, X, y):
 	return score/iterations * 100
 
 def chooseRandom(x, y):
-	x_train, x_test, y_train, y_test = sklearn.cross_validation.train_test_split(x, y, test_size = 0.5)
+	x_train, x_test, y_train, y_test = sklearn.cross_validation.train_test_split(x, y, test_size = 0.2)
 	return x_train, x_test, y_train, y_test
 
 def keepColumns(X, columns):
@@ -236,6 +236,7 @@ def RF_feature_importance(X, y):
 		print("%d. feature %d (%f)" % (f + 1, indices[f], importances[indices[f]]))
 
 
+
 sample_size = 100
 
 # From ecological literature- maybe feature 15
@@ -251,6 +252,8 @@ warnings.filterwarnings('ignore')
 X = load_data("pier_ne_data.csv")
 y = np.ravel(load_data("pier_ne_labels.csv", False))
 y_new = np.ravel(load_data("pier_ne_labels_new.csv", False))
+print y_new.shape
+print np.sum(y_new)
 
 tooManyNans = []
 for i in range(X.shape[1]):
@@ -312,11 +315,11 @@ Xtransform5 = np.column_stack((x4, x5, x6))
 #### NEW LABELS
 
 
-tooManyNans = []
-for i in range(X.shape[1]):
-	count = np.sum(np.isnan(X.T[i]))
-	if float(count) / float(X.shape[0]) > 0.10:
-		tooManyNans.append(i)
+# tooManyNans = []
+# for i in range(X.shape[1]):
+# 	count = np.sum(np.isnan(X.T[i]))
+# 	if float(count) / float(X.shape[0]) > 0.10:
+# 		tooManyNans.append(i)
 #1, 2, 3, 5, 8, 12, 13, 14, 15, 16, 18, 20, 21, 22, 26, 29, 31, 32, 35, 37, 38, 40, 41, 43, 44, 45, 46, 47, 48
 
 
@@ -324,16 +327,44 @@ for i in range(X.shape[1]):
 
 
 
-Xtransform6 = keepColumns(X, [46, 32, 34, 21, 35, 5, 47, 40, 22, 24, 41, 44, 16, 39, 20, 7, 18, 45, 14, 43]) #new labels feature rank. Got them from RF_feature_importance
+# Xtransform6 = keepColumns(X, [46, 32, 34, 21, 35, 5, 47, 40, 22, 24, 41, 44, 16, 39, 20, 7, 18, 45, 14, 43]) #new labels feature rank. Got them from RF_feature_importance
 
-sampleAndAverage(predictLR, "predictLR new y", sample_size, Xtransform6, y_new)
+# sampleAndAverage(predictLR, "predictLR new y", sample_size, Xtransform6, y_new)
 
-sampleAndAverage(predictRF, "predictRF new y", sample_size, Xtransform6, y_new)
-sampleAndAverage(predictLR, "predictLR keeping 15 most important features from before, new y", sample_size, Xtransform3, y_new)
-sampleAndAverage(predictLR, "predictLR keeping 10 most important features from before, new y", sample_size, Xtransform2, y_new)
-sampleAndAverage(predictRF, "predictRF keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
-sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
+# sampleAndAverage(predictRF, "predictRF new y", sample_size, Xtransform6, y_new)
+# sampleAndAverage(predictLR, "predictLR keeping 15 most important features from before, new y", sample_size, Xtransform3, y_new)
+# sampleAndAverage(predictLR, "predictLR keeping 10 most important features from before, new y", sample_size, Xtransform2, y_new)
+# sampleAndAverage(predictRF, "predictRF keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
+# sampleAndAverage(predictLR, "predictLR keeping 10 most new important features, new y", sample_size, Xtransform6, y_new)
 
+#Seeing which questions are left
+indices_left = set()
+for i in range(X.shape[1]):
+	indices_left.add(i)
+for i in tooManyNans:
+	indices_left.remove(i)
+# indices_left.remove(1)
+indices_left.remove(8)
+print sorted(indices_left)[12]
+print sorted(indices_left)[19]
+print sorted(indices_left)[9]
+print sorted(indices_left)[10]
+
+
+X2 = dropColumns(X, tooManyNans + [1, 8])
+RF_feature_importance(X2, y_new) #new feature 44 most important 
+# X2_transform = keepColumns(X2, [44, 30])
+X3 = keepColumns(X, [46, 32]) #Equivalent to X2_transform.
+# X3 = keepColumns(X, [24, 34, 17, 19])
+X3 = preprocessing.scale(X3)
+#46: Well controlled by herbicides
+#32: Self-compatible or apomictic
+#24: Forms dense thickets
+#34: Reproduction by vegetation
+sampleAndAverage(predictLR, "predictLR", sample_size, X3, y_new)
+sampleAndAverage(predictRF, "predictRF", sample_size, X3, y_new)
+# sampleAndAverage(predictLR, "predictLR", sample_size, X2_transform, y_new)
+# sampleAndAverage(predictRF, "predictRF", sample_size, X2_transform, y_new)
 # x7 = pca_decomposition(generalist, y_new)
 # x8 = pca_decomposition(noninvasivethreats, y_new)
 # x9 = pca_decomposition(other, y_new)
