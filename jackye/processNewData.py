@@ -24,7 +24,9 @@ def find_perfect_match(name, lst):
 	for e in lst:
 		print("  [fpm] exam", e)
 		if all([t in e for t in name_tokens]):
+			print(" [fpm] found", e)
 			return e
+	print (" [fpm] not found")
 	return None
 				
 def match_species(line):
