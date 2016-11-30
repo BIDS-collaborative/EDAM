@@ -1,6 +1,12 @@
 # scrape plant data
-def scrape_pacific_plants():
+def scrape_pacific_plants_html():
 
+
+def scrape_pacific_plants_pdf():
+
+
+def join_pacific_plants():
+  
 
 # subset pacific plants, remove no eval/no score
 def clean_pacific_plants():
