@@ -93,6 +93,7 @@ def predictMeanShift(X, labels):
 
 	ms = MeanShift(bandwidth=bandwidth, bin_seeding=True)
 	results = ms.fit_predict(X)
+	print list(results)
 	labels = ms.labels_
 	cluster_centers = ms.cluster_centers_
 

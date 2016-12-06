@@ -27,7 +27,7 @@ def scrape_pacific_plants_names():
     plant_scientific_names.append(parse_html(str(d)))
 
   # write names to json
-  with open('plant_scientific_names.json', 'w') as datafile:
+  with open('data/plant_scientific_names.json', 'w') as datafile:
     json.dump(plant_scientific_names, datafile, indent=2, separators=(',', ':'))
 
   # find common names
@@ -38,7 +38,7 @@ def scrape_pacific_plants_names():
     plant_common_names.append(parse_html(str(d)))
 
   # write names to json
-  with open('plant_common_names.json', 'w') as datafile:
+  with open('data/plant_common_names.json', 'w') as datafile:
     json.dump(plant_common_names, datafile, indent=2, separators=(',', ':'))
 
 
@@ -58,7 +58,7 @@ def scrape_pacific_plants_location():
     plant_location.append(parse_html(str(d)))
 
   # write locations to json
-  with open('plant_locations.json', 'w') as datafile:
+  with open('data/plant_locations.json', 'w') as datafile:
     json.dump(plant_location, datafile, indent=2, separators=(',', ':'))
 
 
@@ -77,7 +77,7 @@ def scrape_pacific_plants_links():
     plant_links.append(d.find('a').get('href'))
 
   # write links to json
-  with open('plant_links.json', 'w') as datafile:
+  with open('data/plant_links.json', 'w') as datafile:
     json.dump(plant_links, datafile, indent=2, separators=(',', ':'))
 
 
@@ -236,8 +236,8 @@ def write_to_csv(csv_name, data):
 
 def scrape_pacific_plants_data():
   # load link and name data files
-  plant_links = json.load(open('plant_links.json'))
-  plant_names = json.load(open('plant_scientific_names.json'))
+  plant_links = json.load(open('data/plant_links.json'))
+  plant_names = json.load(open('data/plant_scientific_names.json'))
   
   # match name and scrape data from link
   for link, name in zip(plant_links, plant_names):
@@ -249,20 +249,20 @@ def scrape_pacific_plants_data():
       plant_data = scrape_pacific_plants_pdf(link)
 
     # write data to csv
-    write_to_csv('plant_data.csv', name + ',' + ','.join([str(plant_data[k]) for k in sorted(plant_data.keys())]))
+    write_to_csv('data/plant_data.csv', name + ',' + ','.join([str(plant_data[k]) for k in sorted(plant_data.keys())]))
   
 
 # filter plants with missing data and by region (only Pacific)
 def clean_pacific_plants():
   # load location data file
-  plant_locations = json.load(open('plant_locations.json'))
+  plant_locations = json.load(open('data/plant_locations.json'))
 
   # check location and data completeness and write to file
-  with open('plant_data.csv') as csvfile:
+  with open('data/plant_data.csv') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     for row, location in zip(csvreader, plant_locations):
       if location == 'Pacific' and len(row) == 50:
-        write_to_csv('pacific_plant_data.csv', ','.join(row).decode('utf-8'))
+        write_to_csv('data/pacific_plant_data.csv', ','.join(row).decode('utf-8'))
 
 
 # read lists of invasive plants
@@ -281,14 +281,14 @@ def scrape_invasive_plants():
     invasive_plants.append(parse_html(str(d)))
 
   # write invasive plants to json
-  with open('invasive_plants.json', 'w') as datafile:
+  with open('data/invasive_plants.json', 'w') as datafile:
     json.dump(invasive_plants, datafile, indent=2, separators=(',', ':'))
 
 
 # match plant data with invasive plants
 def label_pacific_plants():
   # load invasive plants data file
-  invasive_plants = json.load(open('invasive_plants.json'))
+  invasive_plants = json.load(open('data/invasive_plants.json'))
   species_dict = {}
 
   # convert invasive plants list to genus:species dictionary
@@ -306,7 +306,7 @@ def label_pacific_plants():
       species_dict[genus] = [species]
 
   # iterate through list of plants
-  with open('pacific_plant_data.csv') as csvfile:
+  with open('data/pacific_plant_data.csv') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     # check for match in invasive plants list
     for row in csvreader:
@@ -318,14 +318,17 @@ def label_pacific_plants():
           species = tokens[2]
 
         if species in species_dict[genus] or species_dict[genus] == 'spp.':
-          write_to_csv('pacific_plant_label.csv', '1')
+          write_to_csv('data/pacific_plant_label.csv', '1')
         else:
-          write_to_csv('pacific_plant_label.csv', '0')
+          write_to_csv('data/pacific_plant_label.csv', '0')
       else:
-        write_to_csv('pacific_plant_label.csv', '0')
+        write_to_csv('data/pacific_plant_label.csv', '0')
 
   
-# clean_pacific_plants()
+# scrape_pacific_plants_names()
+# scrape_pacific_plants_location()
+# scrape_pacific_plants_links()
 # scrape_pacific_plants_data()
+# clean_pacific_plants()
 # scrape_invasive_plants()
 # label_pacific_plants()
