@@ -1,3 +1,18 @@
 h1 {
   color: blue;
 }
+
+rect {
+  fill: steelblue;
+}
+
+rect:hover {
+  fill: brown;
+}
+
+text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+

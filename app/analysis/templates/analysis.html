@@ -3,9 +3,12 @@
   {% load static %}
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
   <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="{% static 'analysis.js' %}"></script>
 </head>
 <body>
   <h1>Analysis</h1>
+  <svg class="chart"></svg>
 </body>
 </html>
