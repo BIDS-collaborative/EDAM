@@ -1,0 +1,6 @@
+/*General style for all templates
+Can be overwritten by app-specific CSS*/
+
+h1 {
+  color: green;
+}
