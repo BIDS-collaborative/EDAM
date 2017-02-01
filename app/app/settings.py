@@ -115,6 +115,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+STATIC_ROOT = ''
+
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
@@ -123,5 +126,6 @@ STATIC_URL = '/static/'
 
 # Place shared CSS, JS in root/static folder
 STATICFILES_DIRS = [
+    # '/Users/justinmi/Google Drive/Cal/URAP/BIDS/EDAM/app/static/', # if on a server change to /var/www/static/
     os.path.join(BASE_DIR, 'static'),
 ]
