@@ -14,6 +14,27 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <a class="navbar-brand" href="#">EDAM</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#services">MEMBERS</a></li>
+            <li><a href="#portfolio">ANALYSIS</a></li>
+            <li><a href="#pricing">WEBTOOL</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="jumbotron text-center">
       <h1>EDAM</h1> 
       <p>Machine Learning to Identify Invasive Species</p> 
@@ -42,7 +63,7 @@
     </div>
     <div class="container-fluid text-center bg-grey">
       <h2>Group Members</h2>
-          <div class="row text-center">
+        <div class="row text-center">
           <div class="col-sm-4">
             <div class="thumbnail">
               <img src="http://i.imgur.com/4ybg2jx.jpg" alt="Jonathan">
@@ -85,6 +106,34 @@
               <p>Undergraduate Researcher</p>
             </div>
           </div>
+        </div>
+      </div>
+    <div class="container-fluid bg-grey">
+      <h2 class="text-center">CONTACT</h2>
+      <div class="row">
+        <div class="col-sm-5">
+          <p>Contact us if you are interested in working with us!</p>
+          <p><span class="glyphicon glyphicon-map-marker"></span> Berkeley, US</p>
+          <p><span class="glyphicon glyphicon-phone"></span> +00 1231456789</p>
+          <p><span class="glyphicon glyphicon-envelope"></span> jonathanwang017 [at] berkeley.edu</p> 
+        </div>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+            </div>
+            <div class="col-sm-6 form-group">
+              <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+            </div>
+          </div>
+          <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+          <div class="row">
+            <div class="col-sm-12 form-group">
+              <button class="btn btn-default pull-right" type="submit">Send</button>
+            </div>
+          </div> 
+        </div>
+      </div>
     </div>
   </body>
 
