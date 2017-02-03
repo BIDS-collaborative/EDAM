@@ -26,14 +26,14 @@
 
 /* Styling for Navbar */
 .navbar {
-    margin-bottom: 0 !important;
-    background-color: green !important;
-    z-index: 9999 !important;
-    border: 0 !important;
+    margin-bottom: 0;
+    background-color: green;
+    z-index: 9999;
+    border: 0;
     font-size: 12px !important;
     line-height: 1.42857143 !important;
-    letter-spacing: 4px !important;
-    border-radius: 0 !important;
+    letter-spacing: 4px;
+    border-radius: 0;
 }
 
 .navbar li a, .navbar .navbar-brand {
@@ -46,6 +46,6 @@
 }
 
 .navbar-default .navbar-toggle {
-    border-color: transparent !important;
+    border-color: transparent;
     color: #fff !important;
 }
