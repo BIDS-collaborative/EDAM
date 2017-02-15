@@ -18,8 +18,9 @@ from django.contrib import admin
 
 urlpatterns = [
     # redirect root page to analysis
-    url(r'^$', include('analysis.urls')),
+    url(r'^$', include('analysis.urls'), name='home'),
     url(r'^admin/', admin.site.urls),
     url(r'^webtool/', include('webtool.urls')),
-    url(r'^analysis/', include('analysis.urls'))
+    url(r'^analysis/', include('analysis.urls')),
+    url(r'^upload/', include('upload.urls'))
 ]
