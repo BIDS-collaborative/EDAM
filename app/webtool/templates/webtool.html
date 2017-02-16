@@ -8,13 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static "webtool.css" %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static "fileinput.css" %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static "webtool_style.css" %}" media="screen">
+    <link href="{% static "fileinput.min.css" %}" media="all" rel="stylesheet" type="text/css" />
+    <!-- the main fileinput plugin file -->
+    <script src="path/to/js/fileinput.min.js"></script>
     <title>EDAM</title>
   </head>
 
   <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -27,22 +32,27 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/#about">ABOUT</a></li>
-            <li><a href="/#members">MEMBERS</a></li>
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#members">MEMBERS</a></li>
             <li><a href="/analysis">ANALYSIS</a></li>
             <li><a href="/webtool">WEBTOOL</a></li>
-            <li><a href="/#contact">CONTACT</a></li>
+            <li><a href="#contact">CONTACT</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <div class="jumbotron text-center">
-      <h1>EDAM</h1> 
-      <p>Model Selection</p> 
-      <label class="control-label">Select File</label>
-      <input id="input-4" name="input4[]" type="file" multiple class="file-loading">
-    </div>
 
+    <!-- JUMBOTRON -->
+    <div class="jumbotron text-center">
+      <h3>Webtool</h3> 
+      <p>Dataset Upload</p> 
+      <form class="form-inline">
+        <div class="input-group">
+          <label class="control-label">Select File</label>
+          <input id="input-2" name="input2[]" type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+        </div>
+      </form>
+    </div>
 
     <!-- FOOTER -->
     <footer class="container-fluid text-center">
@@ -78,9 +88,12 @@
           });
         } // End if
       });
-      $("#input-4").fileinput({showCaption: false});
     })
-
+    // initialize with defaults
+    $("input-1").fileinput();
+     
+    // with plugin options
+    $("input-1").fileinput({'showUpload':false, 'previewFileType':'any'});
     </script>
   </body>
 
