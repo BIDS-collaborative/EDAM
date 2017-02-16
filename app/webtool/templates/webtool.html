@@ -15,6 +15,22 @@
     <link href="{% static "fileinput.min.css" %}" media="all" rel="stylesheet" type="text/css" />
     <!-- the main fileinput plugin file -->
     <script src="path/to/js/fileinput.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="rangeslider.min.js"></script>
+    <script>
+        // Initialize a new plugin instance for all
+        // e.g. $('input[type="range"]') elements.
+        $('input[type="range"]').rangeslider();
+
+        // Destroy all plugin instances created from the
+        // e.g. $('input[type="range"]') elements.
+        $('input[type="range"]').rangeslider('destroy');
+
+        // Update all rangeslider instances for all
+        // e.g. $('input[type="range"]') elements.
+        // Usefull if you changed some attributes e.g. `min` or `max` etc.
+        $('input[type="range"]').rangeslider('update', true);
+    </script>
     <title>EDAM</title>
   </head>
 
@@ -50,6 +66,7 @@
         <div class="input-group">
           <label class="control-label">Select File</label>
           <input id="input-2" name="input2[]" type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
+          <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
         </div>
       </form>
     </div>

@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "EDAM app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BIDS-collaborative/EDAM.git"
+  },
+  "keywords": [
+    "EDAM",
+    "app"
+  ],
+  "author": "justinmi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BIDS-collaborative/EDAM/issues"
+  },
+  "homepage": "https://github.com/BIDS-collaborative/EDAM#readme",
+  "dependencies": {
+    "rangeslider.js": "^2.3.0"
+  }
+}
