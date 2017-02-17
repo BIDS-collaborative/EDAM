@@ -7,6 +7,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix
+import cPickle
+
 
 # examine missing data by samples
 def explore_samples(data, threshold=5):
@@ -37,7 +39,6 @@ def explore_features(data, threshold=100):
 # 196 (14%) missing more than 15 features
 # only 22 (2%) missing more than 20 features
 # all features missing in at least one sample
-
 
 # remove missing data (detrimental features and samples)
 def clean_features(features, labels):
@@ -100,7 +101,8 @@ def predict_rf(train_features, test_features, train_labels, test_labels):
   print get_accuracy(predictions, train_labels)
   predictions = model.predict(test_features)
   print get_accuracy(predictions, test_labels)
-  
+  with open('modelRF.pkl', 'wb') as fid:
+    cPickle.dump(model, fid) 
   # create confusion matrix of prediction results
   # cm = confusion_matrix(test_labels, predictions)
   # plot_confusion_matrix(cm, title='Normalized Confusion Matrix (Test Data)')
@@ -114,7 +116,8 @@ def predict_lr(train_features, test_features, train_labels, test_labels):
   print get_accuracy(predictions, train_labels)
   predictions = model.predict(test_features)
   print get_accuracy(predictions, test_labels)
-
+  with open('modelLR.pkl', 'wb') as fid:
+    cPickle.dump(model, fid) 
 
 # Notes:
 # RF training accuracy: ~86%
