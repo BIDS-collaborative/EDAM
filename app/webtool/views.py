@@ -1,5 +1,5 @@
 import numpy as np
-import cPickle
+import _pickle as cPickle
 from sklearn.metrics import confusion_matrix
 
 
@@ -9,24 +9,33 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
+from forms import DocumentForm 
+
 def index(request):
-	# load html from templates/
-	template = loader.get_template('webtool.html')
-	context = {
 
-	}
-	# respond with template with context
-	return HttpResponse(template.render(context, request))
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            training_info = handle_uploaded_file(form.cleaned_data['document'])
+            return render(request, 'webtool_result.html', training_info)
+    else:
+        form = DocumentForm()
+	    return render(request, 'webtool.html', {
+	        'form': form
+	    })
 
 
+def handle_uploaded_file(file_path):
+	data = np.genfromtxt(file_path, delimiter=',')
+	labels = data[:,-1]
+	features = data[:,:-1]
 
+	rf_result = performClassification(features, labels, "RF")
+	lr_result = performClassification(features, labels, "LR")
 
-def uploadData(request):
-	return
-
-
-def parseData(request):
-	return
+	result_dict = {"RF":rf_result, "LR":lr_result}
+	return result_dict
 
 #We can do 2 things with the data right now:
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.
@@ -38,12 +47,12 @@ def split_data(features, labels):
 	return train_features, test_features, train_labels, test_labels
 
 
-def train_rf(train_features, test_features, train_labels, test_labels):
+def train_rf(train_features, train_labels):
 	model = RandomForestClassifier(n_estimators=1000)
 	model.fit(train_features, train_labels)
 	return model
 	
-def train_lr(train_features, test_features, train_labels, test_labels):
+def train_lr(train_features, train_labels):
 	model = LogisticRegression()
 	model.fit(train_features, train_labels)
 	return model
@@ -52,21 +61,21 @@ def get_accuracy(predictions, labels):
 	return float(np.sum(predictions == labels))/len(labels)
 
 
-def performClassification(data_features, data_label, model, train = False):
+def performClassification(data_features, data_label, model_name, train = False):
 	if train:
 		train_features, test_features, train_labels, test_labels = split_data(features, labels)
-		if model == "LR":
+		if model_name == "LR":
 			model = train_lr(train_features, test_features, train_labels, test_labels)
 			predictions = predict_lr(train_features, test_features, train_labels, test_labels)
-		elif model == "RF":
+		elif model_name == "RF":
 			model = train_rf(train_features, test_features, train_labels, test_labels)
 		predictions = model.predict(data_features)
 
 	else:
-		with open("model" + model + "pkl", 'rb') as fid:
+		with open("model" + model_name + ".pkl", 'rb') as fid:
 			model = cPickle.load(fid)
 		predictions = model.predict(data_features)
 	cm = None
 	if data_label != None:
 		cm = confusion_matrix(data_labels, predictions)
-	return (predictions, model, cm)
+	return (model_name, predictions, cm)
