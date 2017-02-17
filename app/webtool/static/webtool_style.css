@@ -1,60 +1,51 @@
-.bg-grey {
-    background-color: #f6f6f6;
-}
-
-.container-fluid {
-    padding: 60px 50px !important;
-}
-
-.logo {
-    font-size: 200px;
-}
-
-@media screen and (max-width: 768px) {
-    .col-sm-4 {
-        text-align: center;
-        margin: 25px 0;
-    }
-}
-
-/* Styling for Jumbotron */
-.jumbotron {
-    background-color: green  !important;
+.model {
+    background-color: #0b7f37  !important;
     color: #ffffff  !important;
     padding: 100px 25px !important;
 }
 
-/* Styling for Navbar */
-.navbar {
-    margin-bottom: 0;
-    background-color: green;
-    z-index: 9999;
-    border: 0;
-    font-size: 12px !important;
-    line-height: 1.42857143 !important;
-    letter-spacing: 4px;
-    border-radius: 0;
+.panel {
+    border: 1px solid #f4511e; 
+    border-radius:0;
+    transition: box-shadow 0.5s;
 }
 
-.navbar li a, .navbar .navbar-brand {
+.panel:hover {
+    box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+}
+
+.panel-footer .btn:hover {
+    border: 1px solid #f4511e;
+    background-color: #fff !important;
+    color: #f4511e;
+}
+
+.panel-heading {
     color: #fff !important;
+    background-color: #f4511e !important;
+    padding: 25px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
 
-.navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #f4511e !important;
+.panel-footer {
     background-color: #fff !important;
 }
 
-.navbar-default .navbar-toggle {
-    border-color: transparent;
-    color: #fff !important;
+.panel-footer h3 {
+    font-size: 32px;
 }
 
-/* Styling for Back-to-Top Button*/
-.back2top {
-    color: green !important;
+.panel-footer h4 {
+    color: #aaa;
+    font-size: 14px;
 }
 
-.glyphicon-chevron-up {
-    color: green !important;
+.panel-footer .btn {
+    margin: 15px 0;
+    background-color: #f4511e;
+    color: #fff;
 }

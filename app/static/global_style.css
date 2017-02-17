@@ -21,7 +21,7 @@
 
 /* Styling for Jumbotron */
 .jumbotron {
-    background-color: green  !important;
+    background-color: #0b7f37  !important;
     color: #ffffff  !important;
     padding: 100px 25px !important;
 }
@@ -29,7 +29,7 @@
 /* Styling for Navbar */
 .navbar {
     margin-bottom: 0;
-    background-color: green;
+    background-color: #04a340;
     z-index: 9999;
     border: 0;
     font-size: 12px !important;
