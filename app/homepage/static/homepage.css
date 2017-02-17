@@ -49,3 +49,12 @@
     border-color: transparent;
     color: #fff !important;
 }
+
+/* Styling for Back-to-Top Button*/
+.back2top {
+    color: green !important;
+}
+
+.glyphicon-chevron-up {
+    color: green !important;
+}

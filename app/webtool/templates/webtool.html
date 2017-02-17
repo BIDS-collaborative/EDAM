@@ -6,37 +6,217 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.min.css" %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static "webtool.css" %}" media="screen">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
+    <link href="{% static "fileinput.min.css" %}" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{% static 'webtool_style.css' %}" media="screen"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">  
+
+    <!-- the main fileinput plugin file -->
+    <script src="path/to/js/fileinput.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="rangeslider.min.js"></script>
+    <script>
+      // Initialize a new plugin instance for all
+      // e.g. $('input[type="range"]') elements.
+      $('input[type="range"]').rangeslider();
+
+      // Destroy all plugin instances created from the
+      // e.g. $('input[type="range"]') elements.
+      $('input[type="range"]').rangeslider('destroy');
+
+      // Update all rangeslider instances for all
+      // e.g. $('input[type="range"]') elements.
+      // Usefull if you changed some attributes e.g. `min` or `max` etc.
+      $('input[type="range"]').rangeslider('update', true);
+      $('input[type="range"]').rangeslider({
+
+          // Feature detection the default is `true`.
+          // Set this to `false` if you want to use
+          // the polyfill also in Browsers which support
+          // the native <input type="range"> element.
+          polyfill: true,
+
+          // Default CSS classes
+          rangeClass: 'rangeslider',
+          disabledClass: 'rangeslider--disabled',
+          horizontalClass: 'rangeslider--horizontal',
+          verticalClass: 'rangeslider--vertical',
+          fillClass: 'rangeslider__fill',
+          handleClass: 'rangeslider__handle',
+
+          // Callback function
+          onInit: function() {},
+
+          // Callback function
+          onSlide: function(position, value) {},
+
+          // Callback function
+          onSlideEnd: function(position, value) {}
+      });
+    </script>
+
+    <!-- SCRIPT FOR SMOOTH SCROLLING FROM NAVBAR -->
+    <script>
+      $(document).ready(function(){
+        // Add smooth scrolling to all links in navbar + footer link
+        $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+
+         // Make sure this.hash has a value before overriding default behavior
+        if (this.hash !== "") {
+
+          // Prevent default anchor click behavior
+          event.preventDefault();
+
+          // Store hash
+          var hash = this.hash;
+
+          // Using jQuery's animate() method to add smooth page scroll
+          // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top
+          }, 900, function(){
+
+            // Add hash (#) to URL when done scrolling (default click behavior)
+            window.location.hash = hash;
+            });
+          } // End if
+        });
+      })
+      // initialize with defaults
+      $("input-1").fileinput();
+       
+      // with plugin options
+      $("input-1").fileinput({'showUpload':false, 'previewFileType':'any'});
+    </script>
     <title>EDAM</title>
   </head>
 
-  <body>
+  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <a class="navbar-brand" href="/">EDAM</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#about">ABOUT</a></li>
+            <li><a href="#members">MEMBERS</a></li>
+            <li><a href="/analysis">ANALYSIS</a></li>
+            <li><a href="/webtool">WEBTOOL</a></li>
+            <li><a href="#contact">CONTACT</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="model container-fluid">
+      <div class="text-center">
+        <h2>Models</h2>
+        <h4>Choose a model</h4>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 col-xs-12">
+          <div class="panel panel-default text-center">
+            <div class="panel-heading">
+              <h1>Random Forest</h1>
+            </div>
+            <div class="panel-body">
+              <p> More overfitting but potentially better fit </p>
+              <p> ... </p>
+              <p> ... </p>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-lg">Select</button>
+            </div>
+          </div>      
+        </div>     
+        <div class="col-sm-4 col-xs-12">
+          <div class="panel panel-default text-center">
+            <div class="panel-heading">
+              <h1>Logistic Regression</h1>
+            </div>
+            <div class="panel-body">
+              <p> ... </p>
+              <p> ... </p>
+              <p> ... </p>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-lg">Select</button>
+            </div>
+          </div>      
+        </div>       
+        <div class="col-sm-4 col-xs-12">
+          <div class="panel panel-default text-center">
+            <div class="panel-heading">
+              <h1>Clustering</h1>
+            </div>
+            <div class="panel-body">
+              <p> If no training data available </p>
+              <p> ... </p>
+              <p> ... </p>
+            </div>
+            <div class="panel-footer">
+              <button class="btn btn-lg">Select</button>
+            </div>
+          </div>      
+        </div>    
+      </div>
+    </div>
+
+
+    <!-- JUMBOTRON -->
     <div class="jumbotron text-center">
-      <h1>EDAM</h1> 
-      <p>Machine Learning to Identify Invasive Species</p> 
+      <h2>Webtool</h2> 
+      <p>Dataset Upload</p> 
       <form class="form-inline">
         <div class="input-group">
-          <input type="email" class="form-control" size="50" placeholder="Species Name" required>
-          <div class="input-group-btn">
-            <button type="button" class="btn btn-danger">Classify</button>
-          </div>
+          <label class="control-label">Select File</label>
+          <input id="input-2" name="input2[]" type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
         </div>
       </form>
     </div>
-    <div class="container-fluid">
-      <h2>Webtools</h2>
-      <h4>Lorem ipsum..</h4> 
-      <p>Lorem ipsum..</p>
-      <button class="btn btn-default btn-lg">Get in Touch</button>
+    <div id="about" class="container-fluid">
+      <div class="row">
+        <div class="text-center">
+          <h2>Hyperparameter Selection</h2>
+          <h4> </h4> 
+        </div>
+        <form class="form-inline text-center">
+          <div class="input-group">
+            <label class="control-label">Hyperparameter 1 </label>
+            <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="container-fluid bg-grey">
-      <h2>Our Values</h2>
-      <h4><strong>MISSION:</strong> Our mission lorem ipsum..</h4> 
-      <p><strong>VISION:</strong> Our vision Lorem ipsum..
+    <div id="about" class="container-fluid">
+      <div class="row">
+        <form class="form-inline text-center">
+          <div class="input-group">
+            <label class="control-label">Hyperparameter 2</label>
+            <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+          </div>
+        </form>
+      </div>
     </div>
+
+    <!-- FOOTER -->
+    <footer class="container-fluid text-center">
+      <a href="#myPage" title="To Top">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+        <p class="back2top">Back to Top</p>
+      </a>
+    </footer>
   </body>
 
 </html>
