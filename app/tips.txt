@@ -1,0 +1,3 @@
+Tips For Running Django
+- ./manage.py collectstatic restart static variables when they are modified
+- python manage.py runserver runs the server
