@@ -39,11 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'analysis',
     'webtool',
-<<<<<<< HEAD
     'homepage'
-=======
-    'species',
->>>>>>> db035f164dfc78d36d7fde1dab14707c09a46eac
+
 ]
 
 MIDDLEWARE = [
