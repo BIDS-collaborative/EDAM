@@ -6,11 +6,12 @@ from django.http import HttpResponse
 
 def index(request):
     if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            #handle_uploaded_file(request.FILES['file'])
-            return redirect('')
+        forms = DocumentForm(request.POST, request.FILES)
+        for form in forms: #Description, data, labels
+            if form.is_valid():
+                form.save()
+                #handle_uploaded_file(request.FILES['file'])
+        return redirect('')
     else:
         form = DocumentForm()
     return render(request, 'upload.html', {
