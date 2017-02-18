@@ -45,7 +45,18 @@ $(document).ready(function(){
     .attr("dy", ".35em")
     .text(function(d) { return d; });
 
+  var confusionMatrix = [
+              [0.69, 0.02],
+              [0.03, 0.70]
 
+          ];
+          var labels = ['Invasive', 'Noninvasive'];
+
+          Matrix({
+              container : '#container',
+              data      : confusionMatrix,
+              labels    : labels
+          });
 
 });
 
