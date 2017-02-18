@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
     <script src="{%static 'd3tips.js' %}"></script>
     <script src="{%static 'd3matrix.js' %}"></script>
     <script src="{% static 'analysis.js' %}"></script>
@@ -61,26 +62,13 @@
     </div>
 
     <!-- DATA -->
-    <div id="data" class="container-fluid">
-      <h1>Example graph</h1>
-      <svg id="chart"></svg>
+
+    <div id="test" class="container-fluid">
+        <h1>Example graph</h1>
+        <svg id="verticalgraph"></svg>
     </div>
     <div id="data" class="container-fluid">
         <div id="container"></div>
-        <script>
-          var confusionMatrix = [
-              [0.69, 0.02],
-              [0.03, 0.70]
-
-          ];
-          var labels = ['Invasive', 'Noninvasive'];
-
-          Matrix({
-              container : '#container',
-              data      : confusionMatrix,
-              labels    : labels
-          });
-          </script>
     </div>
 
     <!-- FOOTER -->
