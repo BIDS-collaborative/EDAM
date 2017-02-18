@@ -1,5 +1,5 @@
 import numpy as np
-import _pickle as cPickle
+import pickle as cPickle
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
