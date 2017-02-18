@@ -6,16 +6,17 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
-    <script src="{%static 'd3tips.js' %}"></script>
-    <script src="{%static 'd3matrix.js' %}"></script>
+    <script src="{% static 'd3tips.js' %}"></script>
+    <script src="{% static 'd3matrix.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'global_js.js' %}"></script>
     <script src="{% static 'analysis.js' %}"></script>
 
     <title>EDAM</title>
@@ -56,7 +57,7 @@
         <div class="col-sm-8">
           <h2>Intro</h2>
           <h4>Big Ideas Proposal here</h4>
-          <object width="300" height="300" type="text/plain" data="big_ideas_proposal.txt" border="0" ></object>
+          <object width="800" height="500" type="text/plain" data="{% static 'big_ideas_proposal.txt' %}" border="0" ></object>
         </div>
       </div>
     </div>
@@ -78,34 +79,5 @@
         <p class="back2top">Back to Top</p>
       </a>
     </footer>
-
-    <!-- SCRIPT FOR SMOOTH SCROLLING FROM NAVBAR -->
-    <script>
-    $(document).ready(function(){
-      // Add smooth scrolling to all links in navbar + footer link
-      $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
-
-       // Make sure this.hash has a value before overriding default behavior
-      if (this.hash !== "") {
-
-        // Prevent default anchor click behavior
-        event.preventDefault();
-
-        // Store hash
-        var hash = this.hash;
-
-        // Using jQuery's animate() method to add smooth page scroll
-        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-        $('html, body').animate({
-          scrollTop: $(hash).offset().top
-        }, 900, function(){
-
-          // Add hash (#) to URL when done scrolling (default click behavior)
-          window.location.hash = hash;
-          });
-        } // End if
-      });
-    })
-    </script>
   </body>
 </html>

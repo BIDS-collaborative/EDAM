@@ -1,7 +1,6 @@
 // sample bar chart in d3.js
 $(document).ready(function(){
 
-
 // /* Horizontal Bar Graph */
 
 //   // sample data
@@ -93,17 +92,15 @@ $(document).ready(function(){
 
 /*CONFUSION MATRIX */
   var confusionMatrix = [
-              [0.69, 0.02],
-              [0.03, 0.70]
+    [0.69, 0.02],
+    [0.03, 0.70]
+  ];
+  var labels = ['Invasive', 'Noninvasive'];
 
-          ];
-          var labels = ['Invasive', 'Noninvasive'];
-
-          Matrix({
-              container : '#container',
-              data      : confusionMatrix,
-              labels    : labels
-          });
-
+  Matrix({
+    container : '#container',
+    data      : confusionMatrix,
+    labels    : labels
+  });
 });
 
