@@ -33,7 +33,7 @@ def parseData(request):
 
 #We can do 2 things with the data right now:
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.
-#2. Predict using a stored in model. Right now it's just the model trained by the dataset. 
+#2. Predict using a stored in model. Right now it's just the model trained by the dataset. There needs to be the 5 features we found previously. 
 #Returns the predictions, model, and confusion matrix
 
 # examine missing data by samples
