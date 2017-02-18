@@ -3,6 +3,7 @@
 
 <html lang="en">
   <head>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -12,7 +13,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <script src="{%static 'd3tips.js' %}"></script>
+    <script src="{%static 'd3matrix.js' %}"></script>
     <script src="{% static 'analysis.js' %}"></script>
+
     <title>EDAM</title>
   </head>
 
@@ -24,7 +29,7 @@
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="/">EDAM</a>
         </div>
@@ -42,7 +47,7 @@
 
     <!-- JUMBOTRON -->
     <div class="jumbotron text-center">
-      <h1>Analysis</h1> 
+      <h1>Analysis</h1>
     </div>
 
     <!-- ABOUT -->
@@ -50,16 +55,20 @@
       <div class="row">
         <div class="col-sm-8">
           <h2>Intro</h2>
-          <h4>Big Ideas Proposal here</h4> 
+          <h4>Big Ideas Proposal here</h4>
           <object width="300" height="300" type="text/plain" data="big_ideas_proposal.txt" border="0" ></object>
         </div>
       </div>
     </div>
 
     <!-- DATA -->
+
+    <div id="test" class="container-fluid">
+        <h1>Example graph</h1>
+        <svg id="verticalgraph"></svg>
+    </div>
     <div id="data" class="container-fluid">
-      <h1>Example graph</h1>
-      <svg class="chart"></svg>
+        <div id="container"></div>
     </div>
 
     <!-- FOOTER -->
