@@ -20,7 +20,7 @@ def index(request):
     if form.is_valid():
       print("form received")
       form.save()
-      training_info = handle_uploaded_file(form.cleaned_data['document'])
+      training_info = handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
       return render(request, 'test2.html', training_info)
 
     print(form._errors)
@@ -30,27 +30,26 @@ def index(request):
     return render(request, 'webtool.html', {'form': form})
 
 
-def handle_uploaded_file(file_path):
-  print(file_path)
-  data = np.genfromtxt(file_path, delimiter=',',skip_header=True)
-  
+def handle_uploaded_file(doc, label):
+    features = np.genfromtxt(doc, delimiter=',',skip_header=True)
+    labels = np.genfromtxt(label, delimiter=',',skip_header=True)
 
-  labels = data[1:,-1]
-  features = data[1:,:-1]
+    # labels = data[1:,-1]
+    # features = features[1:,:]
 
-  labels[np.isnan(labels)] = 0
-  labels[np.isfinite(labels)==False] = 0
+    labels[np.isnan(labels)] = 0
+    labels[np.isfinite(labels)==False] = 0
 
-  features[np.isnan(features)] = 0
-  features[np.isfinite(features)==False] = 0
+    features[np.isnan(features)] = 0
+    features[np.isfinite(features)==False] = 0
 
-  print(np.shape(features), np.any(np.isnan(features)), np.all(np.isfinite(features)))
+    print(np.shape(features), np.any(np.isnan(features)), np.all(np.isfinite(features)))
 
-  rf_result = performClassification(features, labels, "RF", train=True)
-  lr_result = performClassification(features, labels, "LR", train=True)
+    rf_result = performClassification(features, labels, "RF", train=True)
+    lr_result = performClassification(features, labels, "LR", train=True)
 
-  result_dict = {"RF":rf_result, "LR":lr_result}
-  return result_dict
+    result_dict = {"RF":rf_result, "LR":lr_result}
+    return result_dict
 
 #We can do 2 things with the data right now:
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.
