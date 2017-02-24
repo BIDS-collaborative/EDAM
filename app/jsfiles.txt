@@ -1,0 +1,17 @@
+In Analysis:
+    {% static 'analysis.js' %}
+    https://d3js.org/d3.v4.min.js
+    https://code.jquery.com/jquery-3.1.1.min.js
+    {% static 'bootstrap/js/bootstrap.min.js' %}
+    https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
+
+In Webtool:
+    https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
+    {% static "bootstrap/js/bootstrap.min.js" %}
+    {% static 'rangeslider.min.js' }
+    {% static 'jquery.min.js' }
+    {% static 'fileinput.min.js' %}
+
+In Homepage:
+    https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
+    {% static 'bootstrap/js/bootstrap.min.js' %}

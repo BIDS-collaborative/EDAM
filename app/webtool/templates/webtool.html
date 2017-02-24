@@ -7,18 +7,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
-    <link href="{% static "fileinput.min.css" %}" media="all" rel="stylesheet" type="text/css" />
+    <link href="{% static 'fileinput.min.css' %}" media="all" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="{% static 'webtool_style.css' %}" media="screen"> 
     <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">  
 
     <!-- the main fileinput plugin file -->
-    <script src="path/to/js/fileinput.min.js"></script>
-    <script src="jquery.min.js"></script>
-    <script src="rangeslider.min.js"></script>
+    <script src="{% static 'fileinput.min.js' %}"></script>
+    <script src="{% static 'jquery.min.js' }"></script>
+    <script src="{% static 'rangeslider.min.js' }"></script>
     <script>
       // Initialize a new plugin instance for all
       // e.g. $('input[type="range"]') elements.
