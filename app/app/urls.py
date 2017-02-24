@@ -17,7 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    # redirect root page to analysis
     url(r'^$', include('homepage.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^webtool/', include('webtool.urls')), # sends urls with "webtool/" in its address to webtool.urls for further analysis
