@@ -48,6 +48,17 @@ $(document).ready(function(){
 //     .text(function(d) { return d; });
 
 /* VERTICAL BAR GRAPH*/
+$.ajax({url: "links to web results",
+       dataType: "json",
+       success: function(data) {
+        var storeData = null;
+        $.each(data, function(key, val) {
+          if (key == "featureResults"){
+            storeData = val;
+          }
+        });
+       }
+  });
   var data = [4, 8, 15, 16, 23, 42];
 
   var height = 420,
@@ -91,6 +102,17 @@ $(document).ready(function(){
 
 
 /*CONFUSION MATRIX */
+$.ajax({url: "links to web results",
+       dataType: "json",
+       success: function(data) {
+        var storeData = null;
+        $.each(data, function(key, val) {
+          if (key == "matrices"){
+            storeData = val;
+          }
+        });
+       }
+  });
   var confusionMatrix = [
     [0.69, 0.02],
     [0.03, 0.70]
