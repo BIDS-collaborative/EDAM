@@ -26,6 +26,11 @@ function Matrix(options) {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+    var tip = d3.tip()
+        .attr("class", "d3-tip")
+        .offset([-8, 0])
+        .html(function(d) { return "Attribute Value: " + d; });
+
     var background = svg.append("rect")
         .style("stroke", "black")
         .style("stroke-width", "2px")
@@ -56,11 +61,14 @@ function Matrix(options) {
             .enter().append("g")
         .attr("class", "cell")
         .attr("transform", function(d, i) { return "translate(" + x(i) + ", 0)"; });
+     cell.call(tip);
 
     cell.append('rect')
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("stroke-width", 0);
+        .style("stroke-width", 0)
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
 
     cell.append("text")
         .attr("dy", ".32em")

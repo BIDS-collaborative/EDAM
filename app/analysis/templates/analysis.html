@@ -12,7 +12,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-axis.v1.min.js"></script>
     <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <script scr="{% static 'd3-axis.js' %}"></script>
     <script src="{% static 'd3tips.js' %}"></script>
     <script src="{% static 'd3matrix.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -66,7 +68,7 @@
 
     <div id="test" class="container-fluid">
         <h1>Example graph</h1>
-        <svg id="verticalgraph"></svg>
+        <svg width="960" height="500"></svg>
     </div>
     <div id="data" class="container-fluid">
         <div id="container"></div>
