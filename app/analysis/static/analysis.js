@@ -1,10 +1,5 @@
 // sample bar chart in d3.js
 $(document).ready(function(){
-  // load from file for now - add static text in html when finalized
-  $('#intro').load(intro_file);
-  $('#results').load(results_file);
-  $('#conclusion').load(conclusion_file);
-
 // /* Horizontal Bar Graph */
 
 //   // sample data
