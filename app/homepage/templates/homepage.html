@@ -8,10 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-<<<<<<< HEAD
-=======
     <script src="{% static 'global_js.js' %}"></script>
->>>>>>> 97dd2942c0f948644451987aa4fd28c6bcd81fc4
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
     <title>EDAM</title>
@@ -33,8 +30,8 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#about">ABOUT</a></li>
             <li><a href="#members">MEMBERS</a></li>
-            <li><a href="/analysis">ANALYSIS</a></li>
-            <li><a href="/webtool">WEBTOOL</a></li>
+            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
+            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
             <li><a href="#contact">CONTACT</a></li>
           </ul>
         </div>
@@ -56,7 +53,7 @@
     </div>
 
     <!-- ABOUT -->
-    <div id="about" class="container-fluid">
+    <div id="about" name="about" class="container-fluid">
       <div class="row">
         <div class="col-sm-8">
           <h2>About Us</h2>

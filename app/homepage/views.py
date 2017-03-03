@@ -15,7 +15,7 @@ def index(request):
 
 def indexTest(request):
     # load html from templates/
-    template = loader.get_template('homepage.html/#about')
+    template = loader.get_template('homepage.html')
     context = {
 
     }

@@ -36,11 +36,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'home'%}">ABOUT</a></li>
-            <li><a href="{% url 'home' %}">MEMBERS</a></li>
-            <li><a href="/analysis">ANALYSIS</a></li>
-            <li><a href="/webtool">WEBTOOL</a></li>
-            <li><a href="#contact">CONTACT</a></li>
+            <li><a href="{% url 'homepage:index' %}/#about">ABOUT</a></li>
+            <li><a href="{% url 'homepage:index' %}/#members">MEMBERS</a></li>
+            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
+            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
+            <li><a href="{% url 'homepage:index' %}/#contact">CONTACT</a></li>
           </ul>
         </div>
       </div>
@@ -63,7 +63,6 @@
     </div>
 
     <!-- DATA -->
-
     <div id="test" class="container-fluid">
         <h1>Example graph</h1>
         <svg id="verticalgraph"></svg>
