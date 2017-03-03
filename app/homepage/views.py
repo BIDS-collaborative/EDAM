@@ -12,3 +12,12 @@ def index(request):
   }
   # respond with template with context
   return HttpResponse(template.render(context, request))
+
+def indexTest(request):
+    # load html from templates/
+    template = loader.get_template('homepage.html/#about')
+    context = {
+
+    }
+    # respond with template with context
+    return HttpResponse(template.render(context, request))
