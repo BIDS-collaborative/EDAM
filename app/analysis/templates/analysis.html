@@ -9,6 +9,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
+    <script>
+      var intro_file = "{% static 'intro.txt' %}";
+      var results_file = "{% static 'results.txt' %}";
+      var conclusion_file = "{% static 'conclusion.txt' %}";
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -55,9 +60,20 @@
     <div id="about" class="container-fluid">
       <div class="row">
         <div class="col-sm-8">
-          <h2>Intro</h2>
-          <h4>Big Ideas Proposal here</h4>
-          <object width="800" height="500" type="text/plain" data="{% static 'big_ideas_proposal.txt' %}" border="0" ></object>
+          <h2>Introduction</h2>
+          <p id="intro"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <h2>Results</h2>
+          <p id="results"></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <h2>Conclusion</h2>
+          <p id="conclusion"></p>
         </div>
       </div>
     </div>
