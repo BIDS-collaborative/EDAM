@@ -9,10 +9,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'global_js.js' %}"></script>
+    <script src="{% static 'webtool.js' %}"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static 'webtool_style.css' %}" media="screen"> 
     <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">  
+    <link rel="stylesheet" type="text/css" href="{% static 'webtool_style.css' %}" media="screen"> 
     <title>EDAM</title>
   </head>
 
@@ -40,62 +41,9 @@
       </div>
     </nav>
 
-    <div class="model container-fluid">
-      <div class="text-center">
-        <h2>Models</h2>
-        <h4>Choose a model</h4>
-      </div>
-      <div class="row">
-        <div class="col-sm-4 col-xs-12">
-          <div class="panel panel-default text-center">
-            <div class="panel-heading">
-              <h1>Random Forest</h1>
-            </div>
-            <div class="panel-body">
-              <p> More overfitting but potentially better fit </p>
-              <p> ... </p>
-              <p> ... </p>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-lg">Select</button>
-            </div>
-          </div>      
-        </div>     
-        <div class="col-sm-4 col-xs-12">
-          <div class="panel panel-default text-center">
-            <div class="panel-heading">
-              <h1>Logistic Regression</h1>
-            </div>
-            <div class="panel-body">
-              <p> ... </p>
-              <p> ... </p>
-              <p> ... </p>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-lg">Select</button>
-            </div>
-          </div>      
-        </div>       
-        <div class="col-sm-4 col-xs-12">
-          <div class="panel panel-default text-center">
-            <div class="panel-heading">
-              <h1>Clustering</h1>
-            </div>
-            <div class="panel-body">
-              <p> If no training data available </p>
-              <p> ... </p>
-              <p> ... </p>
-            </div>
-            <div class="panel-footer">
-              <button class="btn btn-lg">Select</button>
-            </div>
-          </div>      
-        </div>    
-      </div>
-    </div>
 
 
-    <!-- JUMBOTRON -->
+    <!-- FILE UPLOAD -->
     <div class="jumbotron text-center">
       <h2>Webtool</h2> 
       <p>Dataset Upload</p> 
@@ -105,30 +53,115 @@
         <input type="submit" value="Submit">
       </form>
     </div>
-    <div id="hyperparameter" class="container-fluid">
-      <div class="row">
-        <div class="text-center">
-          <h2>Hyperparameter Selection</h2>
-          <h4> </h4> 
+
+    <!-- MODEL SELECTION -->
+    <div class="model container-fluid">
+      <div class="text-center">
+        <h2>Models</h2>
+        <h4>Choose a model</h4>
+      </div>
+      <!-- Dropdown Menu -->
+      <div class="dropdown text-center">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu dropdown-menu-center" style="left:50%; right:auto; text-align:center; transform:translate(-50%, 0);">
+          <li><a onclick="showPageElement('random-forest'); hidePageElement(document.getElementById('logistic-regression')); hidePageElement(document.getElementById('clustering'))">Random Forest</a></li>
+          <li><a onclick="showPageElement('logistic-regression'); hidePageElement(document.getElementById('random-forest')); hidePageElement(document.getElementById('clustering'))">Logistic Regression</a></li>
+          <li><a onclick="showPageElement('clustering'); hidePageElement(document.getElementById('random-forest')); hidePageElement(document.getElementById('logistic-regression'))">Clustering</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <button   
+        onclick="showPageElement('hyperparameters')">  
+            Show DIV  
+    </button>
+
+
+    <!-- RANDOM FOREST HYPERPARAMETERS -->
+    <div id="random-forest" style="display: none;">
+      <div id="hyperparameter" class="container-fluid" >
+        <div class="row">
+          <div class="text-center">
+            <h2>RF Hyperparameter Selection</h2>
+            <h4> </h4> 
+          </div>
+          <form class="form-inline text-center" method="post">
+            <div class="input-group">
+              <label class="control-label">RF Hyperparameter 1 </label>
+              <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+            </div>
+          </form>
         </div>
-        <form class="form-inline text-center" method="post">
-          <div class="input-group">
-            <label class="control-label">Hyperparameter 1 </label>
-            <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
-          </div>
-        </form>
+      </div>
+      <div id="hyperparameter" class="container-fluid">
+        <div class="row">
+          <form class="form-inline text-center">
+            <div class="input-group">
+              <label class="control-label">RF Hyperparameter 2</label>
+              <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-    <div id="hyperparameter" class="container-fluid">
-      <div class="row">
-        <form class="form-inline text-center">
-          <div class="input-group">
-            <label class="control-label">Hyperparameter 2</label>
-            <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+
+    <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
+    <div id="logistic-regression" style="display: none;">
+      <div id="hyperparameter" class="container-fluid" >
+        <div class="row">
+          <div class="text-center">
+            <h2>LR Hyperparameter Selection</h2>
+            <h4> </h4> 
           </div>
-        </form>
+          <form class="form-inline text-center" method="post">
+            <div class="input-group">
+              <label class="control-label">LR Hyperparameter 1 </label>
+              <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="hyperparameter" class="container-fluid">
+        <div class="row">
+          <form class="form-inline text-center">
+            <div class="input-group">
+              <label class="control-label">LR Hyperparameter 2</label>
+              <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+            </div>
+          </form>
+        </div>
       </div>
     </div>
+
+    <!-- CLUSTERING HYPERPARAMETERS -->
+    <div id="clustering" style="display: none;">
+      <div id="hyperparameter" class="container-fluid" >
+        <div class="row">
+          <div class="text-center">
+            <h2>Clustering Hyperparameter Selection</h2>
+            <h4> </h4> 
+          </div>
+          <form class="form-inline text-center" method="post">
+            <div class="input-group">
+              <label class="control-label">Clustering Hyperparameter 1 </label>
+              <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div id="hyperparameter" class="container-fluid">
+        <div class="row">
+          <form class="form-inline text-center">
+            <div class="input-group">
+              <label class="control-label">Clustering Hyperparameter 2</label>
+              <input type="range" min="10" max="1000" step="10" value="300" data-orientation="vertical">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    
 
     <!-- FOOTER -->
     <footer class="container-fluid text-center">
@@ -138,5 +171,43 @@
       </a>
     </footer>
   </body>
+
+  <script type="text/javascript">  
+  /* Script by: www.jtricks.com 
+   * Version: 20090221 
+   * Latest version: 
+   * www.jtricks.com/javascript/blocks/showinghiding.html 
+   */  
+  function showPageElement(what)  
+  {  
+      var obj = typeof what == 'object'  
+          ? what : document.getElementById(what);  
+    
+      obj.style.display = 'block';  
+      return false;  
+  }  
+    
+  function hidePageElement(what)  
+  {  
+      var obj = typeof what == 'object'  
+          ? what : document.getElementById(what);  
+    
+      obj.style.display = 'none';  
+      return false;  
+  }  
+    
+  function togglePageElementVisibility(what)  
+  {  
+      var obj = typeof what == 'object'  
+          ? what : document.getElementById(what);  
+    
+      if (obj.style.display == 'none')  
+          obj.style.display = 'block';  
+      else  
+          obj.style.display = 'none';  
+      return false;  
+  }  
+    
+  </script>  
 
 </html>
