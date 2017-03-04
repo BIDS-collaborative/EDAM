@@ -118,6 +118,7 @@ $.ajax({url: "links to web results",
   //   .enter().append("g")
   //   .attr("transform", function(d, i) { return "translate(" + i * barWidth + ",0)"; });
   //   bar.call(tip);
+  //test
 
 
   // // bar g is comprised of a rectangular bar and text label
