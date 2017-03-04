@@ -1,6 +1,5 @@
 // sample bar chart in d3.js
 $(document).ready(function(){
-
 // /* Horizontal Bar Graph */
 
 //   // sample data
