@@ -12,7 +12,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-axis.v1.min.js"></script>
     <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+    <script scr="{% static 'd3-axis.js' %}"></script>
     <script src="{% static 'd3tips.js' %}"></script>
     <script src="{% static 'd3matrix.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
@@ -65,7 +67,7 @@
         <div class="col-sm-8">
           <h2>Results</h2>
           <p>
-            By filtering the data to remove missing information, we had a dataset of 962 samples and 18 features. We split the dataset 80:20 into training and validation sets. 
+            By filtering the data to remove missing information, we had a dataset of 962 samples and 18 features. We split the dataset 80:20 into training and validation sets.
           </p>
           <p>
             We trained classification on the training data and predicted on the training and validation data. Depending on the random split of training and validation sets, the prediction accuracy varied a bit. Using the Logistic Regression model, the prediction accuracy was around 75% for both the training and validation sets. With the Random Forest model, the training accuracy was around 85% and the test accuracy was around 75%. Based on these results, Random Forest has more overfitting but potentially has a better prediction accuracy. As seen in the confusion matrix, the classification model leans towards non-invasive. This can be attributed to data bias since a large number of samples are non-invasive.
@@ -80,7 +82,7 @@
       <div class="row">
         <div class="col-sm-8">
           <p>
-            The top 3 most important features from the Random Forest model accounted for about 30% of the total data variance. By training a model on just these 3 features, all 4 prediction accuracies ended up at around 75%. Similarly, we used PCA to reduce the 18 features to just 3 features, which accounted for 50% of the total variance and resulted in the same prediction accuracies as the full feature set. Based on these two results, the significant features for classification of invasive species are reproduction, dispersal, and naturalization. 
+            The top 3 most important features from the Random Forest model accounted for about 30% of the total data variance. By training a model on just these 3 features, all 4 prediction accuracies ended up at around 75%. Similarly, we used PCA to reduce the 18 features to just 3 features, which accounted for 50% of the total variance and resulted in the same prediction accuracies as the full feature set. Based on these two results, the significant features for classification of invasive species are reproduction, dispersal, and naturalization.
           </p>
         </div>
       </div>
@@ -93,7 +95,7 @@
         <div class="col-sm-8">
           <h2>Conclusion</h2>
           <p>
-            As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features. 
+            As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features.
           </p>
           <p>
             The long term goal of this project is to gather more training data and expand our models to encompass more organism groups. To do this, we have developed a webtool to perform live classification of user input data. This allows for testing the models with various hyperparameters while gathering more species data to improve our models.
@@ -105,11 +107,11 @@
     <!-- DATA -->
     <div id="test" class="container-fluid">
         <h1>Example graph</h1>
-        <svg id="verticalgraph"></svg>
+        <svg width="960" height="500"></svg>
     </div>
     <div id="data" class="container-fluid">
         <div id="container"></div>
-    </div>   
+    </div>
 
     <!-- FOOTER -->
     <footer class="container-fluid text-center">
