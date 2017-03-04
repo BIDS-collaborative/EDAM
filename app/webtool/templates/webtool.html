@@ -174,26 +174,28 @@
   </body>
 
   <script type="text/javascript">  
-    /* Shows given <div> and hides all other divs
-     */  
+    /* Shows given <div> and hides all other divs */  
     function showPageElement(what)  
     {  
       if (what == "0") {
         return false;
       }
 
+      // hides element
       var elements = new Array("random-forest", "logistic-regression", "clustering");
-      var obj = typeof what == 'object'  
-        ? what : document.getElementById(what);
-
       for (var i = elements.length - 1; i >= 0; i--) {
           hidePageElement(document.getElementById(elements[i]));
         }  
+
+      // shows element
+      var obj = typeof what == 'object'  
+        ? what : document.getElementById(what);
     
       obj.style.display = 'block';  
       return false;  
     }  
       
+    /* hides a given div */
     function hidePageElement(what)  
     {  
       var obj = typeof what == 'object'  
