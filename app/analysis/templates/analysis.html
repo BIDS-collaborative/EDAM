@@ -38,11 +38,11 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#about">ABOUT</a></li>
-            <li><a href="#members">MEMBERS</a></li>
-            <li><a href="/analysis">ANALYSIS</a></li>
-            <li><a href="/webtool">WEBTOOL</a></li>
-            <li><a href="#contact">CONTACT</a></li>
+            <!-- <li><a href="{% url 'homepage:index' %}/#about">ABOUT</a></li> -->
+            <!-- <li><a href="{% url 'homepage:index' %}/#members">MEMBERS</a></li> -->
+            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
+            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
+            <!-- <li><a href="{% url 'homepage:index' %}/#contact">CONTACT</a></li> -->
           </ul>
         </div>
       </div>
@@ -54,7 +54,7 @@
     </div>
 
     <!-- ABOUT -->
-    <div id="about" class="container-fluid">
+    <div id="proposal" class="container-fluid">
       <div class="row">
         <div class="col-sm-8">
           <h2>Introduction</h2>
