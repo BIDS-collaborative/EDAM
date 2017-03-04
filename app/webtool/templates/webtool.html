@@ -62,7 +62,7 @@
       </div>
       <!-- Dropdown Menu -->
       <div class="dropdown text-center">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Dropdown Example
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Models
         <span class="caret"></span></button>
         <ul class="dropdown-menu dropdown-menu-center" style="left:50%; right:auto; text-align:center; transform:translate(-50%, 0);">
           <li><a onclick="showPageElement('random-forest'); hidePageElement(document.getElementById('logistic-regression')); hidePageElement(document.getElementById('clustering'))">Random Forest</a></li>
@@ -72,11 +72,12 @@
       </div>
     </div>
 
-    <button   
-        onclick="showPageElement('hyperparameters')">  
-            Show DIV  
-    </button>
-
+    <select onchange="showPageElement(value);" required>
+      <option value="0">Choose a model</option>
+      <option value="random-forest">Random Forest</option>
+      <option value="logistic-regression">Logistic Regression</option>
+      <option value="clustering">Clustering</option>
+    </select>
 
     <!-- RANDOM FOREST HYPERPARAMETERS -->
     <div id="random-forest" style="display: none;">
@@ -173,41 +174,34 @@
   </body>
 
   <script type="text/javascript">  
-  /* Script by: www.jtricks.com 
-   * Version: 20090221 
-   * Latest version: 
-   * www.jtricks.com/javascript/blocks/showinghiding.html 
-   */  
-  function showPageElement(what)  
-  {  
+    /* Shows given <div> and hides all other divs
+     */  
+    function showPageElement(what)  
+    {  
+      if (what == "0") {
+        return false;
+      }
+
+      var elements = new Array("random-forest", "logistic-regression", "clustering");
       var obj = typeof what == 'object'  
-          ? what : document.getElementById(what);  
+        ? what : document.getElementById(what);
+
+      for (var i = elements.length - 1; i >= 0; i--) {
+          hidePageElement(document.getElementById(elements[i]));
+        }  
     
       obj.style.display = 'block';  
       return false;  
-  }  
-    
-  function hidePageElement(what)  
-  {  
+    }  
+      
+    function hidePageElement(what)  
+    {  
       var obj = typeof what == 'object'  
-          ? what : document.getElementById(what);  
+        ? what : document.getElementById(what);  
     
       obj.style.display = 'none';  
       return false;  
-  }  
-    
-  function togglePageElementVisibility(what)  
-  {  
-      var obj = typeof what == 'object'  
-          ? what : document.getElementById(what);  
-    
-      if (obj.style.display == 'none')  
-          obj.style.display = 'block';  
-      else  
-          obj.style.display = 'none';  
-      return false;  
-  }  
-    
+    }  
   </script>  
 
 </html>
