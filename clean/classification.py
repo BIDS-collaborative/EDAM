@@ -69,7 +69,7 @@ def clean_features(features, labels):
 
 # split training and test data
 def split_data(features, labels):
-  train_features, test_features, train_labels, test_labels = sklearn.cross_validation.train_test_split(features, labels, test_size = 0.2)
+  train_features, test_features, train_labels, test_labels = sklearn.model_selection.train_test_split(features, labels, test_size = 0.2)
   return train_features, test_features, train_labels, test_labels
 
 def get_accuracy(predictions, labels):
@@ -177,14 +177,14 @@ features = np.genfromtxt('data/pacific_plant_data.csv', delimiter=',')
 labels = np.genfromtxt('data/pacific_plant_label.csv')
 features, labels = clean_features(features, labels)
 # features = get_principal_components(features, 3)
-features = get_best_features(features, labels, 5)
+# features = get_best_features(features, labels, 5)
 
 # np.savetxt('data/clustering_features.csv', features, delimiter=',', fmt='%i')
 # np.savetxt('data/clustering_labels.csv', labels, fmt='%i')
 # get_feature_importance(features, labels)
 
 train_features, test_features, train_labels, test_labels = split_data(features, labels)
-predict_rf(train_features, test_features, train_labels, test_labels)
-predict_lr(train_features, test_features, train_labels, test_labels)
+# predict_rf(train_features, test_features, train_labels, test_labels)
+# predict_lr(train_features, test_features, train_labels, test_labels)
 
 

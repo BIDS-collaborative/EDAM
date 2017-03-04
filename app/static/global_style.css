@@ -1,62 +1,42 @@
 /* General CSS to be used by all pages, can be overwritten */
+.navbar {
+  margin-bottom: 0;
+  background-color: #04a340;
+  z-index: 9999;
+  border: 0;
+  font-size: 12px;
+  line-height: 1.42857143;
+  letter-spacing: 4px;
+  border-radius: 0;
+}
 
-.bg-grey {
-    background-color: #f6f6f6;
+.navbar .nav li a, .navbar .navbar-brand {
+  color: #fff;
+}
+
+.navbar .navbar-brand:hover {
+  color: #fff;
+}
+
+.navbar .nav li a:hover, .navbar .nav li.active a {
+  color: #f4511e;
+  background-color: #fff;
+}
+
+.jumbotron {
+  background-color: #0b7f37;
+  color: #ffffff;
+  padding: 70px 25px;
 }
 
 .container-fluid {
-    padding: 60px 50px !important;
+  padding: 60px 50px;
 }
 
-.logo {
-    font-size: 200px;
+.bg-grey {
+  background-color: #f6f6f6;
 }
 
-@media screen and (max-width: 768px) {
-    .col-sm-4 {
-        text-align: center;
-        margin: 25px 0;
-    }
-}
-
-/* Styling for Jumbotron */
-.jumbotron {
-    background-color: #0b7f37  !important;
-    color: #ffffff  !important;
-    padding: 100px 25px !important;
-}
-
-/* Styling for Navbar */
-.navbar {
-    margin-bottom: 0;
-    background-color: #04a340;
-    z-index: 9999;
-    border: 0;
-    font-size: 12px !important;
-    line-height: 1.42857143 !important;
-    letter-spacing: 4px;
-    border-radius: 0;
-}
-
-.navbar li a, .navbar .navbar-brand {
-    color: #fff !important;
-}
-
-.navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #f4511e !important;
-    background-color: #fff !important;
-}
-
-.navbar-default .navbar-toggle {
-    border-color: transparent;
-    color: #fff !important;
-}
-
-/* Styling for Back-to-Top Button*/
-.back2top {
-    color: green !important;
-}
-
-.glyphicon-chevron-up {
-    color: green !important;
+.green-text {
+  color: green;
 }

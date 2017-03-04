@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 {% load static %}
 
-<html lang="en">
+<html>
   <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://d3js.org/d3-axis.v1.min.js"></script>
-    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
     <script scr="{% static 'd3-axis.js' %}"></script>
     <script src="{% static 'd3tips.js' %}"></script>
     <script src="{% static 'd3matrix.js' %}"></script>
@@ -24,27 +19,17 @@
     <title>EDAM</title>
   </head>
 
-  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+  <body id="top">
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">EDAM</a>
+          <a class="navbar-brand" href="{% url 'homepage:index' %}">EDAM</a>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="{% url 'homepage:index' %}/#about">ABOUT</a></li> -->
-            <!-- <li><a href="{% url 'homepage:index' %}/#members">MEMBERS</a></li> -->
-            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
-            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
-            <!-- <li><a href="{% url 'homepage:index' %}/#contact">CONTACT</a></li> -->
-          </ul>
-        </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
+          <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
+        </ul>
       </div>
     </nav>
 
@@ -53,10 +38,10 @@
       <h1>Analysis</h1>
     </div>
 
-    <!-- ABOUT -->
-    <div id="proposal" class="container-fluid">
+    <!-- CONTENT -->
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <h2>Introduction</h2>
           <p>
             With the goal of understanding the challenges of classifying invasive species, we analyzed and tested classification models on the PIER Pacific plant dataset. Using a dataset of invasive plants, we trained machine learning models to classify the invasiveness of the PIER dataset plants. We first cleaned the data to remove plants missing too many features and only keeping features that are present in most of the samples and that can be easily attained. With the reduced dataset, we divided the samples into training and validation sets and trained Random Forest and Logistic Regression models. In addition, we used PCA to try to reduce the size of the feature space to better visualize the classification results.
@@ -64,7 +49,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <h2>Results</h2>
           <p>
             By filtering the data to remove missing information, we had a dataset of 962 samples and 18 features. We split the dataset 80:20 into training and validation sets.
@@ -75,24 +60,24 @@
         </div>
       </div>
       <div class="row">
-        <div id="test" class="container-fluid">
-          <svg id="verticalgraph"></svg>
+        <div class="container-fluid">
+          <div id="confusion_matrix"></div>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <p>
             The top 3 most important features from the Random Forest model accounted for about 30% of the total data variance. By training a model on just these 3 features, all 4 prediction accuracies ended up at around 75%. Similarly, we used PCA to reduce the 18 features to just 3 features, which accounted for 50% of the total variance and resulted in the same prediction accuracies as the full feature set. Based on these two results, the significant features for classification of invasive species are reproduction, dispersal, and naturalization.
           </p>
         </div>
       </div>
       <div class="row">
-        <div id="data" class="container-fluid">
-          <div id="container"></div>
+        <div class="container-fluid">
+          <svg id="feature_importance"></svg>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
           <h2>Conclusion</h2>
           <p>
             As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features.
@@ -104,20 +89,11 @@
       </div>
     </div>
 
-    <!-- DATA -->
-    <div id="test" class="container-fluid">
-        <h1>Example graph</h1>
-        <svg width="960" height="500"></svg>
-    </div>
-    <div id="data" class="container-fluid">
-        <div id="container"></div>
-    </div>
-
     <!-- FOOTER -->
     <footer class="container-fluid text-center">
-      <a href="#myPage" title="To Top">
-        <span class="glyphicon glyphicon-chevron-up"></span>
-        <p class="back2top">Back to Top</p>
+      <a href="#top">
+        <span class="glyphicon glyphicon-chevron-up green-text"></span>
+        <p class="green-text">Back to Top</p>
       </a>
     </footer>
   </body>
