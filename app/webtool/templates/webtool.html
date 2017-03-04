@@ -58,14 +58,17 @@
         <h4>Choose a model</h4>
       </div>
       <!-- Dropdown Menu -->
-      <div class="dropdown text-center">
-        <select onchange="showPageElement(value);" required>
-          <option value="0">Choose a model</option>
-          <option value="random-forest">Random Forest</option>
-          <option value="logistic-regression">Logistic Regression</option>
-          <option value="clustering">Clustering</option>
-        </select>
-      </div>
+      <form action="">
+        <div class="dropdown text-center">
+          <select onchange="showPageElement(value);" required>
+            <option value="">None</option>
+            <option value="random-forest">Random Forest</option>
+            <option value="logistic-regression">Logistic Regression</option>
+            <option value="clustering">Clustering</option>
+          </select>
+        </div>
+        <input type="submit" value="Submit">
+      </form>
     </div>
 
 
@@ -152,8 +155,7 @@
           </form>
         </div>
       </div>
-    </div>
-    
+    </div>    
 
     <!-- FOOTER -->
     <footer class="container-fluid text-center">
@@ -163,38 +165,5 @@
       </a>
     </footer>
   </body>
-
-  <script type="text/javascript">  
-    /* Shows given <div> and hides all other divs */  
-    function showPageElement(what)  
-    {  
-      if (what == "0") {
-        return false;
-      }
-
-      // hides element
-      var elements = new Array("random-forest", "logistic-regression", "clustering");
-      for (var i = elements.length - 1; i >= 0; i--) {
-          hidePageElement(document.getElementById(elements[i]));
-        }  
-
-      // shows element
-      var obj = typeof what == 'object'  
-        ? what : document.getElementById(what);
-    
-      obj.style.display = 'block';  
-      return false;  
-    }  
-      
-    /* hides a given div */
-    function hidePageElement(what)  
-    {  
-      var obj = typeof what == 'object'  
-        ? what : document.getElementById(what);  
-    
-      obj.style.display = 'none';  
-      return false;  
-    }  
-  </script>  
 
 </html>
