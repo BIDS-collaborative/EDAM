@@ -12,11 +12,9 @@ from rest_framework import status
 
 import numpy as np
 import itertools
-import matplotlib.pyplot as plt
 import sklearn
 import os
 import cPickle
-from mpl_toolkits.mplot3d import Axes3D
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
