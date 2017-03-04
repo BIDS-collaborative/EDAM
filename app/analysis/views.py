@@ -1,9 +1,9 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse
 from django.template import loader
 from django.templatetags.static import static
+
+from .models import PierData
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -15,28 +15,19 @@ import itertools
 import sklearn
 import os
 import cPickle
+import json
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix
 
 
-from webtool.views import handle_uploaded_file
-
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 def index(request):
-  # load html from templates/
   template = loader.get_template('analysis.html')
-  
-  # result_dict = handle_uploaded_file("/static/documents/edam_data.csv")
-  # respond with template with context
-  # return HttpResponse(template.render(request, "webtool_result.html", result_dict))
   return HttpResponse(template.render(request))
 
-
 def load_data():
+  BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
   directory = BASE_DIR + '/analysis'
   features = np.genfromtxt(directory + static('pacific_plant_data.csv'), delimiter=',')
   labels = np.genfromtxt(directory + static('pacific_plant_label.csv'))
@@ -85,7 +76,6 @@ def clean_features(features, labels):
 
   # TODO: efficiently remove NaNs while keeping as much data as possibles
   return features, labels
- 
 
 # split training and test data
 def split_data(features, labels):
@@ -100,9 +90,9 @@ def predict_rf(train_features, test_features, train_labels, test_labels):
   model = RandomForestClassifier(n_estimators=1000)
   model.fit(train_features, train_labels)
   predictions = model.predict(train_features)
-  print get_accuracy(predictions, train_labels)
+  # print get_accuracy(predictions, train_labels)
   predictions = model.predict(test_features)
-  print get_accuracy(predictions, test_labels)
+  # print get_accuracy(predictions, test_labels)
   return predictions
 
 # build LR model
@@ -110,9 +100,9 @@ def predict_lr(train_features, test_features, train_labels, test_labels):
   model = LogisticRegression()
   model.fit(train_features, train_labels)
   predictions = model.predict(train_features)
-  print get_accuracy(predictions, train_labels)
+  # print get_accuracy(predictions, train_labels)
   predictions = model.predict(test_features)
-  print get_accuracy(predictions, test_labels)
+  # print get_accuracy(predictions, test_labels)
   return predictions
 
 # plot confusion matrix
@@ -146,27 +136,41 @@ def get_principal_components(features, n_features=18):
   model.fit(features.T)
   return model.components_.T
 
-
+# cache PIER analysis data in database
+# allow options for confusion matrix (training or test, prediction model)
 @api_view(['GET'])
 def confusion_matrix(request):
-  directory = BASE_DIR + '/analysis'
-  f = open(directory + static('pacific_plant_split.pkl'), 'rb')
-  train_features, test_features, train_labels, test_labels = cPickle.load(f)
-  f = open(directory + static('pacific_plant_rf.pkl'), 'rb')
-  model = cPickle.load(f)
-  predictions = model.predict(test_features)
-  cm = get_confusion_matrix(test_labels, predictions)
-  return Response(cm)
+  confusion_matrix = None
+  if PierData.objects.filter(name='confusion_matrix').exists():
+    confusion_matrix = json.loads(PierData.objects.get(name='confusion_matrix').json)
+  else:
+    features, labels = load_data()
+    train_features, test_features, train_labels, test_labels = split_data(features, labels)
+    predictions = predict_rf(train_features, test_features, train_labels, test_labels)
+    confusion_matrix = get_confusion_matrix(test_labels, predictions)
+    PierData.objects.create(name='confusion_matrix', json=json.dumps(confusion_matrix.tolist()))
+  return Response(confusion_matrix)
 
 
 @api_view(['GET'])
 def feature_importance(request):
-  directory = BASE_DIR + '/analysis'
-  f = open(directory + static('pacific_plant_rf.pkl'), 'rb')
-  model = cPickle.load(f)
-  return Response(model.feature_importances_)
+  feature_importance = None
+  if PierData.objects.filter(name='feature_importance').exists():
+    feature_importance = json.loads(PierData.objects.get(name='feature_importance').json)
+  else:
+    features, labels = load_data()
+    feature_importance = get_feature_importance(features, labels)
+    PierData.objects.create(name='feature_importance', json=json.dumps(feature_importance.tolist()))
+  return Response(feature_importance)
   
 @api_view(['GET'])
 def pca_variance(request):
-  return Response('test')
+  pca_variance = None
+  if PierData.objects.filter(name='pca_variance').exists():
+    pca_variance = json.loads(PierData.objects.get(name='pca_variance').json)
+  else:
+    features, labels = load_data()
+    pca_variance = get_pca_variance(features)
+    PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance.tolist()))
+  return Response(pca_variance)
   
