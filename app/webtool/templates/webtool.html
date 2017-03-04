@@ -31,11 +31,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'homepage:index' %}/#about/">ABOUT</a></li>
-            <li><a href="{% url 'homepage:index' %}/#members/">MEMBERS</a></li>
             <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
             <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
-            <li><a href="{% url 'homepage:index' %/#contact/">CONTACT</a></li>
           </ul>
         </div>
       </div>
@@ -62,22 +59,16 @@
       </div>
       <!-- Dropdown Menu -->
       <div class="dropdown text-center">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Models
-        <span class="caret"></span></button>
-        <ul class="dropdown-menu dropdown-menu-center" style="left:50%; right:auto; text-align:center; transform:translate(-50%, 0);">
-          <li><a onclick="showPageElement('random-forest'); hidePageElement(document.getElementById('logistic-regression')); hidePageElement(document.getElementById('clustering'))">Random Forest</a></li>
-          <li><a onclick="showPageElement('logistic-regression'); hidePageElement(document.getElementById('random-forest')); hidePageElement(document.getElementById('clustering'))">Logistic Regression</a></li>
-          <li><a onclick="showPageElement('clustering'); hidePageElement(document.getElementById('random-forest')); hidePageElement(document.getElementById('logistic-regression'))">Clustering</a></li>
-        </ul>
+        <select onchange="showPageElement(value);" required>
+          <option value="0">Choose a model</option>
+          <option value="random-forest">Random Forest</option>
+          <option value="logistic-regression">Logistic Regression</option>
+          <option value="clustering">Clustering</option>
+        </select>
       </div>
     </div>
 
-    <select onchange="showPageElement(value);" required>
-      <option value="0">Choose a model</option>
-      <option value="random-forest">Random Forest</option>
-      <option value="logistic-regression">Logistic Regression</option>
-      <option value="clustering">Clustering</option>
-    </select>
+
 
     <!-- RANDOM FOREST HYPERPARAMETERS -->
     <div id="random-forest" style="display: none;">
