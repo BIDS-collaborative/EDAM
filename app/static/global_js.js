@@ -2,8 +2,8 @@ function createVerticalBarGraph(data, x, y) {
   var dimensions = margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = x - margin.left - margin.right,
     height = y - margin.top - margin.bottom;
-  var importance = d3.keys(data),
-  features = d3.values(data);
+  var features = data['features'],
+  importance = data['importance'];
   var svg = d3.select('#feature_importance')
     .attr('width', x)
     .attr('height', y);
@@ -53,12 +53,14 @@ function createVerticalBarGraph(data, x, y) {
 }
 
 function createMatrix(data, x, y) {
-  var labels = ['Invasive', 'Noninvasive'];
+  // data is a dictionary of the form {data: [], tips: [], labels: []} 
+  // where data is shown in the cells, tips are hover tooltips and labels are x/y axis labels
   Matrix({
     margins   : {top: 10, right: 10, bottom: 50, left: 100},
     container : '#confusion_matrix',
-    data      : data,
-    labels    : labels,
+    data      : data['matrix'],
+    tips      : data['tips'],
+    labels    : data['labels'],
     width     : x,
     height    : y
   });
