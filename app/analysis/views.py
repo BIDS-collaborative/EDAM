@@ -14,7 +14,8 @@ import numpy as np
 import itertools
 import sklearn
 import os
-import cPickle
+
+import pickle
 import json
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -42,7 +43,7 @@ def explore_samples(data, threshold=5):
     if missing_vals > threshold:
       rows.append(i)
       count += 1
-  print count
+  print (count)
   return rows
 
 # examine missing data by features
@@ -51,7 +52,7 @@ def explore_features(data, threshold=100):
   for i in range(data.shape[1]):
     missing_vals = np.sum(np.isnan(data[:, i]))
     if missing_vals > threshold:
-      print i, missing_vals
+      print (i, missing_vals)
       cols.append(i)
   return cols
 
@@ -64,15 +65,15 @@ def clean_features(features, labels):
   for f, s in zip(feature_threshold, sample_threshold):
     remove_cols = explore_features(features, f)
     features = np.delete(features, remove_cols, axis=1)
-    print features.shape
-    print '---'
-    
+    print (features.shape)
+    print ('---')
+
     # remove samples missing data
     remove_rows = explore_samples(features, s)
     features = np.delete(features, remove_rows, axis=0)
     labels = np.delete(labels, remove_rows)
-    print features.shape, labels.shape
-    print '---'
+    print (features.shape, labels.shape)
+    print ('---')
 
   # TODO: efficiently remove NaNs while keeping as much data as possibles
   return features, labels
@@ -162,7 +163,7 @@ def feature_importance(request):
     feature_importance = get_feature_importance(features, labels)
     PierData.objects.create(name='feature_importance', json=json.dumps(feature_importance.tolist()))
   return Response(feature_importance)
-  
+
 @api_view(['GET'])
 def pca_variance(request):
   pca_variance = None
@@ -173,4 +174,4 @@ def pca_variance(request):
     pca_variance = get_pca_variance(features)
     PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance.tolist()))
   return Response(pca_variance)
-  
+
