@@ -68,7 +68,7 @@ def clean_features(features, labels, feature_names):
     feature_names = np.delete(feature_names, remove_cols)
     print features.shape
     print '---'
-    
+
     # remove samples missing data
     remove_rows = explore_samples(features, s)
     features = np.delete(features, remove_rows, axis=0)
@@ -148,15 +148,15 @@ def confusion_matrix(request):
     predictions = predict_rf(train_features, test_features, train_labels, test_labels)
     cm, counts = get_confusion_matrix(test_labels, predictions)
     data['matrix'] = cm.tolist()
-    data['tips'] = [str(counts[0][0]) + ' out of ' + str(counts[0][0] + counts[0][1]), 
+    data['tips'] = [str(counts[0][0]) + ' out of ' + str(counts[0][0] + counts[0][1]),
     str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
-    str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]), 
+    str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]),
     str(counts[1][1]) + ' out of ' + str(counts[1][0] + counts[1][1])]
     data['labels'] = ['Invasive', 'Non-Invasive']
     PierData.objects.update_or_create(name='confusion_matrix', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='confusion_matrix').json)
-    
+
   return Response(data)
 
 
@@ -170,9 +170,9 @@ def feature_importance(request):
     PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)
-    
+
   return Response(data)
-  
+
 @api_view(['GET'])
 def pca_variance(request):
   pca_variance = None
@@ -183,4 +183,3 @@ def pca_variance(request):
     pca_variance = get_pca_variance(features)
     PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance))
   return Response(pca_variance)
-  

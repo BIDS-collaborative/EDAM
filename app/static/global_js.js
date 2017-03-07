@@ -12,7 +12,6 @@ function createVerticalBarGraph(data, x, y) {
   for (i = 0; i < features.length; i++){
     pairs.push([Math.round(importance[i]*1000)/1000, features[i]]);
   }
-
   var barWidth = width/importance.length;
   var y = d3.scaleLinear().domain([0, d3.max(importance)]).range([height, 0]);
   var x = d3.scaleBand().domain(d3.range(0, importance.length)).rangeRound([0, width]);
@@ -53,7 +52,7 @@ function createVerticalBarGraph(data, x, y) {
 }
 
 function createMatrix(data, x, y) {
-  // data is a dictionary of the form {data: [], tips: [], labels: []} 
+  // data is a dictionary of the form {data: [], tips: [], labels: []}
   // where data is shown in the cells, tips are hover tooltips and labels are x/y axis labels
   Matrix({
     margins   : {top: 10, right: 10, bottom: 50, left: 100},
@@ -64,4 +63,67 @@ function createMatrix(data, x, y) {
     width     : x,
     height    : y
   });
+}
+
+function createScatterPlot(data, x, y) {
+  var feature1 = data['feature1'],
+  feature2 = data['feature2']
+  species = data['species'];
+  var pairs = [];
+
+  for (i = 0; i < feature1.length; i++){
+    pairs.push([feature1[i], feature2[i], species[i]]);
+  }
+
+  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+      width = x - margin.left - margin.right,
+      height = y - margin.top - margin.bottom;
+
+
+
+  var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([-8, 0])
+    .html(function(d) { return d[2]});
+
+  // set the ranges
+  var x = d3.scaleLinear().domain([0, (d3.max(feature1)+2)]).range([0, width]);
+  var y = d3.scaleLinear().domain([0, (d3.max(feature2)+2)]).range([height, 0]);
+
+  // append the svg obgect to the body of the page
+  // appends a 'group' element to 'svg'
+  // moves the 'group' element to the top left margin
+  var svg = d3.select("#scatter_plot")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+
+
+
+  var g = svg.append('g')
+      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+
+    g.append('g')
+      .attr('class', 'axis axis--x')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(d3.axisBottom(x));
+    var yAxis = d3.axisLeft(y);
+    yAxis.ticks(10);
+    yAxis.tickSizeOuter(0);
+    yAxis.tickPadding(3);
+    g.append('g')
+      .attr('class', 'axis axis--y')
+      .call(yAxis);
+
+    // Add the scatterplot
+    svg.selectAll("dot")
+        .data(pairs)
+        .enter().append("circle")
+        .attr('class', 'circ')
+        .call(tip)
+        .attr("r", 6)
+        .attr("cx", function(d) { return x(d[0] + 0.75);})
+        .attr("cy", function(d) { return y(d[1] - 0.6);})
+        .on('mouseover', tip.show)
+        .on('mouseout', tip.hide);
 }
