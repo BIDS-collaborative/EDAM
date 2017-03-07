@@ -3,8 +3,8 @@ function Matrix(options) {
   var margin = options.margins,
       width = options.width,
       height = options.height,
-      data = options.data[0],
-      samples = options.data[1],
+      data = options.data,
+      samples = options.tips,
       container = options.container,
       labelsData = options.labels,
       numrows,
@@ -26,8 +26,6 @@ function Matrix(options) {
   for (i = 0 ; i < 4; i++) {
     indexDict[total[i]] = samples[i];
   }
-
-
 
   numrows = data.length;
   numcols = data[0].length;
