@@ -49,3 +49,6 @@ rect:hover {
   fill: none;
   stroke: #000;
 }
+.circ:hover {
+  fill: brown;
+}
