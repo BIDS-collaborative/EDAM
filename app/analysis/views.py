@@ -31,7 +31,8 @@ def load_data():
   directory = BASE_DIR + '/analysis'
   features = np.genfromtxt(directory + static('pacific_plant_data.csv'), delimiter=',')
   labels = np.genfromtxt(directory + static('pacific_plant_label.csv'))
-  return clean_features(features, labels)
+  feature_names = np.genfromtxt(directory + static('pacific_plant_features.csv'), delimiter='\n', dtype=str)
+  return clean_features(features, labels, feature_names)
 
 # examine missing data by samples
 def explore_samples(data, threshold=5):
@@ -56,7 +57,7 @@ def explore_features(data, threshold=100):
   return cols
 
 # remove missing data (detrimental features and samples)
-def clean_features(features, labels):
+def clean_features(features, labels, feature_names):
   # remove features missing in a lot of samples
   feature_threshold = [300, 250, 200, 150, 100]
   sample_threshold = [20, 15, 10, 5, 0]
@@ -64,9 +65,10 @@ def clean_features(features, labels):
   for f, s in zip(feature_threshold, sample_threshold):
     remove_cols = explore_features(features, f)
     features = np.delete(features, remove_cols, axis=1)
+    feature_names = np.delete(feature_names, remove_cols)
     print features.shape
     print '---'
-    
+
     # remove samples missing data
     remove_rows = explore_samples(features, s)
     features = np.delete(features, remove_rows, axis=0)
@@ -75,7 +77,7 @@ def clean_features(features, labels):
     print '---'
 
   # TODO: efficiently remove NaNs while keeping as much data as possibles
-  return features, labels
+  return features, labels, feature_names
 
 # split training and test data
 def split_data(features, labels):
@@ -106,13 +108,12 @@ def predict_lr(train_features, test_features, train_labels, test_labels):
   return predictions
 
 # plot confusion matrix
-def get_confusion_matrix(labels, predictions, normalize=True):
+def get_confusion_matrix(labels, predictions):
   cm = np.array([[0, 0], [0, 0]])
   for l, p in zip(labels.astype(int), predictions.astype(int)):
     cm[l][p] += 1
-  if normalize:
-    cm = cm.astype(float) / cm.sum(axis=1)[:, np.newaxis]
-  return np.round(cm, 2)
+  norm_cm = cm.astype(float) / cm.sum(axis=1)[:, np.newaxis]
+  return np.round(norm_cm, 2), cm
   # sklearn confusion matrix has encoding error
   # cm = confusion_matrix(labels, predictions)
   # print cm
@@ -140,37 +141,45 @@ def get_principal_components(features, n_features=18):
 # allow options for confusion matrix (training or test, prediction model)
 @api_view(['GET'])
 def confusion_matrix(request):
-  confusion_matrix = None
-  if PierData.objects.filter(name='confusion_matrix').exists():
-    confusion_matrix = json.loads(PierData.objects.get(name='confusion_matrix').json)
-  else:
-    features, labels = load_data()
+  data = dict()
+  if (not PierData.objects.filter(name='confusion_matrix').exists()) or (request.query_params.get('reset')):
+    features, labels, feature_names = load_data()
     train_features, test_features, train_labels, test_labels = split_data(features, labels)
     predictions = predict_rf(train_features, test_features, train_labels, test_labels)
-    confusion_matrix = get_confusion_matrix(test_labels, predictions)
-    PierData.objects.create(name='confusion_matrix', json=json.dumps(confusion_matrix.tolist()))
-  return Response(confusion_matrix)
+    cm, counts = get_confusion_matrix(test_labels, predictions)
+    data['matrix'] = cm.tolist()
+    data['tips'] = [str(counts[0][0]) + ' out of ' + str(counts[0][0] + counts[0][1]),
+    str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
+    str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]),
+    str(counts[1][1]) + ' out of ' + str(counts[1][0] + counts[1][1])]
+    data['labels'] = ['Invasive', 'Non-Invasive']
+    PierData.objects.update_or_create(name='confusion_matrix', defaults={'json': json.dumps(data)})
+  else:
+    data = json.loads(PierData.objects.get(name='confusion_matrix').json)
+
+  return Response(data)
 
 
 @api_view(['GET'])
 def feature_importance(request):
-  feature_importance = None
-  if PierData.objects.filter(name='feature_importance').exists():
-    feature_importance = json.loads(PierData.objects.get(name='feature_importance').json)
+  data = dict()
+  if (not PierData.objects.filter(name='feature_importance').exists()) or (request.query_params.get('reset')):
+    features, labels, feature_names = load_data()
+    data['importance'] = get_feature_importance(features, labels).tolist()
+    data['features'] = feature_names.tolist()
+    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
   else:
-    features, labels = load_data()
-    feature_importance = get_feature_importance(features, labels)
-    PierData.objects.create(name='feature_importance', json=json.dumps(feature_importance.tolist()))
-  return Response(feature_importance)
-  
+    data = json.loads(PierData.objects.get(name='feature_importance').json)
+
+  return Response(data)
+
 @api_view(['GET'])
 def pca_variance(request):
   pca_variance = None
   if PierData.objects.filter(name='pca_variance').exists():
     pca_variance = json.loads(PierData.objects.get(name='pca_variance').json)
   else:
-    features, labels = load_data()
+    features, labels, feature_names = load_data()
     pca_variance = get_pca_variance(features)
-    PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance.tolist()))
+    PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance))
   return Response(pca_variance)
-  
