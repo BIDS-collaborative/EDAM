@@ -1,10 +1,6 @@
 /* Shows given <div> and hides all other divs */ 
 function showPageElement(what)  
 {  
-  if (what == "0") {
-    hideAllElements(); 
-  }
-
   hideAllElements();
 
   // shows element
