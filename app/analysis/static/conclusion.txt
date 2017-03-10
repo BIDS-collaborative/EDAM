@@ -1,3 +1,0 @@
-As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features. 
-
-The long term goal of this project is to gather more training data and expand our models to encompass more organism groups. To do this, we have developed a webtool to perform live classification of user input data. This allows for testing the models with various hyperparameters while gathering more species data to improve our models.

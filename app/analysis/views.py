@@ -134,8 +134,10 @@ def get_pca_variance(features):
 
 def get_principal_components(features, n_features=18):
   model = PCA(n_components=n_features)
-  model.fit(features.T)
-  return model.components_.T
+  model.fit(features)
+  return model.transform(features)
+  # return model.components_.T
+
 
 # cache PIER analysis data in database
 # allow options for confusion matrix (training or test, prediction model)
@@ -183,3 +185,19 @@ def pca_variance(request):
     pca_variance = get_pca_variance(features)
     PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance))
   return Response(pca_variance)
+
+
+@api_view(['GET'])
+def pca_scatter(request):
+  data = dict()
+  if (not PierData.objects.filter(name='pca_scatter').exists()) or (request.query_params.get('reset')):
+    features, labels, feature_names = load_data()
+    princomps = get_principal_components(features, 2)
+    data['feature1'] = princomps[:,0]
+    data['feature2'] = princomps[:,1]
+    data['species'] = [0]*len(princomps[:,0])
+    # PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
+  else:
+    data = json.loads(PierData.objects.get(name='feature_importance').json)
+
+  return Response(data)
