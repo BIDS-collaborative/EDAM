@@ -67,12 +67,13 @@ function createMatrix(data, x, y) {
 
 function createScatterPlot(data, x, y) {
   var feature1 = data['feature1'],
-  feature2 = data['feature2']
+  feature2 = data['feature2'],
+  invasive = data['invasive'],
   species = data['species'];
   var pairs = [];
 
   for (i = 0; i < feature1.length; i++){
-    pairs.push([feature1[i], feature2[i], species[i]]);
+    pairs.push([feature1[i], feature2[i], species[i], invasive[i]]);
   }
 
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
@@ -85,8 +86,8 @@ function createScatterPlot(data, x, y) {
     .html(function(d) { return d[2]});
 
   // set the ranges
-  var x = d3.scaleLinear().domain([(d3.min(feature1)-1), (d3.max(feature1)+1)]).range([0, width]);
-  var y = d3.scaleLinear().domain([(d3.min(feature2)-1), (d3.max(feature2)+1)]).range([height, 0]);
+  var x = d3.scaleLinear().domain([(d3.min(feature1) - 0.25), (d3.max(feature1) + 0.25)]).range([0, width]);
+  var y = d3.scaleLinear().domain([(d3.min(feature2) - 0.25), (d3.max(feature2) + 0.25)]).range([height, 0]);
 
   // append the svg obgect to the body of the page
   // appends a 'group' element to 'svg'
@@ -117,9 +118,10 @@ function createScatterPlot(data, x, y) {
     .enter().append("circle")
     .attr('class', 'circ')
     .call(tip)
-    .attr("r", 6)
-    .attr("cx", function(d) { return x(d[0] + 0.75);})
-    .attr("cy", function(d) { return y(d[1] - 0.6);})
+    .attr("r", 4)
+    .attr("cx", function(d) { return x(d[0]) + margin.left;})
+    .attr("cy", function(d) { return y(d[1]) + margin.top;})
+    .style("fill", function(d) {if (d[3] == 0) {return "blue"}; return "red";})
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
 }
