@@ -26,8 +26,9 @@ def index(request):
     print(form._errors)
     return render(request, 'test2.html', {"RF":None, "LR":None})
   else:
-    form = DocumentForm()
-    return render(request, 'webtool.html', {'form': form})
+    doc_form = DocumentForm()
+    hyper_form = HyperparameterForm()
+    return render(request, 'webtool.html', {'DocumentForm': doc_form, 'HyperparameterForm': hyper_form})
 
 
 def handle_uploaded_file(doc, label):
@@ -58,14 +59,15 @@ def hyperparameter_uploads(request):
     if form.is_valid():
       print("hyperparameters received")
       form.save()
-      submission_info = {"model_choice": form.cleaned_data['model_choice'], "hyperparameters": form.cleaned_data['hyperparamters'], "filename": form.cleaned_data['filename']}
+      submission_info = {"model_choice": form.cleaned_data['model_choice'], "hyperparameters": form.cleaned_data['hyperparameters'], "filename": form.cleaned_data['filename']}
       return render(request, 'test2.html', submission_info)
     else:
       print(form._errors)
       return render(request, 'test2.html', {"RF":None, "LR":None})
   else:
-    form = DocumentForm()
-    return render(request, 'webtool.html', {'form': form})
+    doc_form = DocumentForm()
+    hyper_form = HyperparameterForm()
+    return render(request, 'webtool.html', {'DocumentForm': doc_form, 'HyperparameterForm': hyper_form})
 
 #We can do 2 things with the data right now:
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.

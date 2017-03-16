@@ -10,8 +10,8 @@ class Document(models.Model):
   label = models.FileField(upload_to='documents/')
   uploaded_at = models.DateTimeField(auto_now_add=True)
 
-class ModelHyperparameter(models.Model):
-    model = models.TextField()
+class Hyperparameter(models.Model):
+    model_choice = models.TextField()
     hyperparameters = models.TextField()
     filename = models.TextField()
     uploaded_at = models.DateTimeField(auto_now_add=True)

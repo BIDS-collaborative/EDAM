@@ -44,7 +44,7 @@
       <p>Dataset Upload</p> 
       <form enctype="multipart/form-data" action="" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ DocumentForm }}
         <input type="submit" value="Submit">
       </form>
     </div>
@@ -65,102 +65,105 @@
             <option value="clustering">Clustering</option>
           </select>
         </div>
+
+        <!-- RANDOM FOREST HYPERPARAMETERS -->
+        <div id="random-forest" style="display: none;">
+          <div id="hyperparameter" class="container-fluid" >
+            <div class="row">
+              <div class="text-center">
+                <h2>RF Hyperparameter Selection</h2>
+                <h4> </h4> 
+              </div>
+              <form class="form-inline text-center" method="post">
+                <div class="input-group">
+                  <label class="control-label">RF Hyperparameter 1 </label>
+                  <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
+                  <output name="ageOutputName" id="ageOutputId">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="hyperparameter" class="container-fluid">
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <form name="registrationForm">
+                    <label class="control-label">RF Hyperparameter 2 </label>
+                    <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
+                    <output name="ageOutputName" id="ageOutputId">50</output>
+                  </form>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
+        <div id="logistic-regression" style="display: none;">
+          <div id="hyperparameter" class="container-fluid" >
+            <div class="row">
+              <div class="text-center">
+                <h2>LR Hyperparameter Selection</h2>
+                <h4> </h4> 
+              </div>
+              <form class="form-inline text-center" method="post">
+                <div class="input-group">
+                  <label class="control-label">LR Hyperparameter 1 </label>
+                  <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
+                  <output name="ageOutputName" id="ageOutputId">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="hyperparameter" class="container-fluid">
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <label class="control-label">LR Hyperparameter 2</label>
+                  <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
+                  <output name="ageOutputName" id="ageOutputId">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- CLUSTERING HYPERPARAMETERS -->
+        <div id="clustering" style="display: none;">
+          <div id="hyperparameter" class="container-fluid" >
+            <div class="row">
+              <div class="text-center">
+                <h2>Clustering Hyperparameter Selection</h2>
+                <h4> </h4> 
+              </div>
+              <form class="form-inline text-center" method="post">
+                <div class="input-group">
+                  <label class="control-label">Clustering Hyperparameter 1 </label>
+                  <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
+                  <output name="ageOutputName" id="ageOutputId">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="hyperparameter" class="container-fluid">
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <label class="control-label">Clustering Hyperparameter 2</label>
+                  <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
+                  <output name="ageOutputName" id="ageOutputId">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>    
+        
         <input type="submit" value="Submit" onsubmit="submit();">
       </form>
     </div>
 
 
-    <!-- RANDOM FOREST HYPERPARAMETERS -->
-    <div id="random-forest" style="display: none;">
-      <div id="hyperparameter" class="container-fluid" >
-        <div class="row">
-          <div class="text-center">
-            <h2>RF Hyperparameter Selection</h2>
-            <h4> </h4> 
-          </div>
-          <form class="form-inline text-center" method="post">
-            <div class="input-group">
-              <label class="control-label">RF Hyperparameter 1 </label>
-              <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
-              <output name="ageOutputName" id="ageOutputId">50</output>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div id="hyperparameter" class="container-fluid">
-        <div class="row">
-          <form class="form-inline text-center">
-            <div class="input-group">
-              <form name="registrationForm">
-                <label class="control-label">RF Hyperparameter 2 </label>
-                <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
-                <output name="ageOutputName" id="ageOutputId">50</output>
-              </form>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
-    <div id="logistic-regression" style="display: none;">
-      <div id="hyperparameter" class="container-fluid" >
-        <div class="row">
-          <div class="text-center">
-            <h2>LR Hyperparameter Selection</h2>
-            <h4> </h4> 
-          </div>
-          <form class="form-inline text-center" method="post">
-            <div class="input-group">
-              <label class="control-label">LR Hyperparameter 1 </label>
-              <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
-              <output name="ageOutputName" id="ageOutputId">50</output>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div id="hyperparameter" class="container-fluid">
-        <div class="row">
-          <form class="form-inline text-center">
-            <div class="input-group">
-              <label class="control-label">LR Hyperparameter 2</label>
-              <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
-              <output name="ageOutputName" id="ageOutputId">50</output>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- CLUSTERING HYPERPARAMETERS -->
-    <div id="clustering" style="display: none;">
-      <div id="hyperparameter" class="container-fluid" >
-        <div class="row">
-          <div class="text-center">
-            <h2>Clustering Hyperparameter Selection</h2>
-            <h4> </h4> 
-          </div>
-          <form class="form-inline text-center" method="post">
-            <div class="input-group">
-              <label class="control-label">Clustering Hyperparameter 1 </label>
-              <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
-              <output name="ageOutputName" id="ageOutputId">50</output>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div id="hyperparameter" class="container-fluid">
-        <div class="row">
-          <form class="form-inline text-center">
-            <div class="input-group">
-              <label class="control-label">Clustering Hyperparameter 2</label>
-              <input type="range" name="ageInputName" id="ageInputId" value="50" min="1" max="100" oninput="ageOutputId.value = ageInputId.value">
-              <output name="ageOutputName" id="ageOutputId">50</output>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>    
+    
 
     <!-- FOOTER -->
     <footer class="container-fluid text-center">

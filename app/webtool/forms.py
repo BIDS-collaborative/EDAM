@@ -1,12 +1,14 @@
 from django import forms
 from .models import Document
+from .models import Hyperparameter
 
 class DocumentForm(forms.ModelForm):
   class Meta:
     model = Document
     fields = ('description', 'document', 'label')
 
-class Hyperparamter(forms.ModelForm):
+class HyperparameterForm(forms.ModelForm):
     class Meta:
-        model = 
+        model = Hyperparameter
+        fields = ('model_choice', 'hyperparameters', 'filename')
             
