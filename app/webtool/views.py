@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from .forms import DocumentForm 
+from .forms import HyperparameterForm
 
 def index(request):
   if request.method == 'POST':
@@ -49,6 +50,22 @@ def handle_uploaded_file(doc, label):
 
   result_dict = {"RF":rf_result, "LR":lr_result}
   return result_dict
+
+def hyperparameter_uploads(request):
+  if request.method == 'POST':
+    form = HyperparameterForm(request.POST, request.FILES)
+
+    if form.is_valid():
+      print("hyperparameters received")
+      form.save()
+      submission_info = {"model_choice": form.cleaned_data['model_choice'], "hyperparameters": form.cleaned_data['hyperparamters'], "filename": form.cleaned_data['filename']}
+      return render(request, 'test2.html', submission_info)
+    else:
+      print(form._errors)
+      return render(request, 'test2.html', {"RF":None, "LR":None})
+  else:
+    form = DocumentForm()
+    return render(request, 'webtool.html', {'form': form})
 
 #We can do 2 things with the data right now:
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.

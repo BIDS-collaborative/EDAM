@@ -29,6 +29,10 @@ function hideAllElements()
     }
 }
 
+function submit() {
+  console.log("hi");
+}
+
 $( document ).ready(function() {
     /* make sure the javascript file doesn't do anything until the html is loaded */
 });
