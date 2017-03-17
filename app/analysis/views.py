@@ -154,7 +154,7 @@ def confusion_matrix(request):
     str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
     str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]),
     str(counts[1][1]) + ' out of ' + str(counts[1][0] + counts[1][1])]
-    data['labels'] = ['Invasive', 'Non-Invasive']
+    data['labels'] = ['Non-Invasive', 'Invasive']
     PierData.objects.update_or_create(name='confusion_matrix', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='confusion_matrix').json)

@@ -112,7 +112,7 @@ function Matrix(options) {
       .attr("y2", 5);
 
   columnLabels.append("text")
-      .attr("x", 110)
+      .attr("x", x.bandwidth() / 2)
       .attr("y", y.bandwidth() / 8)
       .attr("dy", ".32em")
       .attr("text-anchor", "middle")
@@ -134,7 +134,7 @@ function Matrix(options) {
       .attr("y2", y.bandwidth() / 2);
 
   rowLabels.append("text")
-      .attr("x", -8)
+      .attr("x", -10)
       .attr("y", y.bandwidth() / 2)
       .attr("dy", ".32em")
       .attr("text-anchor", "end")
