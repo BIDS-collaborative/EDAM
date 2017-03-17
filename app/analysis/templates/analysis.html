@@ -78,6 +78,18 @@
       </div>
       <div class="row">
         <div class="col-sm-12">
+          <p>
+            By plotting the top two principal components of the data, there appears to be 2 primary groups divided by a diagonal boundary. Above the boundary is predominantly one color, while below it is more mixed. The color labels help visualize the predictive accuracy of our model in 2 dimensions.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-fluid">
+          <svg id="scatter_plot"></svg>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
           <h2>Conclusion</h2>
           <p>
             As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features.
@@ -85,11 +97,6 @@
           <p>
             The long term goal of this project is to gather more training data and expand our models to encompass more organism groups. To do this, we have developed a webtool to perform live classification of user input data. This allows for testing the models with various hyperparameters while gathering more species data to improve our models.
           </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container-fluid">
-          <svg id="scatter_plot"></svg>
         </div>
       </div>
     </div>

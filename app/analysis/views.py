@@ -43,7 +43,11 @@ def explore_samples(data, threshold=5):
     if missing_vals > threshold:
       rows.append(i)
       count += 1
+<<<<<<< HEAD
   print(count)
+=======
+  print (count)
+>>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
   return rows
 
 # examine missing data by features
@@ -52,7 +56,11 @@ def explore_features(data, threshold=100):
   for i in range(data.shape[1]):
     missing_vals = np.sum(np.isnan(data[:, i]))
     if missing_vals > threshold:
+<<<<<<< HEAD
       print(i, missing_vals)
+=======
+      print (i, missing_vals)
+>>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
       cols.append(i)
   return cols
 
@@ -66,15 +74,25 @@ def clean_features(features, labels, feature_names):
     remove_cols = explore_features(features, f)
     features = np.delete(features, remove_cols, axis=1)
     feature_names = np.delete(feature_names, remove_cols)
+<<<<<<< HEAD
     print(features.shape)
     print('---')
+=======
+    print (features.shape)
+    print ('---')
+>>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
 
     # remove samples missing data
     remove_rows = explore_samples(features, s)
     features = np.delete(features, remove_rows, axis=0)
     labels = np.delete(labels, remove_rows)
+<<<<<<< HEAD
     print(features.shape, labels.shape)
     print('---')
+=======
+    print (features.shape, labels.shape)
+    print ('---')
+>>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
 
   # TODO: efficiently remove NaNs while keeping as much data as possibles
   return features, labels, feature_names
@@ -134,8 +152,10 @@ def get_pca_variance(features):
 
 def get_principal_components(features, n_features=18):
   model = PCA(n_components=n_features)
-  model.fit(features.T)
-  return model.components_.T
+  model.fit(features)
+  return model.transform(features)
+  # return model.components_.T
+
 
 # cache PIER analysis data in database
 # allow options for confusion matrix (training or test, prediction model)
@@ -152,7 +172,7 @@ def confusion_matrix(request):
     str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
     str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]),
     str(counts[1][1]) + ' out of ' + str(counts[1][0] + counts[1][1])]
-    data['labels'] = ['Invasive', 'Non-Invasive']
+    data['labels'] = ['Non-Invasive', 'Invasive']
     PierData.objects.update_or_create(name='confusion_matrix', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='confusion_matrix').json)
@@ -186,3 +206,20 @@ def pca_variance(request):
     pca_variance = get_pca_variance(features)
     PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance))
   return Response(pca_variance)
+
+
+@api_view(['GET'])
+def pca_scatter(request):
+  data = dict()
+  if (not PierData.objects.filter(name='pca_scatter').exists()) or (request.query_params.get('reset')):
+    features, labels, feature_names = load_data()
+    princomps = get_principal_components(features, 2)
+    data['feature1'] = princomps[:,0]
+    data['feature2'] = princomps[:,1]
+    data['species'] = [0]*len(princomps[:,0])
+    data['label'] = labels
+    # PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
+  else:
+    data = json.loads(PierData.objects.get(name='feature_importance').json)
+
+  return Response(data)
