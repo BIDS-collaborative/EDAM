@@ -43,11 +43,7 @@ def explore_samples(data, threshold=5):
     if missing_vals > threshold:
       rows.append(i)
       count += 1
-<<<<<<< HEAD
-  print(count)
-=======
   print (count)
->>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
   return rows
 
 # examine missing data by features
@@ -56,11 +52,7 @@ def explore_features(data, threshold=100):
   for i in range(data.shape[1]):
     missing_vals = np.sum(np.isnan(data[:, i]))
     if missing_vals > threshold:
-<<<<<<< HEAD
-      print(i, missing_vals)
-=======
       print (i, missing_vals)
->>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
       cols.append(i)
   return cols
 
@@ -74,25 +66,15 @@ def clean_features(features, labels, feature_names):
     remove_cols = explore_features(features, f)
     features = np.delete(features, remove_cols, axis=1)
     feature_names = np.delete(feature_names, remove_cols)
-<<<<<<< HEAD
-    print(features.shape)
-    print('---')
-=======
     print (features.shape)
     print ('---')
->>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
 
     # remove samples missing data
     remove_rows = explore_samples(features, s)
     features = np.delete(features, remove_rows, axis=0)
     labels = np.delete(labels, remove_rows)
-<<<<<<< HEAD
-    print(features.shape, labels.shape)
-    print('---')
-=======
     print (features.shape, labels.shape)
     print ('---')
->>>>>>> d95b4d933ee113fb29bd5610a2c39fe6c7ebf360
 
   # TODO: efficiently remove NaNs while keeping as much data as possibles
   return features, labels, feature_names
