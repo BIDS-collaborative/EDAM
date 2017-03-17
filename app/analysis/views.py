@@ -196,6 +196,7 @@ def pca_scatter(request):
     data['feature1'] = princomps[:,0]
     data['feature2'] = princomps[:,1]
     data['species'] = [0]*len(princomps[:,0])
+    data['label'] = labels
     # PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)

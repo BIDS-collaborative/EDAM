@@ -70,6 +70,7 @@ function createScatterPlot(data, x, y) {
   feature2 = data['feature2'],
   invasive = data['invasive'],
   species = data['species'];
+  invasive = data['label'];
   var pairs = [];
 
   for (i = 0; i < feature1.length; i++){
