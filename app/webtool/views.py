@@ -1,5 +1,7 @@
 import numpy as np
 import pickle as cPickle
+import json
+
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -9,51 +11,57 @@ from sklearn.preprocessing import Imputer
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.templatetags.static import static
 
 from .forms import DocumentForm 
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
 
 def index(request):
   if request.method == 'POST':
     form = DocumentForm(request.POST, request.FILES)
 
     if form.is_valid():
-      print("form received")
       form.save()
-      training_info = handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
-      return render(request, 'test2.html', training_info)
+      handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
+      template = loader.get_template('webtool.html')
+      return HttpResponse(template.render(request))
 
-    print(form._errors)
-    return render(request, 'test2.html', {"RF":None, "LR":None})
   else:
     form = DocumentForm()
     return render(request, 'webtool.html', {'form': form})
+
 
 
 def handle_uploaded_file(doc, label):
   features = np.genfromtxt(doc, delimiter=',',skip_header=True)
   labels = np.genfromtxt(label, delimiter=',',skip_header=True)
 
-  # labels = data[1:,-1]
-  # features = features[1:,:]
-
+  # temporary way to handle missing values, should be replaced
   labels[np.isnan(labels)] = 0
   labels[np.isfinite(labels)==False] = 0
-
   features[np.isnan(features)] = 0
   features[np.isfinite(features)==False] = 0
-
-  print(np.shape(features), np.any(np.isnan(features)), np.all(np.isfinite(features)))
 
   rf_result = performClassification(features, labels, "RF", train=True)
   lr_result = performClassification(features, labels, "LR", train=True)
 
   result_dict = {"RF":rf_result, "LR":lr_result}
-  return result_dict
 
-#We can do 2 things with the data right now:
-#1. Split the data into a training set and test set, training the data and then running prediction on the test set.
-#2. Predict using a stored in model. Right now it's just the model trained by the dataset. 
-#Returns the predictions, model, and confusion matrix
+  with open(doc+"_data", 'w') as f:
+    json.dump(result_dict, f)
+
+
+@api_view(['GET'])
+def return_all_data(request):
+  data_file = request['GET'].get("document")
+  with open(data_file+"_data", 'r') as f:
+    data = f.read()
+  return Response(data)
+
+
 
 def split_data(features, labels):
   print("split_data")
@@ -81,31 +89,6 @@ def explore_features(data, threshold=100):
     if missing_vals > threshold:
       print(i, missing_vals)
       cols.append(i)
-
-
-def clean_features(features, labels):
-  # remove features missing in a lot of samples
-  feature_threshold = [300, 250, 200, 150, 100]
-  sample_threshold = [20, 15, 10, 5, 0]
-
-  for f, s in zip(feature_threshold, sample_threshold):
-    remove_cols = explore_features(features, f)
-    features = np.delete(features, remove_cols, axis=1)
-    print(features.shape)
-    
-    # remove samples missing data
-    remove_rows = explore_samples(features, s)
-    features = np.delete(features, remove_rows, axis=0)
-    labels = np.delete(labels, remove_rows)
-    print(features.shape, labels.shape)
-
-  # RATIONALE: any feature missing in more than 5% of 
-  # samples has no guarantee of being collected so do
-  # not include in model and any sample still missing
-  # data probably is fairly unknown or poorly recorded
-
-  # TODO: efficiently remove NaNs while keeping as much data as possibles
-  return features, labels
 
 
 def train_rf(train_features, train_labels):
@@ -148,4 +131,17 @@ def performClassification(data_features, data_label, model_name, train = False):
   if data_label != None:
     cm = confusion_matrix(test_labels, predictions)
     print(cm)
-  return (model_name, predictions, cm)
+  dic = {"model":model_name, "prediction": predictions.tolist(), "matrix": cm.tolist()}
+  return dic
+
+
+
+
+
+
+
+
+
+
+
+
