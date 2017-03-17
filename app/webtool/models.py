@@ -11,7 +11,11 @@ class Document(models.Model):
   uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class Hyperparameter(models.Model):
-    model_choice = models.TextField()
-    hyperparameters = models.TextField()
-    filename = models.TextField()
+    CHOICES = (
+        ('Logistic Regression', 'Logistic Regression'), 
+        ('Random Forest', 'Random Forest')
+    )
+    model_choice = models.CharField(max_length=255, choices=CHOICES)
+    hyperparameters = models.CharField(max_length=255, blank=True)
+    filename = models.CharField(max_length=255, blank=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)

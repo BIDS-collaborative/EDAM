@@ -6,6 +6,11 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import Imputer
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -168,3 +173,14 @@ def performClassification(data_features, data_label, model_name, train = False):
     cm = confusion_matrix(test_labels, predictions)
     print(cm)
   return (model_name, predictions, cm)
+
+@api_view(['GET'])
+def model_selection(request):
+  model = request.query_params.get('model')
+  hyperparameters = request.query_params.get('hyperparameters').split(',')
+  filename = request.query_params.get('filename')
+  print model
+  print hyperparameters
+  print filename
+
+  return Response(' ')
