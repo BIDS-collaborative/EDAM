@@ -177,14 +177,15 @@ def feature_importance(request):
 
 @api_view(['GET'])
 def pca_variance(request):
-  pca_variance = None
-  if PierData.objects.filter(name='pca_variance').exists():
-    pca_variance = json.loads(PierData.objects.get(name='pca_variance').json)
-  else:
+  data = dict()
+  if (not PierData.objects.filter(name='pca_variance').exists()) or (request.query_params.get('reset')):
     features, labels, feature_names = load_data()
-    pca_variance = get_pca_variance(features)
-    PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance))
-  return Response(pca_variance)
+    data['pca_variance'] = get_pca_variance(features)
+    PierData.objects.create(name='pca_variance', json=json.dumps(data))
+  else:
+    data = json.loads(PierData.objects.get(name='pca_variance').json)
+    
+  return Response(data)
 
 
 @api_view(['GET'])
@@ -197,7 +198,7 @@ def pca_scatter(request):
     data['feature2'] = princomps[:,1]
     data['species'] = [0]*len(princomps[:,0])
     data['label'] = labels
-    # PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
+    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)
 
