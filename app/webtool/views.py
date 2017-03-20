@@ -16,7 +16,6 @@ from django.http import HttpResponse
 from django.template import loader
 
 from .forms import DocumentForm 
-from .forms import HyperparameterForm
 
 def index(request):
   if request.method == 'POST':
@@ -32,8 +31,7 @@ def index(request):
     return render(request, 'test2.html', {"RF":None, "LR":None})
   else:
     doc_form = DocumentForm()
-    hyper_form = HyperparameterForm()
-    return render(request, 'webtool.html', {'DocumentForm': doc_form, 'HyperparameterForm': hyper_form})
+    return render(request, 'webtool.html', {'DocumentForm': doc_form})
 
 
 def handle_uploaded_file(doc, label):
@@ -179,8 +177,8 @@ def model_selection(request):
   model = request.query_params.get('model')
   hyperparameters = request.query_params.get('hyperparameters').split(',')
   filename = request.query_params.get('filename')
-  print model
-  print hyperparameters
-  print filename
+  print (model)
+  print (hyperparameters)
+  print (filename)
 
   return Response(' ')
