@@ -162,6 +162,9 @@ def confusion_matrix(request):
   return Response(data)
 
 
+#############
+# Look at this
+
 @api_view(['GET'])
 def feature_importance(request):
   data = dict()
@@ -169,7 +172,7 @@ def feature_importance(request):
     features, labels, feature_names = load_data()
     data['importance'] = get_feature_importance(features, labels).tolist()
     data['features'] = feature_names.tolist()
-    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
+    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)}) ## creates model from the models.py class
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)
 
