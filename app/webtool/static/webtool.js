@@ -40,16 +40,39 @@ function submit() {
       var hp = document.getElementById( elements[i].concat("In1") );
       requestString = requestString.concat("&hyperparameters=").concat(hp.value).concat(",");
       requestString = requestString.concat(document.getElementById( elements[i].concat("In2") ).value);
-      alert(requestString);
+      requestString = requestString.concat("&features=").concat(extractFileName("id_document"));
+      requestString = requestString.concat("&labels=").concat(extractFileName("id_label"));
+      return requestString;
     }
   }
   if (selected == false) {
     alert("Please make a model and hyperparameter selection");
   }
-  return false;
+  return "";
+}
+
+function extractFileName(filename) {
+  var fullPath = document.getElementById(filename).value;
+  if (fullPath) {
+      var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+      var filename = fullPath.substring(startIndex);
+      if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+          filename = filename.substring(1);
+      }
+      return filename;
+  }
+  return "";
+}
+
+function restSubmit() {
+  $.ajax({url: '/webtool/model_selection/'.concat(submit()),
+    dataType: 'json',
+    success: function(data) {
+      alert(data);
+    }
+  });
 }
 
 $( document ).ready(function() {
-  /* make sure the javascript file doesn't do anything until the html is loaded */
-  alert("hi");
+  
 });

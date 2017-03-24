@@ -176,9 +176,7 @@ def performClassification(data_features, data_label, model_name, train = False):
 def model_selection(request):
   model = request.query_params.get('model')
   hyperparameters = request.query_params.get('hyperparameters').split(',')
-  filename = request.query_params.get('filename')
-  print (model)
-  print (hyperparameters)
-  print (filename)
+  features = request.query_params.get('features')
+  labels = request.query_params.get('labels')
 
-  return Response(' ')
+  return Response({"model": model, "hyperparameters": hyperparameters, "features": features, "labels": labels})
