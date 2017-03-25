@@ -172,7 +172,7 @@ def feature_importance(request):
     features, labels, feature_names = load_data()
     data['importance'] = get_feature_importance(features, labels).tolist()
     data['features'] = feature_names.tolist()
-    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)}) ## creates model from the models.py class
+    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)}) 
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)
 
