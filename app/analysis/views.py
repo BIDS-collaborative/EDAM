@@ -197,10 +197,10 @@ def pca_scatter(request):
   if (not PierData.objects.filter(name='pca_scatter').exists()) or (request.query_params.get('reset')):
     features, labels, feature_names = load_data()
     princomps = get_principal_components(features, 2)
-    data['feature1'] = princomps[:,0]
-    data['feature2'] = princomps[:,1]
+    data['feature1'] = princomps[:,0].tolist()
+    data['feature2'] = princomps[:,1].tolist()
     data['species'] = [0]*len(princomps[:,0])
-    data['label'] = labels
+    data['label'] = labels.tolist()
     PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)
