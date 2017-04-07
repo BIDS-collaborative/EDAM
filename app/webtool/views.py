@@ -21,7 +21,7 @@ import os
 import json
 from sklearn.decomposition import PCA
 
-from .forms import DocumentForm 
+from .forms import DocumentForm
 
 def index(request):
   if request.method == 'POST':
@@ -80,7 +80,7 @@ def hyperparameter_uploads(request):
 
 #We can do 2 things with the data right now:
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.
-#2. Predict using a stored in model. Right now it's just the model trained by the dataset. 
+#2. Predict using a stored in model. Right now it's just the model trained by the dataset.
 #Returns the predictions, model, and confusion matrix
 
 def split_data(features, labels):
@@ -116,9 +116,9 @@ def performClassification(data_features, data_label, model_name, train = False):
 
 def load_data(data, labels):
   BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-  directory =  BASE_DIR + "/documents/" 
-  print directory
-  print data
+  directory =  BASE_DIR + "/documents/"
+  print (directory)
+  print (data)
   features = np.genfromtxt(directory + data, delimiter=',')
   labels = np.genfromtxt(directory + labels, delimiter = ",")
   # feature_names = np.genfromtxt(directory + static('pacific_plant_features.csv'), delimiter='\n', dtype=str)
