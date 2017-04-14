@@ -125,6 +125,7 @@ function createScatterPlot(data, x, y) {
     .style("fill", function(d) {if (d[3] == 0) {return "blue"}; return "red";})
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
+}
 
 function create3DScatterPlot(data, x, y, z){
   var feature1 = data['feature1'],
@@ -141,8 +142,9 @@ function create3DScatterPlot(data, x, y, z){
     }
   }
 
-// Set up the chart
-var chart = new Highcharts.Chart({
+
+  // Set up the chart
+  var chart = new Highcharts.Chart({
     chart: {
         renderTo: 'scatterplot',
         width: x,
@@ -214,36 +216,36 @@ var chart = new Highcharts.Chart({
             symbol: 'circle'
         }
     }]
-});
+  });
 
 
-// Add mouse events for rotation
-$(chart.container).on('mousedown.hc touchstart.hc', function (eStart) {
-    eStart = chart.pointer.normalize(eStart);
+  // Add mouse events for rotation
+  $(chart.container).on('mousedown.hc touchstart.hc', function (eStart) {
+      eStart = chart.pointer.normalize(eStart);
 
-    var posX = eStart.pageX,
-        posY = eStart.pageY,
-        alpha = chart.options.chart.options3d.alpha,
-        beta = chart.options.chart.options3d.beta,
-        newAlpha,
-        newBeta,
-        sensitivity = 5; // lower is more sensitive
+      var posX = eStart.pageX,
+          posY = eStart.pageY,
+          alpha = chart.options.chart.options3d.alpha,
+          beta = chart.options.chart.options3d.beta,
+          newAlpha,
+          newBeta,
+          sensitivity = 5; // lower is more sensitive
 
-    $(document).on({
-        'mousemove.hc touchdrag.hc': function (e) {
-            // Run beta
-            newBeta = beta + (posX - e.pageX) / sensitivity;
-            chart.options.chart.options3d.beta = newBeta;
+      $(document).on({
+          'mousemove.hc touchdrag.hc': function (e) {
+              // Run beta
+              newBeta = beta + (posX - e.pageX) / sensitivity;
+              chart.options.chart.options3d.beta = newBeta;
 
-            // Run alpha
-            newAlpha = alpha + (e.pageY - posY) / sensitivity;
-            chart.options.chart.options3d.alpha = newAlpha;
+              // Run alpha
+              newAlpha = alpha + (e.pageY - posY) / sensitivity;
+              chart.options.chart.options3d.alpha = newAlpha;
 
-            chart.redraw(false);
-        },
-        'mouseup touchend': function () {
-            $(document).off('.hc');
-        }
-    });
-});
+              chart.redraw(false);
+          },
+          'mouseup touchend': function () {
+              $(document).off('.hc');
+          }
+      });
+  });
 }

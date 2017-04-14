@@ -12,7 +12,7 @@ function showPageElement(what) {
 
 /* hides all elements */
 function hideAllElements() {
-  var elements = new Array("rf", "lr", "clustering");
+  var elements = new Array("rf", "lr");
   for (var i = elements.length - 1; i >= 0; i--) {
       hidePageElement(document.getElementById(elements[i]));
     }
@@ -29,7 +29,7 @@ function hidePageElement(what)
 }  
 
 function submit() {
-  var elements = new Array("rf", "lr", "clustering");
+  var elements = new Array("rf", "lr");
   var selected = false;
   var requestString = "?";
   for (var i = elements.length - 1; i >= 0; i--) {
