@@ -126,3 +126,126 @@ function createScatterPlot(data, x, y) {
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
 }
+
+function create3DScatterPlot(data, x, y, z){
+  var feature1 = data['feature1'],
+  feature2 = data['feature2'],
+  feature3 = data['feature3'],
+  invasive = data['label'],
+  invasive_points = [],
+  noninvasive_points = [];
+  for (i = 0; i < feature1.length; i++){
+    if (invasive[i] == 1){
+      invasive_points.push([feature1[i], feature2[i], feature3[i]]);
+    } else {
+      noninvasive_points.push([feature1[i], feature2[i], feature3[i]]);
+    }
+  }
+
+
+  // Set up the chart
+  var chart = new Highcharts.Chart({
+    chart: {
+        renderTo: 'scatterplot',
+        width: x,
+        height: y,
+        margin: 100,
+        type: 'scatter',
+        options3d: {
+            enabled: true,
+            alpha: 10,
+            beta: 30,
+            depth: z,
+            viewDistance: 5,
+            fitToPlot: false,
+            frame: {
+                bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
+                back: { size: 1, color: 'rgba(0,0,0,0.04)' },
+                side: { size: 1, color: 'rgba(0,0,0,0.06)' }
+            }
+        }
+    },
+    title: {
+        text: 'Draggable box'
+    },
+    subtitle: {
+        text: 'Click and drag the plot area to rotate in space'
+    },
+    plotOptions: {
+        scatter: {
+            width: 10,
+            height: 10,
+            depth: 10
+        }
+    },
+    yAxis: {
+        min: 0,
+        max: 10,
+        title: {
+          text:"PCA 2"
+        }
+    },
+    xAxis: {
+        min: 0,
+        max: 10,
+        gridLineWidth: 1,
+        title: {
+          text:"PCA 1"
+        }
+    },
+    zAxis: {
+        min: 0,
+        max: 10,
+        showFirstLabel: false,
+        title: {
+          text:"PCA 3"
+        }
+    },
+    legend: {
+        enabled: false
+    },
+    series: [{
+        name: 'Invasive',
+        color: '#ED0D08',
+        data: invasive_points
+    }, {
+        name: 'Noninvasive',
+        color: '#4682b4',
+        data: noninvasive_points,
+        marker: {
+            symbol: 'circle'
+        }
+    }]
+  });
+
+
+  // Add mouse events for rotation
+  $(chart.container).on('mousedown.hc touchstart.hc', function (eStart) {
+      eStart = chart.pointer.normalize(eStart);
+
+      var posX = eStart.pageX,
+          posY = eStart.pageY,
+          alpha = chart.options.chart.options3d.alpha,
+          beta = chart.options.chart.options3d.beta,
+          newAlpha,
+          newBeta,
+          sensitivity = 5; // lower is more sensitive
+
+      $(document).on({
+          'mousemove.hc touchdrag.hc': function (e) {
+              // Run beta
+              newBeta = beta + (posX - e.pageX) / sensitivity;
+              chart.options.chart.options3d.beta = newBeta;
+
+              // Run alpha
+              newAlpha = alpha + (e.pageY - posY) / sensitivity;
+              chart.options.chart.options3d.alpha = newAlpha;
+
+              chart.redraw(false);
+          },
+          'mouseup touchend': function () {
+              $(document).off('.hc');
+          }
+      });
+  });
+}

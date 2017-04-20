@@ -6,5 +6,6 @@ from . import views
 app_name = 'webtool'
 urlpatterns = [
   url(r'^$', views.index, name='index'),
-  url(r'^confusion_matrix/', views.return_all_data),
+  url(r'^classify', views.performClassification, name='classify'),
+  url(r'^model_selection/', views.model_selection),  
 ]

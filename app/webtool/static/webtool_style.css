@@ -49,3 +49,16 @@
     background-color: #f4511e;
     color: #fff;
 }
+
+select {
+    background-color: white;
+    color: black;
+}
+
+output {
+    color: white;
+}
+
+input[type=file] {
+    display: inline;
+}

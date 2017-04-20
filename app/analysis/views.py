@@ -162,6 +162,9 @@ def confusion_matrix(request):
   return Response(data)
 
 
+#############
+# Look at this
+
 @api_view(['GET'])
 def feature_importance(request):
   data = dict()
@@ -169,7 +172,7 @@ def feature_importance(request):
     features, labels, feature_names = load_data()
     data['importance'] = get_feature_importance(features, labels).tolist()
     data['features'] = feature_names.tolist()
-    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
+    PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)}) 
   else:
     data = json.loads(PierData.objects.get(name='feature_importance').json)
 
@@ -177,14 +180,15 @@ def feature_importance(request):
 
 @api_view(['GET'])
 def pca_variance(request):
-  pca_variance = None
-  if PierData.objects.filter(name='pca_variance').exists():
-    pca_variance = json.loads(PierData.objects.get(name='pca_variance').json)
-  else:
+  data = dict()
+  if (not PierData.objects.filter(name='pca_variance').exists()) or (request.query_params.get('reset')):
     features, labels, feature_names = load_data()
-    pca_variance = get_pca_variance(features)
-    PierData.objects.create(name='pca_variance', json=json.dumps(pca_variance))
-  return Response(pca_variance)
+    data['pca_variance'] = get_pca_variance(features)
+    PierData.objects.create(name='pca_variance', json=json.dumps(data))
+  else:
+    data = json.loads(PierData.objects.get(name='pca_variance').json)
+    
+  return Response(data)
 
 
 @api_view(['GET'])
@@ -193,12 +197,12 @@ def pca_scatter(request):
   if (not PierData.objects.filter(name='pca_scatter').exists()) or (request.query_params.get('reset')):
     features, labels, feature_names = load_data()
     princomps = get_principal_components(features, 2)
-    data['feature1'] = princomps[:,0]
-    data['feature2'] = princomps[:,1]
+    data['feature1'] = princomps[:,0].tolist()
+    data['feature2'] = princomps[:,1].tolist()
     data['species'] = [0]*len(princomps[:,0])
-    data['label'] = labels
-    # PierData.objects.update_or_create(name='feature_importance', defaults={'json': json.dumps(data)})
+    data['label'] = labels.tolist()
+    PierData.objects.update_or_create(name='pca_scatter', defaults={'json': json.dumps(data)})
   else:
-    data = json.loads(PierData.objects.get(name='feature_importance').json)
+    data = json.loads(PierData.objects.get(name='pca_scatter').json)
 
   return Response(data)
