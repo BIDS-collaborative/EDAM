@@ -68,7 +68,8 @@ function restSubmit() {
   $.ajax({url: '/webtool/model_selection/'.concat(submit()),
     dataType: 'json',
     success: function(data) {
-      alert(data);
+      // alert(data);
+      window.location.href = data.redirect
     }
   });
 }

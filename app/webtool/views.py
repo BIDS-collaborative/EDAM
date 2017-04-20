@@ -252,5 +252,10 @@ def model_selection(request):
   feature1 = princomps[:,0]
   feature2  = princomps[:,1]
   species = [0]*len(princomps[:,0])
-  return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi}, "predictions": predictions, "confusion_matrix": {"matrix": cm.tolist(), "tips": tips}, "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]}})
+  return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi},
+   "predictions": predictions, 
+   "confusion_matrix": {"matrix": cm.tolist(), "tips": tips}, 
+   "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
+   "redirect": request.get_full_path()
+   })
   # return Response({"model": model, "hyperparameters": hyperparameters, "features": features, "labels": labels})
