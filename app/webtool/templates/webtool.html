@@ -38,142 +38,135 @@
       </div>
     </nav>
 
-    <!-- FILE UPLOAD -->
     <div class="jumbotron text-center">
-      <h1>Webtool</h1>   
+      <h1>Webtool</h1> 
     </div>
 
+    <!-- FILE UPLOAD -->
     <div class="container-fluid">
-      <div class="content-display">
-        <div class="text-center">
-          <h2>Dataset Upload</h2>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="jumbotron text-center">
+            <h2>Dataset Upload</h2> 
+            <form enctype="multipart/form-data" action="" method="post">
+              {% csrf_token %}
+              <div class="container-fluid">
+                {{ DocumentForm.description.label_tag }}
+                {{ DocumentForm.description }}
+              </div>
+              <div class="row">
+                {{ DocumentForm.document.label_tag }}
+                {{ DocumentForm.document }}
+                {{ DocumentForm.label.label_tag }}
+                {{ DocumentForm.label }}
+              </div>
+              <div class="container-fluid">
+                <input class="btn btn-sm btn-default" type="submit" value="Submit">
+              </div>
+            </form>
+          </div>
         </div>
-        <form enctype="multipart/form-data" action="" method="post">
-          {% csrf_token %}
-          {{ DocumentForm }}
-          <input id="file-submit" type="submit" value="Submit">
-        </form>
       </div>
     </div>
 
     <!-- MODEL SELECTION -->
     <div class="container-fluid">
-      <div class="content-display">
-        <div class="text-center">
-          <h2>Models</h2>
-          <h4>Choose a model</h4>
-        </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="jumbotron text-center">
+            <div class="container-fluid">
+              <h2>Models</h2>
+              <h4>Choose a model</h4>
+            
+              <!-- Dropdown Menu -->
+              <div class="dropdown text-center">
+                <select onchange="showPageElement(value);" required>
+                  <option value="">None</option>
+                  <option value="rf">Random Forest</option>
+                  <option value="lr">Logistic Regression</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- RANDOM FOREST HYPERPARAMETERS -->
+            <div id="rf" style="display: none;">
+              <div class="text-center">
+                <p>RF Hyperparameter Selection</p>
+              </div>
+              <div id="hyperparameter-1" >
+                <div class="row">
+                  <form class="form-inline text-center" method="post">
+                    <div class="input-group">
+                      <label class="control-label">RF Hyperparameter 1</label>
+                      <input type="range" id="rfIn1" value="50" min="1" max="100" oninput="rfOut1.value = rfIn1.value">
+                      <output id="rfOut1">50</output>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div id="hyperparameter-2">
+                <div class="row">
+                  <form class="form-inline text-center" method="post">
+                    <div class="input-group">
+                      <label class="control-label">RF Hyperparameter 2</label>
+                      <input type="range" id="rfIn2" value="50" min="1" max="100" oninput="rfOut2.value = rfIn2.value">
+                      <output id="rfOut2">50</output>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
+            <div id="lr" style="display: none;">
+              <div class="text-center">
+                <p>LR Hyperparameter Selection</p>
+              </div>
+              <div id="hyperparameter-1">
+                <div class="row">
+                  <form class="form-inline text-center" method="post">
+                    <div class="input-group">
+                      <label class="control-label">LR Hyperparameter 1 </label>
+                      <input type="range" name="ageInputName" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
+                      <output name="ageOutputName" id="lrOut1">50</output>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div id="hyperparameter-2">
+                <div class="row">
+                  <form class="form-inline text-center">
+                    <div class="input-group">
+                      <label class="control-label">LR Hyperparameter 2</label>
+                      <input type="range" name="ageInputName" id="lrIn2" value="50" min="1" max="100" oninput="lrOut2.value = lrIn2.value">
+                      <output name="ageOutputName" id="lrOut2">50</output>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
         
-        <!-- Dropdown Menu -->
-        <form action="" method="post">
-          <div class="dropdown text-center">
-            <select onchange="showPageElement(value);" required>
-              <option value="">None</option>
-              <option value="rf">Random Forest</option>
-              <option value="lr">Logistic Regression</option>
-              <option value="clustering">Clustering</option>
-            </select>
-          </div>
-
-          <!-- RANDOM FOREST HYPERPARAMETERS -->
-          <div id="rf" style="display: none;">
-            <div id="hyperparameter-1" class="container-fluid" >
-              <div class="row">
-                <div class="text-center">
-                  <h2>RF Hyperparameter Selection</h2>
-                  <h4> </h4> 
-                </div>
-                <form class="form-inline text-center" method="post">
-                  <div class="input-group">
-                    <label class="control-label">RF Hyperparameter 1 </label>
-                    <input type="range" name="ageInputName" class="rfRange" id="rfIn1" value="50" min="1" max="100" oninput="rfOut1.value = rfIn1.value">
-                    <output name="ageOutputName" id="rfOut1">50</output>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div id="hyperparameter-2" class="container-fluid">
-              <div class="row">
-                <form class="form-inline text-center">
-                  <div class="input-group">
-                    <form name="registrationForm">
-                      <label class="control-label">RF Hyperparameter 2 </label>
-                      <input type="range" name="ageInputName" class="rfRange" id="rfIn2" value="50" min="1" max="100" oninput="rfOut2.value = rfIn2.value">
-                      <output name="ageOutputName" id="rfOut2">50</output>
-                    </form>
-                  </div>
-                </form>
-              </div>
+            <div class="container-fluid">
+              <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="restSubmit();">
             </div>
           </div>
-
-          <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
-          <div id="lr" style="display: none;">
-            <div id="hyperparameter-1" class="container-fluid" >
-              <div class="row">
-                <div class="text-center">
-                  <h2>LR Hyperparameter Selection</h2>
-                  <h4> </h4> 
-                </div>
-                <form class="form-inline text-center" method="post">
-                  <div class="input-group">
-                    <label class="control-label">LR Hyperparameter 1 </label>
-                    <input type="range" name="ageInputName" class="lrRange" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
-                    <output name="ageOutputName" id="lrOut1">50</output>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div id="hyperparameter-2" class="container-fluid">
-              <div class="row">
-                <form class="form-inline text-center">
-                  <div class="input-group">
-                    <label class="control-label">LR Hyperparameter 2</label>
-                    <input type="range" name="ageInputName" class="lrRange" id="lrIn2" value="50" min="1" max="100" oninput="lrOut2.value = lrIn2.value">
-                    <output name="ageOutputName" id="lrOut2">50</output>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          <!-- CLUSTERING HYPERPARAMETERS -->
-          <div id="clustering" style="display: none;">
-            <div id="hyperparameter-1" class="container-fluid" >
-              <div class="row">
-                <div class="text-center">
-                  <h2>Clustering Hyperparameter Selection</h2>
-                  <h4> </h4> 
-                </div>
-                <form class="form-inline text-center" method="post">
-                  <div class="input-group">
-                    <label class="control-label">Clustering Hyperparameter 1 </label>
-                    <input type="range" name="ageInputName" class="clusteringRange" id="clusteringIn1" value="50" min="1" max="100" oninput="clusteringOut1.value = clusteringIn1.value">
-                    <output name="ageOutputName" id="clusteringOut1">50</output>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div id="hyperparameter-2" class="container-fluid">
-              <div class="row">
-                <form class="form-inline text-center">
-                  <div class="input-group">
-                    <label class="control-label">Clustering Hyperparameter 2</label>
-                    <input type="range" name="ageInputName" class="clusteringRange" id="clusteringIn2" value="50" min="1" max="100" oninput="clusteringOut2.value = clusteringIn2.value">
-                    <output name="ageOutputName" id="clusteringOut2">50</output>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>    
-          
-          <input type="submit" id="model-submit" value="Submit" onclick="restSubmit();">
-        </form>
+        </div>
+>>>>>>> 560753a5ca1735eaa5bb745fce4d4bf1ac2fb54c
       </div>
     </div>
 
 
-    
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="jumbotron text-center">
+            <h2>Results</h2> 
+            
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- FOOTER -->
     <footer class="container-fluid text-center">
