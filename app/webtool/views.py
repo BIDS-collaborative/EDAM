@@ -36,7 +36,7 @@ def index(request):
 
     if form.is_valid():
       form.save()
-      handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
+      # handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
       template = loader.get_template('webtool.html')
       return HttpResponse(template.render(request))
 
@@ -46,20 +46,20 @@ def index(request):
 
 
 
-def handle_uploaded_file(doc, label):
-  features = np.genfromtxt(doc, delimiter=',',skip_header=True)
-  labels = np.genfromtxt(label, delimiter=',',skip_header=True)
+# def handle_uploaded_file(doc, label):
+#   features = np.genfromtxt(doc, delimiter=',',skip_header=True)
+#   labels = np.genfromtxt(label, delimiter=',',skip_header=True)
 
-  # temporary way to handle missing values, should be replaced
-  labels[np.isnan(labels)] = 0
-  labels[np.isfinite(labels)==False] = 0
-  features[np.isnan(features)] = 0
-  features[np.isfinite(features)==False] = 0
+#   # temporary way to handle missing values, should be replaced
+#   labels[np.isnan(labels)] = 0
+#   labels[np.isfinite(labels)==False] = 0
+#   features[np.isnan(features)] = 0
+#   features[np.isfinite(features)==False] = 0
 
-  rf_result = performClassification(features, labels, "RF", train=True)
-  lr_result = performClassification(features, labels, "LR", train=True)
+#   rf_result = performClassification(features, labels, "RF", train=True)
+#   lr_result = performClassification(features, labels, "LR", train=True)
 
-  result_dict = {"RF":rf_result, "LR":lr_result}
+#   result_dict = {"RF":rf_result, "LR":lr_result}
 
 
 def hyperparameter_uploads(request):
@@ -229,6 +229,19 @@ def get_principal_components(features, n_features=18):
 #confusion matrix, feature importance, model predictions, pca variance
 @api_view(['GET'])
 def model_selection(request):
+
+  # form = HyperparameterForm(request.POST, request.FILES)
+
+
+  # if form.is_valid():
+  #   form.save()
+  print("file:", request.FILES)
+  form = DocumentForm(request.GET, request.FILES)
+  if form.is_valid():
+    print("valid")
+    form.save()
+
+
   model = request.query_params.get('model')
   hyperparameters = request.query_params.get('hyperparameters').split(',')
   features = request.query_params.get('features')
