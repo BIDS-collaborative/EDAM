@@ -70,6 +70,7 @@ function restSubmit() {
     success: function(data) {
       // alert(data);
       window.location.href = data.redirect
+      showPageElement('model-results')
     }
   });
 }
