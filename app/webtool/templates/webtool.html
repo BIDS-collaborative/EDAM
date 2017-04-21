@@ -47,7 +47,7 @@
       <div class="row">
         <div class="col-sm-12">
           <div class="jumbotron text-center">
-            <h2>Dataset Upload</h2> 
+            <h2>1. Dataset Upload</h2> 
             <form enctype="multipart/form-data" action="" method="post">
               {% csrf_token %}
               <div class="container-fluid">
@@ -60,22 +60,11 @@
                 {{ DocumentForm.label.label_tag }}
                 {{ DocumentForm.label }}
               </div>
-              <div class="container-fluid">
-                <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="showPageElement('model-selection')">
-              </div>
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- MODEL SELECTION -->
-    <div class="container" id="model-selection" style="display: none">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="jumbotron text-center">
+            <!-- MODEL SELECTION -->
             <div class="container-fluid">
-              <h2>Models</h2>
+              <h2>2. Model Selection</h2>
               <h4>Choose a model</h4>
             
               <!-- Dropdown Menu -->
