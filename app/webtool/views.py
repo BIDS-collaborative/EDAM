@@ -253,7 +253,7 @@ def model_selection(request):
   species = [0]*len(princomps[:,0])
   return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi},
    "predictions": predictions, 
-   "confusion_matrix": {"matrix": cm.tolist(), "tips": tips}, 
+   "confusion_matrix": {"matrix": cm.tolist(), "tips": tips, 'labels': ['Non-Invasive', 'Invasive']}, 
    "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
    "redirect": request.get_full_path()
    })

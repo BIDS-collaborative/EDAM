@@ -69,7 +69,13 @@ function restSubmit() {
     dataType: 'json',
     success: function(data) {
       // alert(data);
-      window.location.href = data.redirect
+      var x = 600, y = 400;
+      createVerticalBarGraph(data['feature_importance'], x, y);
+      var x = 300, y = 300;
+      createMatrix(data['confusion_matrix'], x, y);
+      var x = 600, y = 400;
+      createScatterPlot(data['pca'], x, y);
+      // create3DScatterPlot(data, x, y, z);
       showPageElement('model-results')
     }
   });
