@@ -1,5 +1,7 @@
 import numpy as np
 import pickle as cPickle
+import json
+
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -14,6 +16,7 @@ from rest_framework import status
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.templatetags.static import static
 
 import sklearn
 import itertools
@@ -23,43 +26,41 @@ from sklearn.decomposition import PCA
 
 from .forms import DocumentForm
 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+
 def index(request):
   if request.method == 'POST':
     form = DocumentForm(request.POST, request.FILES)
 
     if form.is_valid():
-      print("form received")
       form.save()
-      training_info = handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
-      return render(request, 'test2.html', training_info)
+      handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
+      template = loader.get_template('webtool.html')
+      return HttpResponse(template.render(request))
 
-    print(form._errors)
-    return render(request, 'test2.html', {"RF":None, "LR":None})
   else:
     doc_form = DocumentForm()
     return render(request, 'webtool.html', {'DocumentForm': doc_form})
+
 
 
 def handle_uploaded_file(doc, label):
   features = np.genfromtxt(doc, delimiter=',',skip_header=True)
   labels = np.genfromtxt(label, delimiter=',',skip_header=True)
 
-  # labels = data[1:,-1]
-  # features = features[1:,:]
-
+  # temporary way to handle missing values, should be replaced
   labels[np.isnan(labels)] = 0
   labels[np.isfinite(labels)==False] = 0
-
   features[np.isnan(features)] = 0
   features[np.isfinite(features)==False] = 0
-
-  print(np.shape(features), np.any(np.isnan(features)), np.all(np.isfinite(features)))
 
   rf_result = performClassification(features, labels, "RF", train=True)
   lr_result = performClassification(features, labels, "LR", train=True)
 
   result_dict = {"RF":rf_result, "LR":lr_result}
-  return result_dict
+
 
 def hyperparameter_uploads(request):
   if request.method == 'POST':
@@ -246,11 +247,14 @@ def model_selection(request):
   fi = get_feature_importance(data[0], data[1])
   fi = fi.tolist()
   pca = get_pca_variance(data[0])
-
-
   princomps = get_principal_components(data[0], 2)
   feature1 = princomps[:,0]
   feature2  = princomps[:,1]
   species = [0]*len(princomps[:,0])
-  return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi}, "predictions": predictions, "confusion_matrix": {"matrix": cm.tolist(), "tips": tips}, "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]}})
+  return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi},
+   "predictions": predictions, 
+   "confusion_matrix": {"matrix": cm.tolist(), "tips": tips}, 
+   "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
+   "redirect": request.get_full_path()
+   })
   # return Response({"model": model, "hyperparameters": hyperparameters, "features": features, "labels": labels})
