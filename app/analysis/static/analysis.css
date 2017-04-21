@@ -3,7 +3,18 @@
 }
 
 /* change color for both matrix and bar graph */
-rect:hover {
+#feature_importance rect:hover {
+  fill: brown;
+}
+#confusion_matrix rect:hover {
+  fill: brown;
+}
+
+#3d_scatter_plot {
+
+}
+
+.d3-tip rect:hover {
   fill: brown;
 }
 
