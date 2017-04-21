@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'global_js.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
     <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
     <title>EDAM</title>
@@ -48,7 +49,9 @@
           <h2>About Us</h2>
           <h4>Environmental Data Access Monitor (EDAM) is a part of an initiative to model ecosystems including food webs, species lists, and other interactions. The goal of EDAM is to measure how much biodiversity data is available for a certain ecosystem. To begin to quantify this metric, we have to better understand the factors affecting ecosystems.
           <br> <br>
-          Invasive species are one such factor, heavily impacting the presence of native species. However, there is currently no easy way to identify invasive species aside from manually classifying each species in an environment. Ecologists have plenty of species data but no way to use it to classify invasive species. We propose a method to use machine learning models to identify features that can define invasive species. A data driven method for classification would speed up the process significantly and remove the bottleneck of requiring expert analysis.
+          Invasive species are one such factor, heavily impacting the presence of native species. However, there is currently no easy way to identify invasive species aside from manually classifying each species in an environment. Ecologists have plenty of species data but no way to use it to classify invasive species. We propose a method to use machine learning models to identify features that can define invasive species. A data driven method for classification would speed up the process significantly and remove the bottleneck of requiring expert analysis. 
+          <br><br>
+          If you are interested in our analysis of our own datasets, visit the <a href="{% url 'analysis:index' %}">analysis</a> page. And if you want to upload your own datasets, visit the <a href="{% url 'webtool:index' %}">webtool</a> page
           </h4> 
         </div>
         <div class="col-sm-4">
@@ -65,21 +68,21 @@
         <div class="row text-center">
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="http://i.imgur.com/4ybg2jx.jpg" alt="Jonathan">
+              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Jonathan">
               <p><strong>Jonathan Wang</strong></p>
               <p>Jonathan Wang is a senior undergraduate student studying Computer Science and Statistics. Jonathan is the project manager of this project, maintaining the overall direction of the project.</p>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="http://i.imgur.com/4ybg2jx.jpg" alt="Brian">
+              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Brian">
               <p><strong>Brian Lin</strong></p>
               <p>Brian Lin is a junior undergraduate student studying Computer Science and Statistics with an interest in Economics. He is mainly interested in applying machine learning and data science to solving real life problems. </p>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="http://i.imgur.com/4ybg2jx.jpg" alt="Lavanya">
+              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Lavanya">
               <p><strong>Lavanya Harinarayan</strong></p>
               <p>Lavanya Harinarayan is a senior undergraduate student studying Computer Science. She is interested in exploring the various applications of machine learning and artificial intelligence, especially in the field of security.</p>
             </div>
@@ -88,21 +91,21 @@
         <div class="row text-center">
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="http://i.imgur.com/4ybg2jx.jpg" alt="Jack">
+              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Jack">
               <p><strong>Jack Ye</strong></p>
               <p>Jack Ye is a junior undergraduate student studying Computer Science and Statistics. Apart from BIDS, he is currently working in the Berkeley ICSI multimedia team for research about music information retrieval.</p>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="{% static "justin.jpg" %}" alt="Justin">
+              <img class="image" src="{% static "justin.jpg" %}" alt="Justin">
               <p><strong>Justin Mi</strong></p>
               <p>Justin Mi is a freshman undergraduate student studying Electrical Engineering and Computer Sciences. Outside of BIDS, Justin is involved in Berkeley’s AUTOLAB.</p>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="thumbnail">
-              <img src="http://i.imgur.com/4ybg2jx.jpg" alt="Caleb">
+              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Caleb">
               <p><strong>Caleb Siu</strong></p>
               <p>Caleb Siu is a sophomore undergraduate student studying Computer Science and Economics. In addition, he is the Director of Finance for Society of Asian Americans and Engineers at Berkeley and part of a college ministry. </p>
             </div>
