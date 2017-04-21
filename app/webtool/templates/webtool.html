@@ -43,7 +43,7 @@
     </div>
 
     <!-- FILE UPLOAD -->
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <div class="jumbotron text-center">
@@ -61,7 +61,7 @@
                 {{ DocumentForm.label }}
               </div>
               <div class="container-fluid">
-                <input class="btn btn-sm btn-default" type="submit" value="Submit">
+                <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="showPageElement('model-selection')">
               </div>
             </form>
           </div>
@@ -70,7 +70,7 @@
     </div>
 
     <!-- MODEL SELECTION -->
-    <div class="container-fluid">
+    <div class="container" id="model-selection" style="display: none">
       <div class="row">
         <div class="col-sm-12">
           <div class="jumbotron text-center">
@@ -97,7 +97,7 @@
                 <div class="row">
                   <form class="form-inline text-center" method="post">
                     <div class="input-group">
-                      <label class="control-label">RF Hyperparameter 1</label>
+                      <label class="control-label">Number of Trees</label>
                       <input type="range" id="rfIn1" value="50" min="1" max="100" oninput="rfOut1.value = rfIn1.value">
                       <output id="rfOut1">50</output>
                     </div>
@@ -126,27 +126,14 @@
                 <div class="row">
                   <form class="form-inline text-center" method="post">
                     <div class="input-group">
-                      <label class="control-label">LR Hyperparameter 1 </label>
+                      <label class="control-label">Regularization Strength</label>
                       <input type="range" name="ageInputName" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
                       <output name="ageOutputName" id="lrOut1">50</output>
                     </div>
                   </form>
                 </div>
               </div>
-              <div id="hyperparameter-2">
-                <div class="row">
-                  <form class="form-inline text-center">
-                    <div class="input-group">
-                      <label class="control-label">LR Hyperparameter 2</label>
-                      <input type="range" name="ageInputName" id="lrIn2" value="50" min="1" max="100" oninput="lrOut2.value = lrIn2.value">
-                      <output name="ageOutputName" id="lrOut2">50</output>
-                    </div>
-                  </form>
-                </div>
-              </div>
             </div>
-
-        
             <div class="container-fluid">
               <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="restSubmit();">
             </div>
@@ -156,7 +143,7 @@
     </div>
 
 
-    <div class="container-fluid">
+    <div class="container" id="model-results" style="display: none">
       <div class="row">
         <div class="col-sm-12">
           <div class="jumbotron text-center">

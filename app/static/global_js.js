@@ -142,9 +142,8 @@ function create3DScatterPlot(data, x, y, z){
     }
   }
 
-
   // Set up the chart
-  var chart = new Highcharts.Chart({
+  var chart = new Highcharts.Chart('3d_scatter_plot', {
     chart: {
         renderTo: 'scatterplot',
         width: x,
@@ -179,23 +178,23 @@ function create3DScatterPlot(data, x, y, z){
         }
     },
     yAxis: {
-        min: 0,
-        max: 10,
+        min: 1.5*Math.max(Math.min(...feature2)),
+        max: 1.5*Math.max(Math.max(...feature2)),
         title: {
           text:"PCA 2"
         }
     },
     xAxis: {
-        min: 0,
-        max: 10,
+        min: 1.5*Math.max(Math.min(...feature1)),
+        max: 1.5*Math.max(Math.max(...feature1)),
         gridLineWidth: 1,
         title: {
           text:"PCA 1"
         }
     },
     zAxis: {
-        min: 0,
-        max: 10,
+        min: 1.5*Math.max(Math.min(...feature3)),
+        max: 1.5*Math.max(Math.max(...feature3)),
         showFirstLabel: false,
         title: {
           text:"PCA 3"

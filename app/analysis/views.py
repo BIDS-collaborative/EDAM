@@ -206,3 +206,21 @@ def pca_scatter(request):
     data = json.loads(PierData.objects.get(name='pca_scatter').json)
 
   return Response(data)
+
+
+@api_view(['GET'])
+def pca_3d(request):
+  data = dict()
+  if (not PierData.objects.filter(name='pca_3d').exists()) or (request.query_params.get('reset')):
+    features, labels, feature_names = load_data()
+    princomps = get_principal_components(features, 3)
+    data['feature1'] = princomps[:,0].tolist()
+    data['feature2'] = princomps[:,1].tolist()
+    data['feature3'] = princomps[:,2].tolist()
+    data['species'] = [0]*len(princomps[:,0])
+    data['label'] = labels.tolist()
+    PierData.objects.update_or_create(name='pca_3d', defaults={'json': json.dumps(data)})
+  else:
+    data = json.loads(PierData.objects.get(name='pca_3d').json)
+
+  return Response(data) 
