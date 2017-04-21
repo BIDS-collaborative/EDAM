@@ -44,23 +44,21 @@
     color: #fff;
 }
 
-<<<<<<< HEAD
 [for ~= "id_description"] {
-    color: red;
+    color: white;
     display: block;
     margin: auto;
     text-align: center;
 }
 
 [for ~= "id_document"] {
-    content: '\A';
     color: red;
     display: block;
     float: left;
+    clear: both;
 }
 
 [for ~= "id_label"] {
-    content: '\A';
     color: red;
     display: block;
     float: right;
