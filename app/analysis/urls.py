@@ -9,4 +9,5 @@ urlpatterns = [
   url(r'^feature_importance/', views.feature_importance),
   url(r'^pca_variance/', views.pca_variance),
   url(r'^pca_scatter/', views.pca_scatter),
+  url(r'^pca_3d/', views.pca_3d),
 ]
