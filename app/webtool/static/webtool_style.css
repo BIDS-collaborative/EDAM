@@ -1,9 +1,3 @@
-.model {
-    background-color: #0b7f37  !important;
-    color: #ffffff  !important;
-    padding: 100px 25px !important;
-}
-
 .panel {
     border: 1px solid #f4511e; 
     border-radius:0;
@@ -48,6 +42,59 @@
     margin: 15px 0;
     background-color: #f4511e;
     color: #fff;
+}
+
+[for ~= "id_description"] {
+    color: white;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+[for ~= "id_document"] {
+    color: red;
+    display: block;
+    float: left;
+    clear: both;
+}
+
+[for ~= "id_label"] {
+    color: red;
+    display: block;
+    float: right;
+}
+
+#id_description {
+    display: block;
+    margin: auto;
+}
+
+#id_document {
+    float: left;
+}
+
+#id_label {
+    float: right;
+}
+
+#file-submit {
+    content: '\A';
+    display: block;
+    margin: auto;
+    clear: both;
+}
+
+#model-submit {
+    content: '\A';
+    display: block;
+    margin: auto;
+    clear: both;
+}
+
+.content-display {
+    background-color: #0b7f37  !important;
+    color: #ffffff  !important;
+    padding: 50px 50px !important;
 }
 
 select {

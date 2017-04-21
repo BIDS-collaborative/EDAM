@@ -40,15 +40,14 @@ function submit() {
       var hp = document.getElementById( elements[i].concat("In1") );
       requestString = requestString.concat("&hyperparameters=").concat(hp.value).concat(",");
       requestString = requestString.concat(document.getElementById( elements[i].concat("In2") ).value);
-      requestString = requestString.concat("&features=").concat(extractFileName("id_document"));
-      requestString = requestString.concat("&labels=").concat(extractFileName("id_label"));
-      return requestString;
     }
   }
   if (selected == false) {
     alert("Please make a model and hyperparameter selection");
   }
-  return "";
+  requestString = requestString.concat("&features=").concat(extractFileName("id_document"));
+  requestString = requestString.concat("&labels=").concat(extractFileName("id_label"));
+  return requestString;
 }
 
 function extractFileName(filename) {

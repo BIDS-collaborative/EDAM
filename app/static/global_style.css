@@ -41,6 +41,11 @@
   color: green;
 }
 
+.thumbnail {
+    border: 0 none !important;
+    box-shadow: none !important;
+    background: transparent !important; 
+
 .d3rect {
   fill: steelblue;
 }
