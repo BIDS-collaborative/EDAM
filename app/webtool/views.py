@@ -239,7 +239,7 @@ def model_selection(request):
     predictions = predict_lr(train_features, test_features, train_labels, test_labels)
   else:
     predictions = predict_rf(train_features, test_features, train_labels, test_labels)
-  counts, cm = get_confusion_matrix(test_labels, predictions)
+  cm, counts = get_confusion_matrix(test_labels, predictions)
   tips = [str(counts[0][0]) + ' out of ' + str(counts[0][0] + counts[0][1]),
     str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
     str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]),
@@ -247,14 +247,16 @@ def model_selection(request):
   fi = get_feature_importance(data[0], data[1])
   fi = fi.tolist()
   pca = get_pca_variance(data[0])
-  princomps = get_principal_components(data[0], 2)
+  princomps = get_principal_components(data[0], 3)
   feature1 = princomps[:,0]
   feature2  = princomps[:,1]
+  feature3  = princomps[:,2]
   species = [0]*len(princomps[:,0])
   return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi},
    "predictions": predictions, 
    "confusion_matrix": {"matrix": cm.tolist(), "tips": tips, 'labels': ['Non-Invasive', 'Invasive']}, 
    "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
+   "pca_3d": {"feature1": feature1, "feature2": feature2, "feature3": feature3, "species": species, "label": data[1]},
    "redirect": request.get_full_path()
    })
   # return Response({"model": model, "hyperparameters": hyperparameters, "features": features, "labels": labels})

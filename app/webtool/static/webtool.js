@@ -75,7 +75,8 @@ function restSubmit() {
       createMatrix(data['confusion_matrix'], x, y);
       var x = 600, y = 400;
       createScatterPlot(data['pca'], x, y);
-      // create3DScatterPlot(data, x, y, z);
+      var x = 600, y = 400, z = 400;
+      create3DScatterPlot(data['pca_3d'], x, y, z);
       showPageElement('model-results')
     }
   });
