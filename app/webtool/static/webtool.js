@@ -40,15 +40,14 @@ function submit() {
       var hp = document.getElementById( elements[i].concat("In1") );
       requestString = requestString.concat("&hyperparameters=").concat(hp.value).concat(",");
       requestString = requestString.concat(document.getElementById( elements[i].concat("In2") ).value);
-      requestString = requestString.concat("&features=").concat(extractFileName("id_document"));
-      requestString = requestString.concat("&labels=").concat(extractFileName("id_label"));
-      return requestString;
     }
   }
   if (selected == false) {
     alert("Please make a model and hyperparameter selection");
   }
-  return "";
+  requestString = requestString.concat("&features=").concat(extractFileName("id_document"));
+  requestString = requestString.concat("&labels=").concat(extractFileName("id_label"));
+  return requestString;
 }
 
 function extractFileName(filename) {
@@ -69,7 +68,14 @@ function restSubmit() {
     dataType: 'json',
     success: function(data) {
       // alert(data);
-      window.location.href = data.redirect
+      var x = 600, y = 400;
+      createVerticalBarGraph(data['feature_importance'], x, y);
+      var x = 300, y = 300;
+      createMatrix(data['confusion_matrix'], x, y);
+      var x = 600, y = 400;
+      createScatterPlot(data['pca'], x, y);
+      var x = 600, y = 400, z = 400;
+      create3DScatterPlot(data['pca_3d'], x, y, z);
       showPageElement('model-results')
     }
   });
