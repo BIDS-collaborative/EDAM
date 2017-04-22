@@ -44,31 +44,6 @@ def index(request):
     return render(request, 'webtool.html', {'DocumentForm': doc_form})
 
 
-
-def hyperparameter_uploads(request):
-  if request.method == 'POST':
-    form = HyperparameterForm(request.POST, request.FILES)
-
-    if form.is_valid():
-      print("hyperparameters received")
-      form.save()
-      submission_info = {"model_choice": form.cleaned_data['model_choice'], "hyperparameters": form.cleaned_data['hyperparameters'], "filename": form.cleaned_data['filename']}
-      return render(request, 'test2.html', submission_info)
-    else:
-      print(form._errors)
-      return render(request, 'test2.html', {"RF":None, "LR":None})
-  else:
-    doc_form = DocumentForm()
-    hyper_form = HyperparameterForm()
-    return render(request, 'webtool.html', {'DocumentForm': doc_form, 'HyperparameterForm': hyper_form})
-
-#We can do 2 things with the data right now:
-#1. Split the data into a training set and test set, training the data and then running prediction on the test set.
-#2. Predict using a stored in model. Right now it's just the model trained by the dataset.
-#Returns the predictions, model, and confusion matrix
-
-
-
 def load_data(data, labels):
   BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
   directory =  BASE_DIR + "/documents/"
