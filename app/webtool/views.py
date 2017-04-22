@@ -36,7 +36,6 @@ def index(request):
 
     if form.is_valid():
       form.save()
-      handle_uploaded_file(form.cleaned_data['document'], form.cleaned_data['label'])
       template = loader.get_template('webtool.html')
       return HttpResponse(template.render(request))
 
@@ -44,22 +43,6 @@ def index(request):
     doc_form = DocumentForm()
     return render(request, 'webtool.html', {'DocumentForm': doc_form})
 
-
-
-def handle_uploaded_file(doc, label):
-  features = np.genfromtxt(doc, delimiter=',',skip_header=True)
-  labels = np.genfromtxt(label, delimiter=',',skip_header=True)
-
-  # temporary way to handle missing values, should be replaced
-  labels[np.isnan(labels)] = 0
-  labels[np.isfinite(labels)==False] = 0
-  features[np.isnan(features)] = 0
-  features[np.isfinite(features)==False] = 0
-
-  rf_result = performClassification(features, labels, "RF", train=True)
-  lr_result = performClassification(features, labels, "LR", train=True)
-
-  result_dict = {"RF":rf_result, "LR":lr_result}
 
 
 def hyperparameter_uploads(request):
@@ -83,35 +66,6 @@ def hyperparameter_uploads(request):
 #1. Split the data into a training set and test set, training the data and then running prediction on the test set.
 #2. Predict using a stored in model. Right now it's just the model trained by the dataset.
 #Returns the predictions, model, and confusion matrix
-
-def split_data(features, labels):
-  print("split_data")
-  train_features, test_features, train_labels, test_labels = train_test_split(features, labels, test_size = 0.2)
-  return train_features, test_features, train_labels, test_labels
-
-
-
-
-def performClassification(data_features, data_label, model_name, train = False):
-  if train:
-    train_features, test_features, train_labels, test_labels = split_data(data_features, data_label)
-    if model_name == "LR":
-      model = train_lr(train_features, train_labels)
-      predictions = model.predict(test_features)
-    elif model_name == "RF":
-      model = train_rf(train_features,train_labels)
-      predictions = model.predict(test_features)
-    print("done prediction", np.shape(predictions))
-  else:
-    with open("model" + model_name + ".pkl", 'rb') as fid:
-      model = cPickle.load(fid)
-    predictions = model.predict(data_features)
-
-  cm = None
-  if data_label != None:
-    cm = confusion_matrix(test_labels, predictions)
-    print(cm)
-  return (model_name, predictions, cm)
 
 
 
@@ -229,6 +183,7 @@ def get_principal_components(features, n_features=18):
 #confusion matrix, feature importance, model predictions, pca variance
 @api_view(['GET'])
 def model_selection(request):
+
   model = request.query_params.get('model')
   hyperparameters = request.query_params.get('hyperparameters').split(',')
   features = request.query_params.get('features')
