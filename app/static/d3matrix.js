@@ -139,5 +139,33 @@ function Matrix(options) {
       .attr("dy", ".32em")
       .attr("text-anchor", "end")
       .text(function(d, i) { return d; });
+  svg.append("text")
+    .attr("x", 200)
+    .attr("y", -10)
+    .attr("text-anchor", "middle")
+    .style("font-size", "22px")
+    .style("text-decoration", "underline")
+    .text("Feature Importance");
+  svg.append("text")
+
+    .attr("x", -100)
+    .attr("y", 180)
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Actual");
+  svg.append("text")
+    .attr("x", 200)
+    .attr("y", 450)
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Predicted");
+  svg.append("text")
+    .attr("x", 200)
+    .attr("y", 470)
+    .style("text-anchor", "middle")
+    .style("font-size", "12px")
+    .style("font-style", "italic")
+    .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 
 }

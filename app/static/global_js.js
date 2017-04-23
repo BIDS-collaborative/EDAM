@@ -1,5 +1,5 @@
 function createVerticalBarGraph(data, x, y) {
-  var dimensions = margin = {top: 20, right: 20, bottom: 30, left: 40},
+  var dimensions = margin = {top: 50, right: 20, bottom: 80, left: 65},
     width = x - margin.left - margin.right,
     height = y - margin.top - margin.bottom;
   var features = data['features'],
@@ -49,13 +49,42 @@ function createVerticalBarGraph(data, x, y) {
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
 
+  svg.append("text")
+    .attr("x", ((width+margin.left + margin.right)/2))
+    .attr("y", height/10)
+    .attr("text-anchor", "middle")
+    .style("font-size", "22px")
+    .style("text-decoration", "underline")
+    .text("Feature Importance");
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0)
+    .attr("x",0 - ((height+margin.top + margin.bottom) / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Feature Value");
+  svg.append("text")
+    .attr("x", ((width+margin.left + margin.right)/2))
+    .attr("y", height + margin.top + 38 )
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("Feature Number");
+  svg.append("text")
+    .attr("x", ((width+margin.left + margin.right)/2))
+    .attr("y", height + margin.top + 56 )
+    .style("text-anchor", "middle")
+    .style("font-size", "12px")
+    .style("font-style", "italic")
+    .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
 }
 
 function createMatrix(data, x, y) {
   // data is a dictionary of the form {data: [], tips: [], labels: []}
   // where data is shown in the cells, tips are hover tooltips and labels are x/y axis labels
   Matrix({
-    margins   : {top: 10, right: 10, bottom: 50, left: 100},
+    margins   : {top: 50, right: 20, bottom: 80, left: 130},
     container : '#confusion_matrix',
     data      : data['matrix'],
     tips      : data['tips'],
@@ -77,7 +106,7 @@ function createScatterPlot(data, x, y) {
     pairs.push([feature1[i], feature2[i], species[i], invasive[i]]);
   }
 
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
+  var margin = {top: 50, right: 20, bottom: 80, left: 65},
     width = x - margin.left - margin.right,
     height = y - margin.top - margin.bottom;
 
@@ -125,6 +154,35 @@ function createScatterPlot(data, x, y) {
     .style("fill", function(d) {if (d[3] == 0) {return "blue"}; return "red";})
     .on('mouseover', tip.show)
     .on('mouseout', tip.hide);
+
+  svg.append("text")
+    .attr("x", ((width+margin.left + margin.right)/2))
+    .attr("y", height/10)
+    .attr("text-anchor", "middle")
+    .style("font-size", "22px")
+    .style("text-decoration", "underline")
+    .text("Scatter Plot");
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0)
+    .attr("x",0 - ((height+margin.top + margin.bottom) / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("PCA 2");
+  svg.append("text")
+    .attr("x", ((width+margin.left + margin.right)/2))
+    .attr("y", height + margin.top + 38 )
+    .style("text-anchor", "middle")
+    .style("font-size", "16px")
+    .text("PCA 1");
+  svg.append("text")
+    .attr("x", ((width+margin.left + margin.right)/2))
+    .attr("y", height + margin.top + 56 )
+    .style("text-anchor", "middle")
+    .style("font-size", "12px")
+    .style("font-style", "italic")
+    .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
 }
 
 function create3DScatterPlot(data, x, y, z){
