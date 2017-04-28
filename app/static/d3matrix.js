@@ -145,7 +145,7 @@ function Matrix(options) {
     .attr("text-anchor", "middle")
     .style("font-size", "22px")
     .style("text-decoration", "underline")
-    .text("Feature Importance");
+    .text("Model Prediction Confusion Matrix");
   svg.append("text")
 
     .attr("x", -100)
@@ -166,6 +166,6 @@ function Matrix(options) {
     .style("text-anchor", "middle")
     .style("font-size", "12px")
     .style("font-style", "italic")
-    .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+    .text("The confusion matrix shows the prediction accuracy of the model");
 
 }

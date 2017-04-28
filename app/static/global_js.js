@@ -55,7 +55,7 @@ function createVerticalBarGraph(data, x, y) {
     .attr("text-anchor", "middle")
     .style("font-size", "22px")
     .style("text-decoration", "underline")
-    .text("Feature Importance");
+    .text("Relative Importance of each Feature");
   svg.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0)
@@ -63,20 +63,20 @@ function createVerticalBarGraph(data, x, y) {
     .attr("dy", "1em")
     .style("text-anchor", "middle")
     .style("font-size", "16px")
-    .text("Feature Value");
+    .text("Feature Importance");
   svg.append("text")
     .attr("x", ((width+margin.left + margin.right)/2))
     .attr("y", height + margin.top + 38 )
     .style("text-anchor", "middle")
     .style("font-size", "16px")
-    .text("Feature Number");
+    .text("Feature Index");
   svg.append("text")
     .attr("x", ((width+margin.left + margin.right)/2))
     .attr("y", height + margin.top + 56 )
     .style("text-anchor", "middle")
     .style("font-size", "12px")
     .style("font-style", "italic")
-    .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+    .text("The bar graph illustrates the relative contribution of each feature to the model");
 
 }
 
@@ -161,7 +161,7 @@ function createScatterPlot(data, x, y) {
     .attr("text-anchor", "middle")
     .style("font-size", "22px")
     .style("text-decoration", "underline")
-    .text("Scatter Plot");
+    .text("Feature Scatter Plot");
   svg.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0)
@@ -182,7 +182,7 @@ function createScatterPlot(data, x, y) {
     .style("text-anchor", "middle")
     .style("font-size", "12px")
     .style("font-style", "italic")
-    .text("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+    .text("Plot of the first 2 principal components of the feature set");
 }
 
 function create3DScatterPlot(data, x, y, z){
@@ -223,7 +223,7 @@ function create3DScatterPlot(data, x, y, z){
         }
     },
     title: {
-        text: 'Draggable box'
+        text: 'Feature Scatter Plot 3D'
     },
     subtitle: {
         text: 'Click and drag the plot area to rotate in space'

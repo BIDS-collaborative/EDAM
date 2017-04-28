@@ -51,28 +51,40 @@
       <h1>Webtool</h1> 
     </div>
 
-    <!-- FILE UPLOAD -->
+    
     <div class="container">
       <div class="row">
         <div class="col-sm-12">
           <div class="jumbotron text-center">
+            <!-- FILE UPLOAD -->
             <h2>1. Dataset Upload</h2> 
-            <form enctype="multipart/form-data" action="" method="post">
-              {% csrf_token %}
-              <div class="container-fluid">
-                {{ DocumentForm.description.label_tag }}
-                {{ DocumentForm.description }}
+            {% if DocumentForm %}
+              <form id="file-upload-form" enctype="multipart/form-data" action="" method="post">
+                {% csrf_token %}
+                <div class="container-fluid">
+                  {{ DocumentForm.description.label_tag }}
+                  {{ DocumentForm.description }}
+                </div>
+                <div class="container-fluid">
+                  {{ DocumentForm.document.label_tag }}
+                  {{ DocumentForm.document }}
+                  {{ DocumentForm.label.label_tag }}
+                  {{ DocumentForm.label }}
+                </div>
+                <div class="container-fluid">
+                  <input class="btn btn-sm btn-default" type="submit" value="Submit">
+                </div>
+              </form>
+            {% else %}
+              <div>
+                <label>Document:</label>
+                <span id='document_filename'>{{ document }}</span>
               </div>
-              <div class="container-fluid">
-                {{ DocumentForm.document.label_tag }}
-                {{ DocumentForm.document }}
-                {{ DocumentForm.label.label_tag }}
-                {{ DocumentForm.label }}
+              <div>
+                <label>Label:</label>
+                <span id='label_filename'>{{ label }}</span>
               </div>
-              <div class="container-fluid">
-                <input class="btn btn-sm btn-default" type="submit" value="Submit">
-              </div>
-            </form>
+            {% endif %}
 
             <!-- MODEL SELECTION -->
             <div class="container-fluid">
@@ -96,7 +108,7 @@
               </div>
               <div id="hyperparameter-1" >
                 <div class="row">
-                  <form class="form-inline text-center" method="post">
+                  <form class="form-inline text-center">
                     <div class="input-group">
                       <label class="control-label">Number of Trees</label>
                       <input type="range" id="rfIn1" value="50" min="1" max="100" oninput="rfOut1.value = rfIn1.value">
@@ -107,7 +119,7 @@
               </div>
               <div id="hyperparameter-2">
                 <div class="row">
-                  <form class="form-inline text-center" method="post">
+                  <form class="form-inline text-center">
                     <div class="input-group">
                       <label class="control-label">RF Hyperparameter 2</label>
                       <input type="range" id="rfIn2" value="50" min="1" max="100" oninput="rfOut2.value = rfIn2.value">
@@ -125,7 +137,7 @@
               </div>
               <div id="hyperparameter-1">
                 <div class="row">
-                  <form class="form-inline text-center" method="post">
+                  <form class="form-inline text-center">
                     <div class="input-group">
                       <label class="control-label">Regularization Strength</label>
                       <input type="range" name="ageInputName" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
@@ -179,6 +191,9 @@
         <p class="back2top">Back to Top</p>
       </a>
     </footer>
+
+    <!-- LOADING OVERLAY -->
+    <div id="overlay"></div>
   </body>
 
 </html>

@@ -33,11 +33,11 @@ from rest_framework.decorators import api_view
 def index(request):
   if request.method == 'POST':
     form = DocumentForm(request.POST, request.FILES)
-
+    
     if form.is_valid():
       form.save()
       template = loader.get_template('webtool.html')
-      return HttpResponse(template.render(request))
+      return HttpResponse(template.render({'document': request.FILES['document'], 'label': request.FILES['label']}))
 
   else:
     doc_form = DocumentForm()
@@ -155,6 +155,7 @@ def get_principal_components(features, n_features=18):
   model.fit(features)
   return model.transform(features)
 
+
 #confusion matrix, feature importance, model predictions, pca variance
 @api_view(['GET'])
 def model_selection(request):
@@ -183,10 +184,9 @@ def model_selection(request):
   feature3  = princomps[:,2]
   species = [0]*len(princomps[:,0])
   return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(), "importance": fi},
-   "predictions": predictions, 
-   "confusion_matrix": {"matrix": cm.tolist(), "tips": tips, 'labels': ['Non-Invasive', 'Invasive']}, 
-   "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
-   "pca_3d": {"feature1": feature1, "feature2": feature2, "feature3": feature3, "species": species, "label": data[1]},
-   "redirect": request.get_full_path()
+    "predictions": predictions, 
+    "confusion_matrix": {"matrix": cm.tolist(), "tips": tips, 'labels': ['Non-Invasive', 'Invasive']}, 
+    "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
+    "pca_3d": {"feature1": feature1, "feature2": feature2, "feature3": feature3, "species": species, "label": data[1]},
+    "redirect": request.get_full_path()
    })
-  # return Response({"model": model, "hyperparameters": hyperparameters, "features": features, "labels": labels})

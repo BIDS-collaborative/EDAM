@@ -14,8 +14,8 @@ function showPageElement(what) {
 function hideAllElements() {
   var elements = new Array("rf", "lr");
   for (var i = elements.length - 1; i >= 0; i--) {
-      hidePageElement(document.getElementById(elements[i]));
-    }
+    hidePageElement(document.getElementById(elements[i]));
+  }
 }
 
 /* hides a given div */
@@ -45,25 +45,27 @@ function submit() {
   if (selected == false) {
     alert("Please make a model and hyperparameter selection");
   }
-  requestString = requestString.concat("&features=").concat(extractFileName("id_document"));
-  requestString = requestString.concat("&labels=").concat(extractFileName("id_label"));
+  requestString = requestString.concat("&features=").concat($("#document_filename").text());
+  requestString = requestString.concat("&labels=").concat($("#label_filename").text());
   return requestString;
 }
 
 function extractFileName(filename) {
   var fullPath = document.getElementById(filename).value;
   if (fullPath) {
-      var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-      var filename = fullPath.substring(startIndex);
-      if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-          filename = filename.substring(1);
-      }
-      return filename;
+    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+    var filename = fullPath.substring(startIndex);
+    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+      filename = filename.substring(1);
+    }
+    return filename;
   }
   return "";
 }
 
 function restSubmit() {
+  $('#overlay').show()
+  
   $.ajax({url: '/webtool/model_selection/'.concat(submit()),
     dataType: 'json',
     success: function(data) {
@@ -77,10 +79,7 @@ function restSubmit() {
       var x = 600, y = 400, z = 400;
       create3DScatterPlot(data['pca_3d'], x, y, z);
       showPageElement('model-results')
+      $('#overlay').hide();
     }
   });
 }
-
-$( document ).ready(function() {
-
-});
