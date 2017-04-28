@@ -1,6 +1,26 @@
+table {
+    display: table;
+    border: 1px solid;
+    border-color: black ;
+    border-spacing: 2px;
+}
+
+.bio {
+    vertical-align: bottom;
+    margin: 10px 50px 100px;
+}
+
+.memberphoto {
+    vertical-align: top;
+}
+
+.photo {
+    vertical-align: top;
+}
+
 .image {
-    height: 500px;
-    width: 75%;
+    height: 200px;
+    width: 200px;
 }
 
 .bg-grey {
@@ -24,7 +44,7 @@
 
 /* Styling for Jumbotron */
 .jumbotron {
-    background-image: url("plants.jpg") !important;
+    background-image: url("ecosystem.jpg") !important;
     background-size: cover;
     color: #ffffff  !important;
     padding: 100px 25px !important;

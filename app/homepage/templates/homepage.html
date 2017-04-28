@@ -64,54 +64,84 @@
 
     <!-- MEMBERS -->
     <div id="members" class="container-fluid text-center bg-grey">
-      <h2>Group Members</h2>
-        <div class="row text-center">
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img class="image" src="{% static "jonathan.jpg" %}" alt="Jonathan">
-              <p><strong>Jonathan Wang</strong></p>
-              <p>Jonathan Wang is a senior undergraduate student studying Computer Science and Statistics. Jonathan is the project manager of this project, maintaining the overall direction of the project.</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Brian">
-              <p><strong>Brian Lin</strong></p>
-              <p>Brian Lin is a junior undergraduate student studying Computer Science and Statistics with an interest in Economics. He is mainly interested in applying machine learning and data science to solving real life problems. </p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Lavanya">
-              <p><strong>Lavanya Harinarayan</strong></p>
-              <p>Lavanya Harinarayan is a senior undergraduate student studying Computer Science. She is interested in exploring the various applications of machine learning and artificial intelligence, especially in the field of security.</p>
-            </div>
-          </div>
-        </div>
-        <div class="row text-center">
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Jack">
-              <p><strong>Jack Ye</strong></p>
-              <p>Jack Ye is a junior undergraduate student studying Computer Science and Statistics. Apart from BIDS, he is currently working in the Berkeley ICSI multimedia team for research about music information retrieval.</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img class="image" src="{% static "justin.jpg" %}" alt="Justin">
-              <p><strong>Justin Mi</strong></p>
-              <p>Justin Mi is a freshman undergraduate student studying Electrical Engineering and Computer Sciences. Outside of BIDS, Justin is involved in Berkeley’s AUTOLAB.</p>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="thumbnail">
-              <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Caleb">
-              <p><strong>Caleb Siu</strong></p>
-              <p>Caleb Siu is a sophomore undergraduate student studying Computer Science and Economics. In addition, he is the Director of Finance for Society of Asian Americans and Engineers at Berkeley and part of a college ministry. </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <table class="membersTable">
+        <tbody>
+          <tr>
+            <td class="memberphoto">
+              <div class="photo">
+                <img class="image" src="{% static "jonathan.jpg" %}" alt="Jonathan">
+              </div>
+              <div class="title">
+                <p><strong>Jonathan Wang</strong></p>
+              </div>
+              <div class="bio">
+                <p>Jonathan Wang is a senior undergraduate student studying Computer Science and Statistics. Jonathan is the project manager of this project, maintaining the overall direction of the project.</p>
+              </div>
+            </td>
+            <td>
+              <div class="photo">
+                <img class="image" src="{% static "brianlin.jpg" %}" alt="Brian">
+              </div>
+              <div class="title">
+                <p><strong>Brian Lin</strong></p>
+              </div>
+              <div class="bio">
+                <p>Brian Lin is a junior undergraduate student studying Computer Science and Statistics with an interest in Economics. He is mainly interested in applying machine learning and data science to solving real life problems.</p>
+              </div>
+            </td>
+            <td>
+              <div class="photo">
+                <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Brian">
+              </div>
+              <div class="title">
+                <p><strong>Lavanya Harinarayan</strong></p>
+              </div>
+              <div class="bio">
+                <p>Lavanya Harinarayan is a senior undergraduate student studying Computer Science. She is interested in exploring the various applications of machine learning and artificial intelligence, especially in the field of security.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="membersTable">
+        <tbody>
+          <tr>
+            <td>
+              <div class="photo">
+                <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Brian">
+              </div>
+              <div class="title">
+                <p><strong>Jack Ye</strong></p>
+              </div>
+              <div class="bio">
+                <p>Jack Ye is a junior undergraduate student studying Computer Science and Statistics. Apart from BIDS, he is currently working in the Berkeley ICSI multimedia team for research about music information retrieval.</p>
+            </td>
+            <td>
+              <div class="photo">
+                <img class="image" src="http://i.imgur.com/4ybg2jx.jpg" alt="Brian">
+              </div>
+              <div class="title">
+                <p><strong>Caleb Siu</strong></p>
+              </div>
+              <div class="bio">
+                <p>Caleb Siu is a sophomore undergraduate student studying Computer Science and Economics. In addition, he is the Director of Finance for Society of Asian Americans and Engineers at Berkeley and part of a college ministry. </p>
+              </div>
+            </td>
+            <td>
+              <div class="photo">
+                <img class="image" src="{% static "justin.jpg" %}" alt="Justin">
+              </div>
+              <div class="title">
+                <p><strong>Justin Mi</strong></p>
+              </div>
+              <div class="bio">
+                <p>Justin Mi is a freshman undergraduate student studying Electrical Engineering and Computer Sciences. Outside of BIDS, Justin is involved in Berkeley’s AUTOLAB.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <!-- CONTACT -->
     <div id="contact" class="container-fluid bg-grey">
