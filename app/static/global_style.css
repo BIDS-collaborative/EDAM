@@ -25,7 +25,7 @@
 }
 
 .jumbotron {
-  background-image: url("ecosystem.jpg") !important;
+  background-color: green;
   color: #ffffff;
   padding: 70px 25px;
 }
