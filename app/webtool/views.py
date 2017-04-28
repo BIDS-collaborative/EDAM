@@ -29,7 +29,8 @@ from .forms import DocumentForm
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-
+# renders page with HTML and document form
+# if form is submitted replace document form with uploaded files
 def index(request):
   if request.method == 'POST':
     form = DocumentForm(request.POST, request.FILES)
@@ -43,14 +44,14 @@ def index(request):
     doc_form = DocumentForm()
     return render(request, 'webtool.html', {'DocumentForm': doc_form})
 
-
+# load data from static documents directory
 def load_data(data, labels):
   BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
   directory =  BASE_DIR + "/documents/"
   print (directory)
   print (data)
   features = np.genfromtxt(directory + data, delimiter=',')
-  labels = np.genfromtxt(directory + labels, delimiter = ",")
+  labels = np.genfromtxt(directory + labels, delimiter = ',')
   # feature_names = np.genfromtxt(directory + static('pacific_plant_features.csv'), delimiter='\n', dtype=str)
   return clean_features(features, labels)
 
@@ -134,11 +135,6 @@ def get_confusion_matrix(labels, predictions):
   norm_cm = cm.astype(float) / cm.sum(axis=1)[:, np.newaxis]
   return np.round(norm_cm, 2), cm
   # sklearn confusion matrix has encoding error
-  # cm = confusion_matrix(labels, predictions)
-  # print cm
-  # if normalize:
-  #   cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-  # return cm
 
 def get_feature_importance(features, labels):
   model = RandomForestClassifier(n_estimators=1000)
@@ -156,20 +152,27 @@ def get_principal_components(features, n_features=18):
   return model.transform(features)
 
 
-#confusion matrix, feature importance, model predictions, pca variance
+# web api that returns data for all analysis plots
+# confusion matrix, feature importance, model predictions, pca variance
 @api_view(['GET'])
 def model_selection(request):
-
+  # get input parameters
   model = request.query_params.get('model')
   hyperparameters = request.query_params.get('hyperparameters').split(',')
   features = request.query_params.get('features')
   labels = request.query_params.get('labels')
+
+  # load data files
   data = load_data(features, labels)
+
+  # train and test models
   train_features, test_features, train_labels, test_labels = split_data(data[0], data[1])
   if model == " LR":
     predictions = predict_lr(train_features, test_features, train_labels, test_labels)
   else:
     predictions = predict_rf(train_features, test_features, train_labels, test_labels)
+
+  # create plot data
   cm, counts = get_confusion_matrix(test_labels, predictions)
   tips = [str(counts[0][0]) + ' out of ' + str(counts[0][0] + counts[0][1]),
     str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
@@ -189,4 +192,4 @@ def model_selection(request):
     "pca": {"feature1": feature1, "feature2": feature2, "species": species, "label": data[1]},
     "pca_3d": {"feature1": feature1, "feature2": feature2, "feature3": feature3, "species": species, "label": data[1]},
     "redirect": request.get_full_path()
-   })
+  })

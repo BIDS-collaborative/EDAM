@@ -1,3 +1,6 @@
+// The following $.ajax() calls call the APIs to generate
+// the data for the plots
+
 $(document).ready(function(){
   /* VERTICAL BAR GRAPH */
   $.ajax({url: '/analysis/feature_importance',

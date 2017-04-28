@@ -28,6 +28,7 @@ function hidePageElement(what)
   return false;
 }
 
+// pulls form data from page and returns as string
 function submit() {
   var elements = new Array("rf", "lr");
   var selected = false;
@@ -63,6 +64,7 @@ function extractFileName(filename) {
   return "";
 }
 
+// gathers form data and passes it to model selection API
 function restSubmit() {
   $('#overlay').show()
   

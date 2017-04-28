@@ -22,10 +22,12 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import confusion_matrix
 
 
+# renders the page with html
 def index(request):
   template = loader.get_template('analysis.html')
   return HttpResponse(template.render(request))
 
+# load PIER data from static documents
 def load_data():
   BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
   directory = BASE_DIR + '/analysis'
@@ -115,11 +117,6 @@ def get_confusion_matrix(labels, predictions):
   norm_cm = cm.astype(float) / cm.sum(axis=1)[:, np.newaxis]
   return np.round(norm_cm, 2), cm
   # sklearn confusion matrix has encoding error
-  # cm = confusion_matrix(labels, predictions)
-  # print cm
-  # if normalize:
-  #   cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-  # return cm
 
 # test PCA and RF feature importances
 def get_feature_importance(features, labels):
@@ -139,8 +136,13 @@ def get_principal_components(features, n_features=18):
   # return model.components_.T
 
 
-# cache PIER analysis data in database
-# allow options for confusion matrix (training or test, prediction model)
+'''
+The following functions are APIs that return data to generate plots
+They allow for caching the plot data in the database and return 
+dictionaries containing the information neecessary for each plot
+'''
+
+# confusion matrix requires 2x2 matrix, tooltips, and labels
 @api_view(['GET'])
 def confusion_matrix(request):
   data = dict()
@@ -161,10 +163,7 @@ def confusion_matrix(request):
 
   return Response(data)
 
-
-#############
-# Look at this
-
+# feature importance requires a list of features and a list of importances
 @api_view(['GET'])
 def feature_importance(request):
   data = dict()
@@ -178,6 +177,7 @@ def feature_importance(request):
 
   return Response(data)
 
+# PCA variance requires a list of variances (this is not currently in use)
 @api_view(['GET'])
 def pca_variance(request):
   data = dict()
@@ -190,7 +190,8 @@ def pca_variance(request):
     
   return Response(data)
 
-
+# PCA scatter requires the values of 2 principal components and a list of labels (invasive or non-invasive)
+# also takes in list of species as tooltips which is currently 0-filled
 @api_view(['GET'])
 def pca_scatter(request):
   data = dict()
@@ -207,7 +208,7 @@ def pca_scatter(request):
 
   return Response(data)
 
-
+# same as PCA scatter but with 3 principal components
 @api_view(['GET'])
 def pca_3d(request):
   data = dict()

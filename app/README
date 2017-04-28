@@ -17,3 +17,11 @@ The app/static/ folder in each app contains the css and js files and the
 app/templates/ folder contains the html.
 
 Additional implementation details are in the comments in each file
+
+
+IMPORTANT NOTES:
+- Django renders HTML by default through the index() function in each views.py file.
+- File upload is handled in the webtool/views.py index() function when the form submitted.
+These files are stored in the documents/ folder via form.save() and the ModelForm.
+- d3 visualization functions are in the /static/d3 files. These include d3-axis.js, 
+d3matrix.js, d3tips.js, and global_js.js
