@@ -1,7 +1,7 @@
 /* General CSS to be used by all pages, can be overwritten */
 .navbar {
   margin-bottom: 0;
-  background-color: gray;
+  background-color: #04a340;
   z-index: 9999;
   border: 0;
   font-size: 12px;

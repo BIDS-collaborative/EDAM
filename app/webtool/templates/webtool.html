@@ -140,8 +140,19 @@
                   <form class="form-inline text-center">
                     <div class="input-group">
                       <label class="control-label">Regularization Strength</label>
-                      <input type="range" name="ageInputName" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
-                      <output name="ageOutputName" id="lrOut1">50</output>
+                      <input type="range" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
+                      <output id="lrOut1">50</output>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div id="hyperparameter-2">
+                <div class="row">
+                  <form class="form-inline text-center">
+                    <div class="input-group">
+                      <label class="control-label">Regularization Strength</label>
+                      <input type="range" id="lrIn2" value="50" min="1" max="100" oninput="lrOut2.value = lrIn2.value">
+                      <output id="lrOut2">50</output>
                     </div>
                   </form>
                 </div>
