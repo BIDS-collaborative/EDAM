@@ -24,7 +24,7 @@
 
 /* Styling for Jumbotron */
 .jumbotron {
-    background-color: green  !important;
+    background-image: url("bids.png") !important;
     color: #ffffff  !important;
     padding: 100px 25px !important;
 }

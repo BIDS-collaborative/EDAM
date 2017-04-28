@@ -1,13 +1,14 @@
 /* General CSS to be used by all pages, can be overwritten */
 .navbar {
   margin-bottom: 0;
-  background-color: #04a340;
+  background-color: gray;
   z-index: 9999;
   border: 0;
   font-size: 12px;
   line-height: 1.42857143;
   letter-spacing: 4px;
   border-radius: 0;
+  opacity: 0.9;
 }
 
 .navbar .nav li a, .navbar .navbar-brand {
@@ -24,7 +25,7 @@
 }
 
 .jumbotron {
-  background-color: #0b7f37;
+  background-image: url("ecosystem.jpg") !important;
   color: #ffffff;
   padding: 70px 25px;
 }
