@@ -1,0 +1,19 @@
+EDAM: Classification of Invasive Species
+
+This web app is designed to showcase our analysis of the Pacific plants dataset
+as well as allow for the analysis of user input data. The page is written with
+Django in the backend with d3.js for visualization.
+
+The Django project is divided into 3 apps: /homepage/, /analysis/, and /webtool/
+in the respective folders. 
+
+The /static/ folder contains page wide css and js files.
+The /documents/ folder contains uploaded files.
+The /app/ folder contains app setup scripts including root url routing.
+
+Each app contains a views.py file that handles the backend logic as well as
+a urls.py file that handles routing within the app.
+The app/static/ folder in each app contains the css and js files and the 
+app/templates/ folder contains the html.
+
+Additional implementation details are in the comments in each file
