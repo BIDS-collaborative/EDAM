@@ -58,33 +58,33 @@
           <div class="jumbotron text-center">
             <!-- FILE UPLOAD -->
             <h2>1. Dataset Upload</h2> 
-            {% if DocumentForm %}
-              <form id="file-upload-form" enctype="multipart/form-data" action="" method="post">
-                {% csrf_token %}
-                <div class="container-fluid">
-                  {{ DocumentForm.description.label_tag }}
-                  {{ DocumentForm.description }}
+              {% if DocumentForm %}
+                <form id="file-upload-form" enctype="multipart/form-data" action="" method="post">
+                  {% csrf_token %}
+                  <div class="container-fluid">
+                    {{ DocumentForm.description.label_tag }}
+                    {{ DocumentForm.description }}
+                  </div>
+                  <div class="container-fluid">
+                    {{ DocumentForm.document.label_tag }}
+                    {{ DocumentForm.document }}
+                    {{ DocumentForm.label.label_tag }}
+                    {{ DocumentForm.label }}
+                  </div>
+                  <div class="container-fluid">
+                    <input class="btn btn-sm btn-default" type="submit" value="Submit">
+                  </div>
+                </form>
+              {% else %}
+                <div>
+                  <label>Document:</label>
+                  <span id='document_filename'>{{ document }}</span>
                 </div>
-                <div class="container-fluid">
-                  {{ DocumentForm.document.label_tag }}
-                  {{ DocumentForm.document }}
-                  {{ DocumentForm.label.label_tag }}
-                  {{ DocumentForm.label }}
+                <div>
+                  <label>Label:</label>
+                  <span id='label_filename'>{{ label }}</span>
                 </div>
-                <div class="container-fluid">
-                  <input class="btn btn-sm btn-default" type="submit" value="Submit">
-                </div>
-              </form>
-            {% else %}
-              <div>
-                <label>Document:</label>
-                <span id='document_filename'>{{ document }}</span>
-              </div>
-              <div>
-                <label>Label:</label>
-                <span id='label_filename'>{{ label }}</span>
-              </div>
-            {% endif %}
+              {% endif %}
 
             <!-- MODEL SELECTION -->
             <div class="container-fluid">
