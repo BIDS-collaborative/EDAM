@@ -24,8 +24,8 @@ from sklearn.metrics import confusion_matrix
 
 # renders the page with html
 def index(request):
-  template = loader.get_template('analysis.html')
-  return HttpResponse(template.render(request))
+  # template = loader.get_template('analysis.html')
+  return render(request, 'analysis.html')
 
 # load PIER data from static documents
 def load_data():

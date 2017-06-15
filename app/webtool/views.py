@@ -37,8 +37,8 @@ def index(request):
     
     if form.is_valid():
       form.save()
-      template = loader.get_template('webtool.html')
-      return HttpResponse(template.render({'document': request.FILES['document'], 'label': request.FILES['label']}))
+      # template = loader.get_template('webtool.html')
+      return render(request, 'webtool.html', {'document': request.FILES['document'], 'label': request.FILES['label']})
 
   else:
     doc_form = DocumentForm()
