@@ -1,8 +1,16 @@
-EDAM: Classification of Invasive Species
+# EDAM: Classification of Invasive Species
 
 This web app is designed to showcase our analysis of the Pacific plants dataset
 as well as allow for the analysis of user input data. The page is written with
 Django in the backend with d3.js for visualization.
+
+# Local Machine Setup
+1. clone the repo
+2. set up a virtual environment using virtualenv or conda
+3. activate the virtual environment
+4. install the dependencies in `requirements.txt` using `pip install -r requirements.txt`
+5. navigate to `app/`
+6. run the server using `python manage.py runserver`
 
 The Django project is divided into 3 apps: /homepage/, /analysis/, and /webtool/
 in the respective folders. 
