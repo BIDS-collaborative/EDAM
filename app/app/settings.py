@@ -25,7 +25,7 @@ SECRET_KEY = 'i0-m0s8xqzdi$d6e3$gsc8c41-_b2(wx6vjpm)!i#)q_sja=3h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://edam-berkeley-edu.apphost.ocf.berkeley.edu/']
+ALLOWED_HOSTS = ['edam-berkeley-edu.apphost.ocf.berkeley.edu']
 
 
 # Application definition
