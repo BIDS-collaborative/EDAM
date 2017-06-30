@@ -27,9 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['edam-berkeley-edu.apphost.ocf.berkeley.edu']
 
-
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -111,9 +109,9 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -121,12 +119,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
+URL_ROOT = '/'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Place shared CSS, JS in root/static folder
-#STATICFILES_DIRS = [
-#    os.path.join(BASE_DIR, 'static'),
-#]
+STATICFILES_DIRS = [
+   os.path.join(BASE_DIR, 'static'),
+]
