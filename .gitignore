@@ -55,3 +55,7 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Django static root files
+**/app/static/
+static/
