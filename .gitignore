@@ -47,7 +47,7 @@ coverage.xml
 *.mo
 *.pot
 
-# Django stuff:
+# Log files:
 *.log
 
 # Sphinx documentation
@@ -59,3 +59,17 @@ target/
 # Django static root files
 **/app/static/
 static/
+
+# Files from prod server
+--log-file
+=1.10.5
+
+# macOS file finder files
+*.DS_Store
+
+# dotenv
+.env
+
+# virtualenv
+venv/
+ENV/
