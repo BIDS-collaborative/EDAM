@@ -14,3 +14,4 @@ lint: $(LINT_TARGETS:%.py=$(DJANGO_PROJECT_ROOT)/%.py)
 
 test:
 	cd $(DJANGO_PROJECT_ROOT) && python2 manage.py test
+	
