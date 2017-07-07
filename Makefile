@@ -5,7 +5,7 @@ DJANGO_PROJECT_ROOT=app
 LINT_CMD=pylint
 LINT_OPTIONS=--output-format=colorized --rcfile=.pylintrc
 # Space-separated Python source files to inspect for PEP8 compliance
-LINT_TARGETS=
+LINT_TARGETS=webtool/apps.py
 
 all: lint 
 
@@ -14,4 +14,3 @@ lint: $(LINT_TARGETS:%.py=$(DJANGO_PROJECT_ROOT)/%.py)
 
 test:
 	cd $(DJANGO_PROJECT_ROOT) && python2 manage.py test
-	
