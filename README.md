@@ -16,6 +16,7 @@ We have analyzed a dataset of Pacific plants (PIER) and developed a webtool to a
 
 ## Web App
 [![Build Status](https://travis-ci.org/BIDS-collaborative/EDAM.svg?branch=master)](https://travis-ci.org/BIDS-collaborative/EDAM)
+
 To get started with the web app, check out our [Getting Started page on the wiki](https://github.com/BIDS-collaborative/EDAM/wiki/Getting-Started-with-the-Web-App). 
 
 ## Origins
