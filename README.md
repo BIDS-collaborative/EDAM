@@ -14,6 +14,9 @@ process of invasive species.
 
 We have analyzed a dataset of Pacific plants (PIER) and developed a webtool to analyze user input data.
 
+## Web App
+[![Build Status](https://travis-ci.org/BIDS-collaborative/EDAM.svg?branch=master)](https://travis-ci.org/BIDS-collaborative/EDAM)
+
 ## Origins
 
 This project originated at a meeting with Neil Davies (Moorea IDEA, BIDS), Jorrit Poelen (GloBI) and Charlotte Cabasse (BIDS) at BIDS on Aug 5, 2015.
