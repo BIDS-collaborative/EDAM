@@ -1,4 +1,6 @@
-""" This module defines the application configuration. """
+"""
+This module defines the application configuration.
+"""
 
 from __future__ import unicode_literals
 

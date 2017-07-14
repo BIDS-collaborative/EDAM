@@ -125,8 +125,8 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 # Place shared CSS, JS in root/static folder
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, 'static'),
-   os.path.join(BASE_DIR, 'webtool/static'),
-   os.path.join(BASE_DIR, 'homepage/static'),
-   os.path.join(BASE_DIR, 'analysis/static'),
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'webtool/static'),
+    os.path.join(BASE_DIR, 'homepage/static'),
+    os.path.join(BASE_DIR, 'analysis/static'),
 ]
