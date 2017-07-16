@@ -1,182 +1,152 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
 {% load static %}
 
-<html lang="en">
+{% block page %} | Home{% endblock %}
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'global_js.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" media="screen">
-    <title>EDAM</title>
-  </head>
+{% block custom_refs %} 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" media="screen">
+{% endblock %}
 
-  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span> 
-          </button>
-          <a class="navbar-brand" href="/">EDAM</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
-            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+{% block body_tags %}data-spy="scroll" data-target=".navbar" data-offset="60"{% endblock %}
+    
+{% block jumbo_content %}
+<h1>EDAM</h1>
+<p>Machine Learning to Identify Invasive Species</p>
+{% endblock %}
 
-    <!-- JUMBOTRON -->
-    <div class="jumbotron text-center">
-      <h1>EDAM</h1> 
-      <p>Machine Learning to Identify Invasive Species</p> 
+{% block content %}
+<!-- ABOUT -->
+<div id="about" name="about" class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>About Us</h2>
+      <h4>Environmental Data Access Monitor (EDAM) is a part of an initiative to model ecosystems including food webs, species lists, and other interactions. The goal of EDAM is to measure how much biodiversity data is available for a certain ecosystem. To begin to quantify this metric, we have to better understand the factors affecting ecosystems.
+      <br><br>
+      Invasive species are one such factor, heavily impacting the presence of native species. However, there is currently no easy way to identify invasive species aside from manually classifying each species in an environment. Ecologists have plenty of species data but no way to use it to classify invasive species. We propose a method to use machine learning models to identify features that can define invasive species. A data driven method for classification would speed up the process significantly and remove the bottleneck of requiring expert analysis. 
+      <br><br>
+      If you are interested in our analysis of our own datasets, visit the <a href="{% url 'analysis:index' %}">analysis</a> page. And if you want to upload your own datasets, visit the <a href="{% url 'webtool:index' %}">webtool</a> page
+      </h4> 
     </div>
-
-    <!-- ABOUT -->
-    <div id="about" name="about" class="container-fluid">
-      <div class="row">
-        <div class="col-sm-8">
-          <h2>About Us</h2>
-          <h4>Environmental Data Access Monitor (EDAM) is a part of an initiative to model ecosystems including food webs, species lists, and other interactions. The goal of EDAM is to measure how much biodiversity data is available for a certain ecosystem. To begin to quantify this metric, we have to better understand the factors affecting ecosystems.
-          <br><br>
-          Invasive species are one such factor, heavily impacting the presence of native species. However, there is currently no easy way to identify invasive species aside from manually classifying each species in an environment. Ecologists have plenty of species data but no way to use it to classify invasive species. We propose a method to use machine learning models to identify features that can define invasive species. A data driven method for classification would speed up the process significantly and remove the bottleneck of requiring expert analysis. 
-          <br><br>
-          If you are interested in our analysis of our own datasets, visit the <a href="{% url 'analysis:index' %}">analysis</a> page. And if you want to upload your own datasets, visit the <a href="{% url 'webtool:index' %}">webtool</a> page
-          </h4> 
-        </div>
-        <div class="col-sm-4">
-          <div class="thumbnail">
-            <img src=" {% static 'bids.png' %} " alt="BIDS">
-          </div>
-        </div>
+    <div class="col-sm-4">
+      <div class="thumbnail">
+        <img src=" {% static 'bids.png' %} " alt="BIDS">
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- MEMBERS -->
-    <div id="members" class="container-fluid text-center bg-grey">
-      <h2>Group Members</h2>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="photo">
-            <img class="image" src="{% static 'jonathan.jpg' %}" alt="Jonathan">
-          </div>
-          <div class="title">
-            <p><strong>Jonathan Wang</strong></p>
-          </div>
-          <div class="bio">
-            <p>Jonathan Wang is a senior undergraduate student studying Computer Science and Statistics. Jonathan is the project manager of this project, maintaining the overall direction of the project.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="photo">
-            <img class="image" src="{% static 'brianlin.jpg' %}" alt="Brian">
-          </div>
-          <div class="title">
-            <p><strong>Brian Lin</strong></p>
-          </div>
-          <div class="bio">
-            <p>Brian Lin is a junior undergraduate student studying Computer Science and Statistics with an interest in Economics. He is mainly interested in applying machine learning and data science to solving real life problems.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="photo">
-            <img class="image" src="{% static 'temp.png' %}" alt="Lavanya">
-          </div>
-          <div class="title">
-            <p><strong>Lavanya Harinarayan</strong></p>
-          </div>
-          <div class="bio">
-            <p>Lavanya Harinarayan is a senior undergraduate student studying Computer Science. She is interested in exploring the various applications of machine learning and artificial intelligence, especially in the field of security.</p>
-          </div>
-        </div>
+<!-- MEMBERS -->
+<div id="members" class="container-fluid text-center bg-grey">
+  <h2>Group Members</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'jonathan.jpg' %}" alt="Jonathan">
       </div>
-      
-      <div class="row">
-        <div class="col-md-4">
-          <div class="photo">
-            <img class="image" src="{% static 'jack.jpeg' %}" alt="Jack">
-          </div>
-          <div class="title">
-            <p><strong>Jack Ye</strong></p>
-          </div>
-          <div class="bio">
-            <p>Jack Ye is a junior undergraduate student studying Computer Science and Statistics. Apart from BIDS, he is currently working in the Berkeley ICSI multimedia team for research about music information retrieval.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="photo">
-            <img class="image" src="{% static 'Caleb-Siu-Picture.jpg' %}" alt="Caleb">
-          </div>
-          <div class="title">
-            <p><strong>Caleb Siu</strong></p>
-          </div>
-          <div class="bio">
-            <p>Caleb Siu is a sophomore undergraduate student studying Computer Science and Economics. In addition, he is the Director of Finance for Society of Asian Americans and Engineers at Berkeley and part of a college ministry. </p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="photo">
-            <img class="image" src="{% static 'justin.jpg' %}" alt="Justin">
-          </div>
-          <div class="title">
-            <p><strong>Justin Mi</strong></p>
-          </div>
-          <div class="bio">
-            <p>Justin Mi is a freshman undergraduate student studying Electrical Engineering and Computer Sciences. Outside of BIDS, Justin is involved in Berkeley’s AUTOLAB.</p>
-          </div>
-        </div>
+      <div class="title">
+        <p><strong>Jonathan Wang</strong></p>
       </div>
-
-    <!-- CONTACT -->
-    <div id="contact" class="container-fluid bg-grey">
-      <h2 class="text-center">CONTACT</h2>
-      <div class="row">
-        <div class="col-sm-5">
-          <p>Contact us if you are interested in working with us!</p>
-          <p><span class="glyphicon glyphicon-map-marker"></span> Berkeley, US</p>
-          <p><span class="glyphicon glyphicon-phone"></span> +00 1231456789</p>
-          <p><span class="glyphicon glyphicon-envelope"></span> jonathanwang017 [at] berkeley [dot] edu</p> 
-        </div>
-        <div class="col-sm-7">
-          <div class="row">
-            <div class="col-sm-6 form-group">
-              <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
-            </div>
-            <div class="col-sm-6 form-group">
-              <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
-            </div>
-          </div>
-          <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
-          <div class="row">
-            <div class="col-sm-12 form-group">
-              <button class="btn btn-default pull-right" type="submit">Send</button>
-            </div>
-          </div> 
-        </div>
+      <div class="bio">
+        <p>Jonathan Wang is a senior undergraduate student studying Computer Science and Statistics. Jonathan is the project manager of this project, maintaining the overall direction of the project.</p>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'brianlin.jpg' %}" alt="Brian">
+      </div>
+      <div class="title">
+        <p><strong>Brian Lin</strong></p>
+      </div>
+      <div class="bio">
+        <p>Brian Lin is a junior undergraduate student studying Computer Science and Statistics with an interest in Economics. He is mainly interested in applying machine learning and data science to solving real life problems.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'temp.png' %}" alt="Lavanya">
+      </div>
+      <div class="title">
+        <p><strong>Lavanya Harinarayan</strong></p>
+      </div>
+      <div class="bio">
+        <p>Lavanya Harinarayan is a senior undergraduate student studying Computer Science. She is interested in exploring the various applications of machine learning and artificial intelligence, especially in the field of security.</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'jack.jpeg' %}" alt="Jack">
+      </div>
+      <div class="title">
+        <p><strong>Jack Ye</strong></p>
+      </div>
+      <div class="bio">
+        <p>Jack Ye is a junior undergraduate student studying Computer Science and Statistics. Apart from BIDS, he is currently working in the Berkeley ICSI multimedia team for research about music information retrieval.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'Caleb-Siu-Picture.jpg' %}" alt="Caleb">
+      </div>
+      <div class="title">
+        <p><strong>Caleb Siu</strong></p>
+      </div>
+      <div class="bio">
+        <p>Caleb Siu is a sophomore undergraduate student studying Computer Science and Economics. In addition, he is the Director of Finance for Society of Asian Americans and Engineers at Berkeley and part of a college ministry. </p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'justin.jpg' %}" alt="Justin">
+      </div>
+      <div class="title">
+        <p><strong>Justin Mi</strong></p>
+      </div>
+      <div class="bio">
+        <p>Justin Mi is a freshman undergraduate student studying Electrical Engineering and Computer Sciences. Outside of BIDS, Justin is involved in Berkeley’s AUTOLAB.</p>
+      </div>
+    </div>
+  </div>
 
-    <!-- FOOTER -->
-    <footer class="container-fluid text-center">
-      <a href="#myPage" title="To Top">
-        <span class="glyphicon glyphicon-chevron-up"></span>
-        <p class="back2top">Back to Top</p>
-      </a>
-      <a href="https://www.ocf.berkeley.edu">
-          <img src="https://www.ocf.berkeley.edu/hosting-logos/ocf-hosted-penguin-dark.svg"
-              alt="Hosted by the OCF" style="border: 0;" />
-      </a>
-    </footer>
-  </body>
+<!-- CONTACT -->
+<div id="contact" class="container-fluid bg-grey">
+  <h2 class="text-center">CONTACT</h2>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>Contact us if you are interested in working with us!</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> Berkeley, US</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +00 1231456789</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> jonathanwang017 [at] berkeley [dot] edu</p> 
+    </div>
+    <div class="col-sm-7">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Name" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-default pull-right" type="submit">Send</button>
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>
+{% endblock %}
 
-</html>
+{% block ocf %}
+<a href="https://www.ocf.berkeley.edu">
+  <img src="https://www.ocf.berkeley.edu/hosting-logos/ocf-hosted-penguin-dark.svg"
+      alt="Hosted by the OCF" style="border: 0;" />
+</a>
+{% endblock %}
+

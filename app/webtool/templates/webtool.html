@@ -1,210 +1,176 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
 {% load static %}
 
-<html lang="en">
+{% block page %} | Webtool{% endblock %}
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'global_js.js' %}"></script>
-    <script src="{% static 'webtool.js' %}"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script scr="{% static 'd3-axis.js' %}"></script>
-    <script src="{% static 'd3tips.js' %}"></script>
-    <script src="{% static 'd3matrix.js' %}"></script>
-    
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
-    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">  
-    <link rel="stylesheet" type="text/css" href="{% static 'webtool_style.css' %}" media="screen"> 
+{% block custom_refs %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{% static 'webtool.js' %}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script scr="{% static 'd3-axis.js' %}"></script>
+<script src="{% static 'd3tips.js' %}"></script>
+<script src="{% static 'd3matrix.js' %}"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="{% static 'webtool_style.css' %}" media="screen">
+{% endblock %}
 
-    <title>EDAM</title>
-  </head>
+{% block body_tags %}data-spy="scroll" data-target=".navbar" data-offset="60"{% endblock %}
 
-  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span> 
-          </button>
-          <a class="navbar-brand" href="/">EDAM</a>
+{% block jumbo_content %}<h1>Webtool</h1>{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="jumbotron text-center">
+        <!-- FILE UPLOAD -->
+        <h2>1. Dataset Upload</h2> 
+          {% if DocumentForm %}
+            <form id="file-upload-form" enctype="multipart/form-data" action="" method="post">
+              {% csrf_token %}
+              <div class="container-fluid">
+                {{ DocumentForm.description.label_tag }}
+                {{ DocumentForm.description }}
+              </div>
+              <div class="container-fluid">
+                {{ DocumentForm.document.label_tag }}
+                {{ DocumentForm.document }}
+                {{ DocumentForm.label.label_tag }}
+                {{ DocumentForm.label }}
+              </div>
+              <div class="container-fluid">
+                <input class="btn btn-sm btn-default" type="submit" value="Submit">
+              </div>
+            </form>
+          {% else %}
+            <div>
+              <label>Document:</label>
+              <span id='document_filename'>{{ document }}</span>
+            </div>
+            <div>
+              <label>Label:</label>
+              <span id='label_filename'>{{ label }}</span>
+            </div>
+          {% endif %}
+
+        <!-- MODEL SELECTION -->
+        <div class="container-fluid">
+          <h2>2. Model Selection</h2>
+          <h4>Choose a model</h4>
+        
+          <!-- Dropdown Menu -->
+          <div class="dropdown text-center">
+            <select onchange="showPageElement(value);" required>
+              <option value="">None</option>
+              <option value="rf">Random Forest</option>
+              <option value="lr">Logistic Regression</option>
+            </select>
+          </div>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
-            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
-          </ul>
+
+        <!-- RANDOM FOREST HYPERPARAMETERS -->
+        <div id="rf" style="display: none;">
+          <div class="text-center">
+            <p>RF Hyperparameter Selection</p>
+          </div>
+          <div id="hyperparameter-1" >
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <label class="control-label">Number of Trees</label>
+                  <input type="range" id="rfIn1" value="50" min="1" max="100" oninput="rfOut1.value = rfIn1.value">
+                  <output id="rfOut1">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="hyperparameter-2">
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <label class="control-label">RF Hyperparameter 2</label>
+                  <input type="range" id="rfIn2" value="50" min="1" max="100" oninput="rfOut2.value = rfIn2.value">
+                  <output id="rfOut2">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
+        <div id="lr" style="display: none;">
+          <div class="text-center">
+            <p>LR Hyperparameter Selection</p>
+          </div>
+          <div id="hyperparameter-1">
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <label class="control-label">Regularization Strength</label>
+                  <input type="range" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
+                  <output id="lrOut1">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div id="hyperparameter-2">
+            <div class="row">
+              <form class="form-inline text-center">
+                <div class="input-group">
+                  <label class="control-label">Regularization Strength</label>
+                  <input type="range" id="lrIn2" value="50" min="1" max="100" oninput="lrOut2.value = lrIn2.value">
+                  <output id="lrOut2">50</output>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="restSubmit();">
         </div>
       </div>
-    </nav>
-
-    <div class="jumbotron text-center">
-      <h1>Webtool</h1> 
     </div>
+  </div>
+</div>
 
-    
-    <div class="container">
+
+<div class="container" id="model-results" style="display: none">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Results</h2> 
       <div class="row">
-        <div class="col-sm-12">
-          <div class="jumbotron text-center">
-            <!-- FILE UPLOAD -->
-            <h2>1. Dataset Upload</h2> 
-              {% if DocumentForm %}
-                <form id="file-upload-form" enctype="multipart/form-data" action="" method="post">
-                  {% csrf_token %}
-                  <div class="container-fluid">
-                    {{ DocumentForm.description.label_tag }}
-                    {{ DocumentForm.description }}
-                  </div>
-                  <div class="container-fluid">
-                    {{ DocumentForm.document.label_tag }}
-                    {{ DocumentForm.document }}
-                    {{ DocumentForm.label.label_tag }}
-                    {{ DocumentForm.label }}
-                  </div>
-                  <div class="container-fluid">
-                    <input class="btn btn-sm btn-default" type="submit" value="Submit">
-                  </div>
-                </form>
-              {% else %}
-                <div>
-                  <label>Document:</label>
-                  <span id='document_filename'>{{ document }}</span>
-                </div>
-                <div>
-                  <label>Label:</label>
-                  <span id='label_filename'>{{ label }}</span>
-                </div>
-              {% endif %}
-
-            <!-- MODEL SELECTION -->
-            <div class="container-fluid">
-              <h2>2. Model Selection</h2>
-              <h4>Choose a model</h4>
-            
-              <!-- Dropdown Menu -->
-              <div class="dropdown text-center">
-                <select onchange="showPageElement(value);" required>
-                  <option value="">None</option>
-                  <option value="rf">Random Forest</option>
-                  <option value="lr">Logistic Regression</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- RANDOM FOREST HYPERPARAMETERS -->
-            <div id="rf" style="display: none;">
-              <div class="text-center">
-                <p>RF Hyperparameter Selection</p>
-              </div>
-              <div id="hyperparameter-1" >
-                <div class="row">
-                  <form class="form-inline text-center">
-                    <div class="input-group">
-                      <label class="control-label">Number of Trees</label>
-                      <input type="range" id="rfIn1" value="50" min="1" max="100" oninput="rfOut1.value = rfIn1.value">
-                      <output id="rfOut1">50</output>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div id="hyperparameter-2">
-                <div class="row">
-                  <form class="form-inline text-center">
-                    <div class="input-group">
-                      <label class="control-label">RF Hyperparameter 2</label>
-                      <input type="range" id="rfIn2" value="50" min="1" max="100" oninput="rfOut2.value = rfIn2.value">
-                      <output id="rfOut2">50</output>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <!-- LOGISTIC REGRESSION HYPERPARAMETERS -->
-            <div id="lr" style="display: none;">
-              <div class="text-center">
-                <p>LR Hyperparameter Selection</p>
-              </div>
-              <div id="hyperparameter-1">
-                <div class="row">
-                  <form class="form-inline text-center">
-                    <div class="input-group">
-                      <label class="control-label">Regularization Strength</label>
-                      <input type="range" id="lrIn1" value="50" min="1" max="100" oninput="lrOut1.value = lrIn1.value">
-                      <output id="lrOut1">50</output>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div id="hyperparameter-2">
-                <div class="row">
-                  <form class="form-inline text-center">
-                    <div class="input-group">
-                      <label class="control-label">Regularization Strength</label>
-                      <input type="range" id="lrIn2" value="50" min="1" max="100" oninput="lrOut2.value = lrIn2.value">
-                      <output id="lrOut2">50</output>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="container-fluid">
-              <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="restSubmit();">
-            </div>
-          </div>
+        <div class="container-fluid text-center">
+          <div id="confusion_matrix"></div>
         </div>
       </div>
-    </div>
-
-
-    <div class="container" id="model-results" style="display: none">
       <div class="row">
-        <div class="col-sm-12">
-          <h2>Results</h2> 
-          <div class="row">
-            <div class="container-fluid text-center">
-              <div id="confusion_matrix"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="container-fluid text-center">
-              <svg id="feature_importance"></svg>
-            </div>
-          </div>
-          <div class="row">
-            <div class="container-fluid text-center">
-              <svg id="scatter_plot"></svg>
-            </div>
-          </div>
-          <div class="row">
-            <div class="container-fluid text-center">
-              <div id="3d_scatter_plot" style="display: inline-block;"></div>
-            </div>
-          </div>
+        <div class="container-fluid text-center">
+          <svg id="feature_importance"></svg>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-fluid text-center">
+          <svg id="scatter_plot"></svg>
+        </div>
+      </div>
+      <div class="row">
+        <div class="container-fluid text-center">
+          <div id="3d_scatter_plot" style="display: inline-block;"></div>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <!-- FOOTER -->
-    <footer class="container-fluid text-center">
-      <a href="#myPage" title="To Top">
-        <span class="glyphicon glyphicon-chevron-up"></span>
-        <p class="back2top">Back to Top</p>
-      </a>
-    </footer>
+{% endblock %}
 
-    <!-- LOADING OVERLAY -->
-    <div id="overlay"></div>
-  </body>
+{% block overlay %}
+<!-- LOADING OVERLAY -->
+<div id="overlay"></div>
+{% endblock %}
 
-</html>
