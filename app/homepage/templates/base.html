@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+  <head>
+    <title>EDAM{% block page %}{% endblock %}</title>
+    <meta charset="utf-8">
+    {% block custom_refs %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" media="screen">
+    <script src="{% static 'global_js.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  </head>
+
+  <body id="top" {% block body_tags %}{% endblock %}>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </button>
+          <a class="navbar-brand" href="/">EDAM</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
+            <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- JUMBOTRON -->
+    <div class="jumbotron text-center">
+      {% block jumbo_content %}{% endblock %} 
+    </div>
+    
+    {% block content %}{% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="container-fluid text-center">
+      <a href="#top">
+        <span class="glyphicon glyphicon-chevron-up green-text"></span>
+        <p class="green-text">Back to Top</p>
+      </a>
+      {% block ocf %}{% endblock %}
+    </footer>
+    
+    {% block overlay %}{% endblock %}
+  </body>
+</html>
+
