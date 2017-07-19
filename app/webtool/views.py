@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.shortcuts import render
 
-from forms import DocumentForm
+from .forms import DocumentForm
 
 
 def index(request):

@@ -54,7 +54,7 @@ output {
 }
 
 input[type=file] {
-    display: inline;
+    display: inline !important;
 }
 
 #overlay {
