@@ -1,119 +1,91 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+
 {% load static %}
 
-<html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'global_style.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script scr="{% static 'd3-axis.js' %}"></script>
-    <script src="{% static 'd3tips.js' %}"></script>
-    <script src="{% static 'd3matrix.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'global_js.js' %}"></script>
-    <script src="{% static 'analysis.js' %}"></script>
+{% block page %} | Analysis{% endblock %}
 
-    <title>EDAM</title>
-  </head>
+{% block custom_refs %}
+<link rel="stylesheet" type="text/css" href="{% static 'analysis.css' %}" />
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min.js"></script>
+<script src="{% static 'd3-axis.js' %}"></script>
+<script src="{% static 'd3tips.js' %}"></script>
+<script src="{% static 'd3matrix.js' %}"></script>
+<script src="{% static 'analysis.js' %}"></script>
+{% endblock %}
 
-  <body id="top">
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="{% url 'homepage:index' %}">EDAM</a>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'analysis:index' %}">ANALYSIS</a></li>
-          <li><a href="{% url 'webtool:index' %}">WEBTOOL</a></li>
-        </ul>
-      </div>
-    </nav>
+{% block jumbo_content %}<h1>Analysis</h1>{% endblock %}
 
-    <!-- JUMBOTRON -->
-    <div class="jumbotron text-center">
-      <h1>Analysis</h1>
+{% block content %}
+<!-- CONTENT -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Introduction</h2>
+      <p>
+        With the goal of understanding the challenges of classifying invasive species, we analyzed and tested classification models on the PIER Pacific plant dataset. Using a dataset of invasive plants, we trained machine learning models to classify the invasiveness of the PIER dataset plants. We first cleaned the data to remove plants missing too many features and only keeping features that are present in most of the samples and that can be easily attained. With the reduced dataset, we divided the samples into training and validation sets and trained Random Forest and Logistic Regression models. In addition, we used PCA to try to reduce the size of the feature space to better visualize the classification results.
+      </p>
     </div>
-
-    <!-- CONTENT -->
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-12">
-          <h2>Introduction</h2>
-          <p>
-            With the goal of understanding the challenges of classifying invasive species, we analyzed and tested classification models on the PIER Pacific plant dataset. Using a dataset of invasive plants, we trained machine learning models to classify the invasiveness of the PIER dataset plants. We first cleaned the data to remove plants missing too many features and only keeping features that are present in most of the samples and that can be easily attained. With the reduced dataset, we divided the samples into training and validation sets and trained Random Forest and Logistic Regression models. In addition, we used PCA to try to reduce the size of the feature space to better visualize the classification results.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <h2>Results</h2>
-          <p>
-            By filtering the data to remove missing information, we had a dataset of 962 samples and 18 features. We split the dataset 80:20 into training and validation sets.
-          </p>
-          <p>
-            We trained classification on the training data and predicted on the training and validation data. Depending on the random split of training and validation sets, the prediction accuracy varied a bit. Using the Logistic Regression model, the prediction accuracy was around 75% for both the training and validation sets. With the Random Forest model, the training accuracy was around 85% and the test accuracy was around 75%. Based on these results, Random Forest has more overfitting but potentially has a better prediction accuracy. As seen in the confusion matrix, the classification model leans towards non-invasive. This can be attributed to data bias since a large number of samples are non-invasive.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container-fluid text-center">
-          <div id="confusion_matrix"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <p>
-            The top 3 most important features from the Random Forest model accounted for about 30% of the total data variance. By training a model on just these 3 features, all 4 prediction accuracies ended up at around 75%. Similarly, we used PCA to reduce the 18 features to just 3 features, which accounted for 50% of the total variance and resulted in the same prediction accuracies as the full feature set. Based on these two results, the significant features for classification of invasive species are reproduction, dispersal, and naturalization.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container-fluid text-center">
-          <svg id="feature_importance"></svg>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <p>
-            By plotting the top two principal components of the data, there appears to be 2 primary groups divided by a diagonal boundary. Above the boundary is predominantly one color, while below it is more mixed. The color labels help visualize the predictive accuracy of our model in 2 dimensions.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container-fluid text-center">
-          <svg id="scatter_plot"></svg>
-        </div>
-      </div>
-      <div class="row">
-        <div class="container-fluid text-center">
-          <div id="3d_scatter_plot" style="display: inline-block";></div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12">
-          <h2>Conclusion</h2>
-          <p>
-            As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features.
-          </p>
-          <p>
-            The long term goal of this project is to gather more training data and expand our models to encompass more organism groups. To do this, we have developed a webtool to perform live classification of user input data. This allows for testing the models with various hyperparameters while gathering more species data to improve our models.
-          </p>
-        </div>
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Results</h2>
+      <p>
+        By filtering the data to remove missing information, we had a dataset of 962 samples and 18 features. We split the dataset 80:20 into training and validation sets.
+      </p>
+      <p>
+        We trained classification on the training data and predicted on the training and validation data. Depending on the random split of training and validation sets, the prediction accuracy varied a bit. Using the Logistic Regression model, the prediction accuracy was around 75% for both the training and validation sets. With the Random Forest model, the training accuracy was around 85% and the test accuracy was around 75%. Based on these results, Random Forest has more overfitting but potentially has a better prediction accuracy. As seen in the confusion matrix, the classification model leans towards non-invasive. This can be attributed to data bias since a large number of samples are non-invasive.
+      </p>
     </div>
+  </div>
+  <div class="row">
+    <div class="container-fluid text-center">
+      <div id="confusion_matrix"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        The top 3 most important features from the Random Forest model accounted for about 30% of the total data variance. By training a model on just these 3 features, all 4 prediction accuracies ended up at around 75%. Similarly, we used PCA to reduce the 18 features to just 3 features, which accounted for 50% of the total variance and resulted in the same prediction accuracies as the full feature set. Based on these two results, the significant features for classification of invasive species are reproduction, dispersal, and naturalization.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container-fluid text-center">
+      <svg id="feature_importance"></svg>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p>
+        By plotting the top two principal components of the data, there appears to be 2 primary groups divided by a diagonal boundary. Above the boundary is predominantly one color, while below it is more mixed. The color labels help visualize the predictive accuracy of our model in 2 dimensions.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container-fluid text-center">
+      <svg id="scatter_plot"></svg>
+    </div>
+  </div>
+  <div class="row">
+    <div class="container-fluid text-center">
+      <div id="3d_scatter_plot" style="display: inline-block";></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Conclusion</h2>
+      <p>
+        As a result of our analysis of the PIER dataset, we determined that prediction models can be used to classify invasive species based on just a few significant features. We are working on improving the prediction models by adjusting the features and balancing the data set. We are also considering specific classifications based on location, which may affect invasiveness as well as other features.
+      </p>
+      <p>
+        The long term goal of this project is to gather more training data and expand our models to encompass more organism groups. To do this, we have developed a webtool to perform live classification of user input data. This allows for testing the models with various hyperparameters while gathering more species data to improve our models.
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
-    <!-- FOOTER -->
-    <footer class="container-fluid text-center">
-      <a href="#top">
-        <span class="glyphicon glyphicon-chevron-up green-text"></span>
-        <p class="green-text">Back to Top</p>
-      </a>
-    </footer>
-  </body>
-</html>
