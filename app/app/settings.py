@@ -25,7 +25,7 @@ SECRET_KEY = 'i0-m0s8xqzdi$d6e3$gsc8c41-_b2(wx6vjpm)!i#)q_sja=3h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['edam-berkeley-edu.apphost.ocf.berkeley.edu']
+ALLOWED_HOSTS = ['edam-berkeley-edu.apphost.ocf.berkeley.edu', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -125,8 +125,8 @@ STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 # Place shared CSS, JS in root/static folder
 STATICFILES_DIRS = [
-   os.path.join(BASE_DIR, 'static'),
-   os.path.join(BASE_DIR, 'webtool/static'),
-   os.path.join(BASE_DIR, 'homepage/static'),
-   os.path.join(BASE_DIR, 'analysis/static'),
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'webtool/static'),
+    os.path.join(BASE_DIR, 'homepage/static'),
+    os.path.join(BASE_DIR, 'analysis/static'),
 ]
