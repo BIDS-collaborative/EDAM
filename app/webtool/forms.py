@@ -1,8 +1,18 @@
+"""
+This module details the structure of all the forms the webtool uses. The schemas will eventually be
+translated into HTML in the templates
+"""
+
 from django import forms
 from .models import Document
 
-# Model form for uploading files
 class DocumentForm(forms.ModelForm):
-  class Meta:
-    model = Document
-    fields = ('description', 'document', 'label')
+    """
+    Model form for uploading files
+    """
+    class Meta:
+        """
+        meta info for Django Model Forms
+        """
+        model = Document
+        fields = ('description', 'document', 'label')

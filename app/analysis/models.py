@@ -1,10 +1,18 @@
+"""
+Model definitions.
+
+This module defines how information used by the web app is structured and how the
+Python layer interfaces with a database.
+"""
+
 from __future__ import unicode_literals
 
 from django.db import models
 
-# Create your models here.
-
-# model for caching analysis plots in database
 class PierData(models.Model):
-  name = models.TextField(primary_key=True)
-  json = models.TextField()
+    """
+    model for caching analysis plots in database
+    """
+    name = models.TextField(primary_key=True)
+    json = models.TextField()
+    
