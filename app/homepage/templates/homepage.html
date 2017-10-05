@@ -4,14 +4,14 @@
 
 {% block page %} | Home{% endblock %}
 
-{% block custom_refs %} 
+{% block custom_refs %}
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" media="screen">
 {% endblock %}
 
 {% block body_tags %}data-spy="scroll" data-target=".navbar" data-offset="60"{% endblock %}
-    
+
 {% block jumbo_content %}
 <h1>EDAM</h1>
 <p>Machine Learning to Identify Invasive Species</p>
@@ -25,10 +25,10 @@
       <h2>About Us</h2>
       <h4>Environmental Data Access Monitor (EDAM) is a part of an initiative to model ecosystems including food webs, species lists, and other interactions. The goal of EDAM is to measure how much biodiversity data is available for a certain ecosystem. To begin to quantify this metric, we have to better understand the factors affecting ecosystems.
       <br><br>
-      Invasive species are one such factor, heavily impacting the presence of native species. However, there is currently no easy way to identify invasive species aside from manually classifying each species in an environment. Ecologists have plenty of species data but no way to use it to classify invasive species. We propose a method to use machine learning models to identify features that can define invasive species. A data driven method for classification would speed up the process significantly and remove the bottleneck of requiring expert analysis. 
+      Invasive species are one such factor, heavily impacting the presence of native species. However, there is currently no easy way to identify invasive species aside from manually classifying each species in an environment. Ecologists have plenty of species data but no way to use it to classify invasive species. We propose a method to use machine learning models to identify features that can define invasive species. A data driven method for classification would speed up the process significantly and remove the bottleneck of requiring expert analysis.
       <br><br>
       If you are interested in our analysis of our own datasets, visit the <a href="{% url 'analysis:index' %}">analysis</a> page. And if you want to upload your own datasets, visit the <a href="{% url 'webtool:index' %}">webtool</a> page
-      </h4> 
+      </h4>
     </div>
     <div class="col-sm-4">
       <div class="thumbnail">
@@ -76,7 +76,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="row">
     <div class="col-md-4">
       <div class="photo">
@@ -125,6 +125,17 @@
         <p>Soham Kudtarkar is a senior undergraduate student studying Computer Science, particularly interested in exploring applications of artificial intelligence. Outside of BIDS, Soham is the VP of Events for the Berkeley Forum.</p>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="photo">
+        <img class="image" src="{% static 'william.jpg' %}" alt="William">
+      </div>
+      <div class="title">
+        <p><strong>William Yang</strong></p>
+      </div>
+      <div class="bio">
+        <p>William Yang is a sophomore undergraduate student studying Computer Science and potentially Data Science. Outside of BIDS, he's also a committee member on the Statistics Undergraduate Student Association.</p>
+      </div>
+    </div>
   </div>
 
 
@@ -136,7 +147,7 @@
       <p>Contact us if you are interested in working with us!</p>
       <p><span class="glyphicon glyphicon-map-marker"></span> Berkeley, US</p>
       <p><span class="glyphicon glyphicon-phone"></span> +00 1231456789</p>
-      <p><span class="glyphicon glyphicon-envelope"></span> jonathanwang017 [at] berkeley [dot] edu</p> 
+      <p><span class="glyphicon glyphicon-envelope"></span> jonathanwang017 [at] berkeley [dot] edu</p>
     </div>
     <div class="col-sm-7">
       <div class="row">
@@ -152,7 +163,7 @@
         <div class="col-sm-12 form-group">
           <button class="btn btn-default pull-right" type="submit">Send</button>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 </div>
