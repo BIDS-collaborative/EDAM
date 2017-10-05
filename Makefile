@@ -20,7 +20,7 @@ LINT_TARGETS= \
 	webtool/models.py \
 	webtool/urls.py 
 
-all: deploy lint test
+all: lint
 deploy: collectstatic disabledebug
 	systemctl --user restart EDAM
 
