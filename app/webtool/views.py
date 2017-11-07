@@ -1,5 +1,14 @@
 """
-This module defines the application's views, which are needed to render pages.
+This module defines the application's views, which are needed to render pages and return page responses.
+
+These views are split into two broad groups:
+    * API endpoints, which dynamically send and receive data
+    * Helper functions, which assist in cleaning, formatting, and analyzing data.
+
+References:
+    * Django Introduction to Views <https://docs.djangoproject.com/en/dev/topics/http/views/>
+    * Scikit Learn Documentation <http://scikit-learn.org/stable/modules/classes.html>
+    * Django REST Framework: <http://www.django-rest-framework.org/api-guide/views/>
 """
 import os
 
@@ -17,14 +26,19 @@ from .forms import DocumentForm
 
 def index(request):
     """
-    renders page with HTML and document form
-    if form is submitted replace document form with uploaded files
+    Renders page with using HTML and includes Python objects as context
+
+    This API endpoint responds differently depending on whether the request is a GET or POST. If the
+    request is a GET, a DocumentForm object is included as context. If the request is a POST, the
+    request's document and label fields are included as context.
+
+    Args:
+        request: The HTTP request object sent by the client.
     """
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            # template = loader.get_template('webtool.html')
             return render(request, 'webtool.html', {'document': request.FILES['document'],
                                                     'label': request.FILES['label']})
     else:
@@ -32,23 +46,37 @@ def index(request):
         return render(request, 'webtool.html', {'DocumentForm': doc_form})
 
 
-def load_data(data, labels):
+def load_data(document, labels):
     """
-    load data from static documents directory
+    Prepares and returns cleaned data using the given document and labels. The document is sourced
+    from the static `/documents/` directory.
+
+    Args:
+        document: The document being loaded from the `/documents/` directory.
+        labels: The labels being loaded from the `/documents/` directory.
+    Returns:
+        Returns a cleaned set of features and labels, in a tuple. i.e. (<features>, <labels>)
     """
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     directory = BASE_DIR + "/documents/"
     print(directory)
-    print(data)
-    features = np.genfromtxt(directory + data, delimiter=',')
+    print(document)
+    features = np.genfromtxt(directory + document, delimiter=',')
     labels = np.genfromtxt(directory + labels, delimiter=',')
     # feature_names = np.genfromtxt(directory + static('pacific_plant_features.csv'), delimiter='\n', dtype=str)
     return clean_features(features, labels)
 
 
-def explore_samples(data, threshold=5):
+def remove_samples(data, threshold=5):
     """
-    examine missing data by samples
+    Aggregates the rows (species) in the data in which there are too many NaN (missing) values, as
+    dictated by `threshold`.
+
+    Args:
+        data: The data object containing the species and their features.
+        threshold: The limit to the number of NaN values a row can have.
+    Returns:
+        A list of rows with more than `threshold` amount of Nan values.
     """
     count = 0
     rows = []
@@ -61,9 +89,16 @@ def explore_samples(data, threshold=5):
     return rows
 
 
-def explore_features(data, threshold=100):
+def remove_features(data, threshold=100):
     """
-    examine missing data by features
+    Aggregates the columns (features) in the data in which there are too many NaN (missing) values, as
+    dictated by `threshold`.
+
+    Args:
+        data: The data object containing the species and their features.
+        threshold: The limit to the number of NaN values a column can have.
+    Returns:
+        A list of columns with more than `threshold` amount of Nan values.
     """
     cols = []
     for i in range(data.shape[1]):
@@ -76,21 +111,28 @@ def explore_features(data, threshold=100):
 
 def clean_features(features, labels):
     """
-    remove missing data (detrimental features and samples)
+    Remove missing and NaN values from the data.
+
+    Args:
+        features (numpy.array): An array of species features.
+        labels (numpy.array): An array of species labels.
+
+    Returns:
+        The features and labels, with rows and columns with excessive NaN or missing values removed. 
     """
     # remove features missing in a lot of samples
     feature_threshold = [300, 250, 200, 150, 100]
     sample_threshold = [20, 15, 10, 5, 0]
 
     for f, s in zip(feature_threshold, sample_threshold):
-        remove_cols = explore_features(features, f)
+        remove_cols = remove_features(features, f)
         features = np.delete(features, remove_cols, axis=1)
         # feature_names = np.delete(feature_names, remove_cols)
         print(features.shape)
         print('---')
 
         # remove samples missing data
-        remove_rows = explore_samples(features, s)
+        remove_rows = remove_samples(features, s)
         features = np.delete(features, remove_rows, axis=0)
         labels = np.delete(labels, remove_rows)
         print(features.shape, labels.shape)
@@ -99,16 +141,22 @@ def clean_features(features, labels):
     # TODO: efficiently remove NaNs while keeping as much data as possibles
     return features, labels
 
-
+# TODO: Remove this redundant function. 
 def split_data(features, labels):
     """
-    split training and test data
+    Split the features and labels into training and test data. 
     """
-    train_features, test_features, train_labels, test_labels = train_test_split(features, labels, 
-                                                                                test_size=0.2)
-    return train_features, test_features, train_labels, test_labels
+    return train_test_split(features, labels, test_size=0.2)
 
 def get_accuracy(predictions, labels):
+    """
+    Returns the accuracy of a given prediction.
+
+    Args:
+
+    Returns:
+        
+    """
     return float(np.sum(predictions == labels))/len(labels)
 
 
@@ -162,10 +210,21 @@ def get_principal_components(features, n_features=18):
 @api_view(['GET'])
 def model_selection(request):
     """
-    web api that returns data for all analysis plots
-    confusion matrix, feature importance, model predictions, pca variance
+    An API endpoint that uses the Django REST framework to analyze the submitted data using the
+    specified model and hyperparameters. Returns a REST response containing the metadata for the 
+    analysis plots.
+
+    Uses the Django REST framework's `api_view` decorator to make the function available as URL
+    endpoint. When a user makes a request, the URL will have `/model_selection` in it, and `urls.py`
+    will direct the request to this function.
+
+    Args:
+        request: The HTTP request object sent by the client.
+
+    Returns:
+        A Django REST Response object, constructed as a JSON object.
     """
-  # get input parameters
+    # get input parameters
     model = request.query_params.get('model')
     hyperparameters = request.query_params.get('hyperparameters').split(',')
     features = request.query_params.get('features')
@@ -182,24 +241,25 @@ def model_selection(request):
         predictions = predict_rf(train_features, test_features, train_labels, test_labels)
 
     # create plot data
-    cm, counts = get_confusion_matrix(test_labels, predictions)
+    confusion_matrix, counts = get_confusion_matrix(test_labels, predictions)
     tips = [str(counts[0][0]) + ' out of ' + str(counts[0][0] + counts[0][1]),
             str(counts[0][1]) + ' out of ' + str(counts[0][0] + counts[0][1]),
             str(counts[1][0]) + ' out of ' + str(counts[1][0] + counts[1][1]),
             str(counts[1][1]) + ' out of ' + str(counts[1][0] + counts[1][1])]
-    fi = get_feature_importance(data[0], data[1])
-    fi = fi.tolist()
-    pca = get_pca_variance(data[0])
-    princomps = get_principal_components(data[0], 3)
-    feature1 = princomps[:, 0]
-    feature2 = princomps[:, 1]
-    feature3 = princomps[:, 2]
-    species = [0]*len(princomps[:, 0])
-    return Response({"feature_importance": {"features": np.zeros(len(fi)).tolist(),
-                                            "importance": fi},
+    feature_importance = get_feature_importance(data[0], data[1])
+    feature_importance = feature_importance.tolist()
+    pca_variance = get_pca_variance(data[0])
+    principal_components = get_principal_components(data[0], 3)
+    feature1 = principal_components[:, 0]
+    feature2 = principal_components[:, 1]
+    feature3 = principal_components[:, 2]
+    species = [0]*len(principal_components[:, 0])
+    return Response({"feature_importance": {"features": np.zeros(len(feature_importance)).tolist(),
+                                            "importance": feature_importance},
                      "predictions": predictions,
-                     "confusion_matrix": {"matrix": cm.tolist(), "tips": tips,
-                                          'labels': ['Non-Invasive', 'Invasive']},
+                     "confusion_matrix": {"matrix": confusion_matrix.tolist(),
+                                          "tips": tips,
+                                          "labels": ['Non-Invasive', 'Invasive']},
                      "pca": {"feature1": feature1, "feature2": feature2, "species": species,
                              "label": data[1]},
                      "pca_3d": {"feature1": feature1, "feature2": feature2, "feature3": feature3,

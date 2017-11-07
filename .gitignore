@@ -73,3 +73,6 @@ static/
 # virtualenv
 venv/
 ENV/
+
+# swap files
+*.swp
