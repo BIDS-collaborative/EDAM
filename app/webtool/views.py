@@ -11,6 +11,7 @@ References:
     * Django REST Framework: <http://www.django-rest-framework.org/api-guide/views/>
 """
 import os
+import csv
 
 import numpy as np
 from sklearn.decomposition import PCA
@@ -46,7 +47,7 @@ def index(request):
         return render(request, 'webtool.html', {'DocumentForm': doc_form})
 
 
-def load_data(document, labels):
+def load_data(document, labels, features_selected):
     """
     Prepares and returns cleaned data using the given document and labels. The document is sourced
     from the static `/documents/` directory.
@@ -64,6 +65,17 @@ def load_data(document, labels):
     features = np.genfromtxt(directory + document, delimiter=',')
     labels = np.genfromtxt(directory + labels, delimiter=',')
     # feature_names = np.genfromtxt(directory + static('pacific_plant_features.csv'), delimiter='\n', dtype=str)
+    feature_names = []
+    with open(directory + document, newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+        for row in reader:
+            feature_names.append(",".join(row))
+    if features_selected:
+        to_delete = []
+        for i in range(len(feature_names)):
+            if feature_names[i] not in features_selected:
+                to_delete.append(i)
+        features = np.delete(features, to_delete, axis=0)
     return clean_features(features, labels)
 
 
@@ -229,9 +241,10 @@ def model_selection(request):
     hyperparameters = request.query_params.get('hyperparameters').split(',')
     features = request.query_params.get('features')
     labels = request.query_params.get('labels')
+    features_selected = request.query_params.get('features_selected')
 
     # load data files
-    data = load_data(features, labels)
+    data = load_data(features, labels, features_selected)
 
     # train and test models
     train_features, test_features, train_labels, test_labels = split_data(data[0], data[1])

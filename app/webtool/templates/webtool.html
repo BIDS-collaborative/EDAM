@@ -130,7 +130,21 @@
           </div>
         </div>
         <div class="container-fluid">
-          <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="restSubmit();">
+          <input class="btn btn-sm btn-default" type="submit" value="Submit">
+        </div>
+
+         <!-- FEATURE SELECTION -->
+        <div class="container-fluid">
+          <h2>3. Feature Selection</h2>
+          <h4>Choose features separated by comma</h4>
+        
+          
+          <div class="text-center">
+            <input type="text" style="color: black" name="features" value="{{ features_selected }}">
+          </div>
+          <div class="container-fluid">
+            <input class="btn btn-sm btn-default" type="submit" value="Submit" onclick="restSubmit();">
+          </div>
         </div>
       </div>
     </div>
